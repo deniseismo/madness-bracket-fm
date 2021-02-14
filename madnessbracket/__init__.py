@@ -16,4 +16,11 @@ def create_app(config_class=Config):
     app.config.from_object(Config)
 
     db.init_app(app)
+
+    # import all necessary blueprints
+    from madnessbracket.main.routes import main
+
+    # register all blueprints
+    app.register_blueprint(main)
+
     return app
