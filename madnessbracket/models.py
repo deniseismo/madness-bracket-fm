@@ -6,6 +6,7 @@ class Artist(db.Model):
     name = db.Column(db.String(), unique=True, index=True, nullable=False)
     albums = db.relationship('Album', backref='artist', lazy=True)
     spotify_name = db.Column(db.String(), nullable=True)
+    songs = db.relationship('Song', backref='artist', lazy=True)
 
     def __repr__(self):
         return f"Artist('{self.name}')"
@@ -31,8 +32,10 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(), nullable=False)
     album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
+    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
     spotify_preview_url = db.Column(db.String(), nullable=True)
     spotify_track_id = db.Column(db.String(), nullable=True)
+    rating = db.Column(db.Integer)
 
     def __repr__(self):
         return f"Song('{self.title}')"
