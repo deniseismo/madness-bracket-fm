@@ -9,7 +9,7 @@ def prepare_tracks(tracks: dict):
     """
     MAX_TRACKS = 32
     # shuffles tracks
-    tracks['tracks'] = random.shuffle(tracks['tracks'])
+    random.shuffle(tracks['tracks'])
     # make sure it's divisible by 4 (madness bracket structure rule)
     tracks_len = len(tracks['tracks']) // 4 * 4
     # caps at 32 max or a lesser dividend
