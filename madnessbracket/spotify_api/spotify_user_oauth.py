@@ -17,9 +17,9 @@ def get_spotify_auth():
     :return: redirect url
     """
     conf = (
-        current_app.config['SPOTIPY_CLIENT_ID'],
-        current_app.config['SPOTIPY_CLIENT_SECRET'],
-        current_app.config['SPOTIPY_REDIRECT_URI']
+        current_app.config['SPOTIFY_CLIENT_ID'],
+        current_app.config['SPOTIFY_CLIENT_SECRET'],
+        current_app.config['SPOTIFY_REDIRECT_URI']
     )
     cred = tk.Credentials(*conf)
     # scopes allow client to read user's name, id, avatar & user's top artists/tracks
@@ -49,9 +49,9 @@ def check_spotify():
         # get new access token
         print('token is expiring')
         conf = (
-            current_app.config['SPOTIPY_CLIENT_ID'],
-            current_app.config['SPOTIPY_CLIENT_SECRET'],
-            current_app.config['SPOTIPY_REDIRECT_URI']
+            current_app.config['SPOTIFY_CLIENT_ID'],
+            current_app.config['SPOTIFY_CLIENT_SECRET'],
+            current_app.config['SPOTIFY_REDIRECT_URI']
         )
         print(user)
         cred = tk.Credentials(*conf)
