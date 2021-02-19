@@ -82,8 +82,8 @@ def spotify_callback():
     return redirect(url_for('main.home'), 307)
 
 
-@spotify.route("/fetch_spotify_tracks", methods=["POST"])
-def get_albums_by_spotify():
+@spotify.route("/fetch_spotify_tracks", methods=["GET", "POST"])
+def get_spotify_tracks():
     """
     gets user's favorite tracks (via spotify)
     :return: jsonified tracks dict
@@ -101,5 +101,6 @@ def get_albums_by_spotify():
             {'message': f"no tracks to show"}
         ),
             404)
+    print(tracks)
     tracks = prepare_tracks(tracks)
     return jsonify(tracks)
