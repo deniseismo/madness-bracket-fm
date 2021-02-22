@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Madness Bracket</title>
+    <link href="{{ url_for('static', filename='css/main.css') }}"
+              rel="stylesheet">
+</head>
+<body>
+{% block content %}{% endblock %}
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
