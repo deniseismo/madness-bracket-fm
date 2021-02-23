@@ -1,4 +1,4 @@
-import { bracket } from "./main.js";
+import { shuffleArray } from "./utilities.js";
 export class BracketData {
   constructor() {
     this.left = {};
@@ -64,28 +64,55 @@ export function traverseAllCells(bracket) {
   console.log("traversing");
 }
 
-export function resetBracket() {
+export function resetBracket(bracket) {
+  // supplementary function to reset a single cell's properties
   function resetCell(cell) {
     cell.setCurrentSong("");
     cell.setElementText();
     cell.makeUnadvanceable();
     cell.deactivate();
   }
+  // reset the final round
+  ["left", "right", "winner"].forEach((side) =>
+    resetCell(bracket.final[side])
+  );
   const numberOfRounds = Object.keys(bracket.left).length;
   for (let i = 0; i < numberOfRounds; i++) {
-    ["left", "right", "winner"].forEach((side) =>
-      resetCell(bracket.final[side])
-    );
     const numberOfCells = Object.keys(bracket.left[i]).length;
     for (let j = 0; j < numberOfCells; j++) {
+      // revert the first round back to normal
       if (i === 0) {
         ["left", "right"].forEach((side) => {
           bracket[side][i][j].makeAdvanceable();
           bracket[side][i][j].activate();
         });
+      // reset the rest of the rounds
       } else {
         ["left", "right"].forEach((side) => resetCell(bracket[side][i][j]));
       }
     }
+  }
+}
+
+// resets & then shuffles songs in the bracket
+export function shuffleBracket(bracket, tracksData) {
+  // reset first
+  resetBracket(bracket);
+  // take out the array of all the tracks dicts
+  let tracks = tracksData['tracks'];
+  shuffleArray(tracks);
+  tracks = {
+    left: tracks.slice(0, tracks.length / 2),
+    right: tracks.slice(tracks.length / 2),
+  };
+  console.log('shuffled array now is ', tracks);
+  // the length of each side's first round
+  const numberOfCells = Object.keys(bracket.left[0]).length;
+  for (let i = 0; i < numberOfCells; i++) {
+    ['left', 'right'].forEach(side => {
+      const trackTitle = tracks[side][i]['track_title'];
+      bracket[side][0][i].setCurrentSong(trackTitle);
+      bracket[side][0][i].setElementText();
+    })
   }
 }
