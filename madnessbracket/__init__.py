@@ -2,8 +2,19 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from madnessbracket.config import Config
+from sqlalchemy import MetaData
 
-db = SQLAlchemy()
+
+my_naming_convention = {
+    "ix": 'ix_%(column_0_label)s',
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(column_0_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s"
+}
+mtd = MetaData(naming_convention=my_naming_convention)
+
+db = SQLAlchemy(metadata=mtd)
 
 
 def create_app(config_class=Config):

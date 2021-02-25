@@ -14,7 +14,8 @@ class Artist(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
+    artist_id = db.Column(db.Integer, db.ForeignKey(
+        'artist.id'), nullable=False)
     title = db.Column(db.String(), nullable=False)
     rating = db.Column(db.Integer)
     alternative_title = db.Column(db.String())
@@ -31,8 +32,9 @@ class Album(db.Model):
 class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(), nullable=False)
-    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=True)
+    artist_id = db.Column(db.Integer, db.ForeignKey(
+        'artist.id'), nullable=False)
     spotify_preview_url = db.Column(db.String(), nullable=True)
     spotify_track_id = db.Column(db.String(), nullable=True)
     rating = db.Column(db.Integer)
@@ -43,7 +45,8 @@ class Song(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    spotify_id = db.Column(db.String(200), unique=True, index=True, nullable=False)
+    spotify_id = db.Column(db.String(200), unique=True,
+                           index=True, nullable=False)
     spotify_token = db.Column(db.String(200), unique=False, nullable=True)
 
     def __repr__(self):
