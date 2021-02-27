@@ -46,3 +46,11 @@ def get_filtered_name(name_to_fix: str):
     # finally remove some trailing hyphens and/or whitespaces
     ultimate_filtered_name = a_correct_title.strip('-').strip()
     return ultimate_filtered_name
+
+
+def fix_quot_marks(song_name):
+    """
+    fixes (’,“, ”)
+    """
+    song_name = song_name.replace("’", "'").replace('“', '"').replace('”', '"')
+    return song_name

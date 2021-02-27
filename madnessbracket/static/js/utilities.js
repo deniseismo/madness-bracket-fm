@@ -5,3 +5,11 @@ export function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
+export function createElement(type, classes) {
+  const element = document.createElement(type);
+  for (const aClass of classes) {
+    element.classList.add(aClass);
+  }
+  return element;
+}
