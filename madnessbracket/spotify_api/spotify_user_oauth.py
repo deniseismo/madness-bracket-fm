@@ -1,9 +1,8 @@
-import random
 import pickle
+import random
 
 import tekore as tk
-from flask import current_app, Blueprint, session
-
+from flask import Blueprint, current_app, session
 from madnessbracket.models import User
 
 spotify = Blueprint('spotify', __name__)
@@ -60,6 +59,7 @@ def check_spotify():
             print(f'user found: {user}')
             # get user's refresh token from db
             refresh_token = user_entry.spotify_token
+            print(f'refresh_token: {refresh_token}')
             if refresh_token:
                 # get new token via refresh token
                 token = cred.refresh_user_token(refresh_token)
@@ -113,7 +113,8 @@ def spotify_get_users_top_tracks(token):
     try:
         with spotify_tekore_client.token_as(token):
             # get user's top 50 tracks
-            top_tracks = spotify_tekore_client.current_user_top_tracks(limit=50, time_range=random.choice(time_periods))
+            top_tracks = spotify_tekore_client.current_user_top_tracks(
+                limit=50, time_range=random.choice(time_periods))
     except tk.HTTPError:
         return None
 
@@ -141,5 +142,3 @@ def spotify_get_users_top_tracks(token):
         print('not enough tracks')
         return None
     return tracks
-
-

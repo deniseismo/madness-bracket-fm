@@ -6,7 +6,7 @@ from flask import request, url_for, Blueprint, redirect, session, jsonify, make_
 from madnessbracket import db
 from madnessbracket.models import User
 from madnessbracket.spotify_api.spotify_user_oauth import get_spotify_auth, check_spotify, spotify_get_users_top_tracks
-from madnessbracket.utilities.spotify_utils import prepare_tracks
+from madnessbracket.utilities.track_processing import prepare_tracks
 
 spotify = Blueprint('spotify', __name__)
 
