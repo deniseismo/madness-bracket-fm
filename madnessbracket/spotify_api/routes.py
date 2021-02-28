@@ -6,7 +6,6 @@ from flask import request, url_for, Blueprint, redirect, session, jsonify, make_
 from madnessbracket import db
 from madnessbracket.models import User
 from madnessbracket.spotify_api.spotify_user_oauth import get_spotify_auth, check_spotify, spotify_get_users_top_tracks
-from madnessbracket.utilities.track_processing import prepare_tracks
 
 spotify = Blueprint('spotify', __name__)
 
@@ -72,7 +71,8 @@ def spotify_callback():
                 # if the user is not yet registered in db
                 # save user to the db with the refresh token
                 refresh_token = token.refresh_token
-                user_entry = User(spotify_id=user_id, spotify_token=refresh_token)
+                user_entry = User(spotify_id=user_id,
+                                  spotify_token=refresh_token)
                 db.session.add(user_entry)
                 db.session.commit()
 
@@ -80,27 +80,3 @@ def spotify_callback():
         print('http error')
         return None
     return redirect(url_for('main.home'), 307)
-
-
-@spotify.route("/fetch_spotify_tracks", methods=["GET", "POST"])
-def get_spotify_tracks():
-    """
-    gets user's favorite tracks (via spotify)
-    :return: jsonified tracks dict
-    """
-    user, token = check_spotify()
-    if not user or not token:
-        return make_response(jsonify(
-            {'message': f"you are not logged in!"}
-        ),
-            401)
-    tracks = spotify_get_users_top_tracks(token)
-    if not tracks:
-        # no tracks found
-        return make_response(jsonify(
-            {'message': f"no tracks to show"}
-        ),
-            404)
-    print(tracks)
-    tracks = prepare_tracks(tracks)
-    return jsonify(tracks)
