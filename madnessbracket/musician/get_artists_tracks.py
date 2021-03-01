@@ -1,7 +1,11 @@
+from madnessbracket import create_app
 from madnessbracket.models import Artist, Song
 
+app = create_app()
+app.app_context().push()
 
-def get_tracks_from_db(artist_name: str):
+
+def get_artists_tracks(artist_name: str):
     """
     :param artist_name: artist's name
     :return: a dict with a list of 'track info' dicts
@@ -19,16 +23,11 @@ def get_tracks_from_db(artist_name: str):
     tracks = {
         "tracks": []
     }
-    for counter, track_entry in enumerate(track_entries):
+    for track_entry in track_entries:
         track = {
-            "id": counter,
             "title": track_entry.title,
             "artist_name": track_entry.artist.name,
-            "album": track_entry.album.title,
-            "color": track_entry.album.album_cover_color
+            "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None
         }
-        if track_entry.spotify_preview_url:
-            track['spotify_preview_url'] = track_entry.spotify_preview_url
-
         tracks["tracks"].append(track)
     return tracks
