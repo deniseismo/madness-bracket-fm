@@ -68,4 +68,3 @@ def music_brainz_get_release_tracklist(release_id: str):
         return None
     tracklist = [track_info['recording']['title'] for track_info in tracklist]
     return tracklist
-

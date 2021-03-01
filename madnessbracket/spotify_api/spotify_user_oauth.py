@@ -104,7 +104,7 @@ def get_spotify_user_info(token):
 def spotify_get_users_top_tracks(token):
     """
     :param token: an access token
-    :return: a dict with a list of 'track info' dicts
+    :return: current user's top track items
     """
     # spotify's internal 'time spans': gives different selections of your fav. tracks based on time period
     time_periods = ['short_term', 'medium_term', 'long_term']
@@ -112,7 +112,7 @@ def spotify_get_users_top_tracks(token):
         return None
     try:
         with spotify_tekore_client.token_as(token):
-            # get user's top 50 tracks
+            # get user's top 50 tracks (pick time span at random)
             top_tracks = spotify_tekore_client.current_user_top_tracks(
                 limit=50, time_range=random.choice(time_periods))
     except tk.HTTPError:
@@ -121,24 +121,10 @@ def spotify_get_users_top_tracks(token):
     if not top_tracks:
         return None
 
-    # initialize a dict to avoid KeyErrors
-    tracks = {
-        "tracks": []
-    }
-    # iterate through tracks
-    for track in top_tracks.items:
-        name = track.name
-        artist_name = track.artists[0].name
-        track_id = track.id
-        preview_url = track.preview_url
-        a_track_info = {
-            "artist_name": artist_name,
-            "track_title": name,
-            "track_id": track_id,
-            "preview_url": preview_url
-        }
-        tracks["tracks"].append(a_track_info)
-    if len(tracks['tracks']) < 4:
-        print('not enough tracks')
+    if not top_tracks.items:
         return None
-    return tracks
+    print(top_tracks.total)
+    if len(top_tracks.items) < 4:
+        print('not enought tracks')
+        return None
+    return top_tracks.items
