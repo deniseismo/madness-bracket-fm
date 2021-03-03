@@ -8,12 +8,17 @@ def cap_tracks(tracks: dict, limit: int = 32):
     :param tracks: a tracks dict with the list of 'track info' dicts
     :return:
     """
+    # standard measurements of the bracket: 4, 8, 16, or 32 tracks
+    bracket_standards = [4, 8, 16, 32]
+    # capping the standards with the limit given
+    capped_standards = list(filter(lambda x: x <= limit, bracket_standards))
     # shuffles tracks
     random.shuffle(tracks['tracks'])
-    # make sure it's divisible by 4 (madness bracket structure rule)
-    tracks_len = len(tracks['tracks']) // 4 * 4
-    # caps at 32 max or a lesser dividend
-    tracks_cap = min(limit, tracks_len)
+    # get the total amount of tracks
+    tracks_len = len(tracks['tracks'])
+    print('total amount of tracks: ', tracks_len)
+    # figure out what the tracks cap should be: the closest maximum number out of the bracket standards
+    tracks_cap = max(list(filter(lambda x: x <= tracks_len, capped_standards)))
     tracks['tracks'] = tracks['tracks'][:tracks_cap]
     return tracks
 
@@ -51,5 +56,5 @@ def fix_quot_marks(song_name):
     """
     fixes (’,“, ”)
     """
-    song_name = song_name.replace("’", "'").replace('“', '"').replace('”', '"')
+    song_name = song_name.replace("’", "'").replace("‘", "'").replace('“', '"').replace('”', '"')
     return song_name
