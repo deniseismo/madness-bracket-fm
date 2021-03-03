@@ -44,7 +44,10 @@ export function createBracketStructure(tracksData) {
       // distributes all the song across the first round cells on both sides of the bracket
       if (roundIndex === 0) {
         const trackTitle = tracks[side][j]["track_title"];
+        const artistName = tracks[side][j]['artist_name'];
+        console.log(trackTitle, artistName)
         cellObject.setCurrentSong(trackTitle);
+        cellObject.setArtistName(artistName);
         cellObject.setElementText();
         cellObject.makeAdvanceable();
         cellObject.activate();

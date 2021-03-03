@@ -109,7 +109,10 @@ export function shuffleBracket(bracket, tracksData) {
   for (let i = 0; i < numberOfCells; i++) {
     ["left", "right"].forEach((side) => {
       const trackTitle = tracks[side][i]["track_title"];
+      const artistName = tracks[side][i]['artist_name'];
+      console.log(artistName);
       bracket[side][0][i].setCurrentSong(trackTitle);
+      bracket[side][0][i].setArtistName(artistName);
       bracket[side][0][i].setElementText();
     });
   }

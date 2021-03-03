@@ -1,7 +1,11 @@
+# my custom ignore files/folders
 .idea
 etc
 *.db
-dev/
+*.sqlite
+migrations/
+songscrape/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -143,3 +147,6 @@ cython_debug/
 
 # vscode files
 /.vscode
+
+# npm/node
+node_modules/
