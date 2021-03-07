@@ -1,0 +1,11 @@
+$greenishColor: #26624c;
+$reddishColor: #ce4264;
+$backgroundColor: #1f1f1f;
+$whitishColor: #f5f5f5;
+
+@mixin flexContainer($direction, $just) {
+  display: flex;
+  justify-content: $just;
+  align-items: center;
+  flex-direction: $direction;
+}

@@ -1,0 +1,44 @@
+@import "./variables";
+@import "./bracket";
+@import "./intro";
+@import "./options";
+
+html,
+body,
+.wrapper,
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: $backgroundColor;
+  color: $whitishColor;
+}
+p {
+  margin: 0;
+}
+header {
+  @include flexContainer(row, space-around);
+  color: #ff3557;
+  height: 60px;
+  width: 100%;
+  min-height: 6vh;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 2rem 0;
+}
+
+.container {
+  @include flexContainer(column, flex-start);
+  margin: 0;
+  overflow: hidden;
+  height: calc(100% - 60px);
+}
+
+button {
+  border: none;
+  color: $whitishColor;
+  &:hover {
+    cursor: pointer;
+  }
+}

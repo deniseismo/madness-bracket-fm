@@ -1,0 +1,42 @@
+.intro-container {
+  @include flexContainer(row, flex-start);
+//   width: 100%;
+  height: 100%;
+}
+.intro-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+.intro-two-lines {
+  width: 0;
+  height: 1px;
+  left: 0;
+  transition: 0.1s all ease;
+  height: 100%;
+  border-top: 5px solid $whitishColor;
+  border-bottom: 5px solid $whitishColor;
+}
+
+.intro-line {
+  width: 0;
+  height: 5px;
+  color: $whitishColor;
+  background: $whitishColor;
+}
+
+.column-space-between {
+  @include flexContainer(column, space-between);
+  height: 100%;
+}
+.horizontal-line {
+  width: 150px;
+  height: 5px;
+  background: $whitishColor;
+}
+
+.vertical-line {
+  height: 50%;
+  width: 5px;
+  background: $whitishColor;
+}
