@@ -6,13 +6,13 @@ def get_artists_tracks(artist_name: str):
     :param artist_name: artist's name
     :return: a dict with a list of 'track info' dicts
     """
-    SONG_LIMIT = 100
+    SONG_LIMIT = 50
     artist = Artist.query.filter_by(name=artist_name).first()
     if not artist:
         # no such artist found
         return None
 
-    track_entries = Song.query.filter_by(artist=artist).order_by(Song.rating).limit(SONG_LIMIT).all()
+    track_entries = Song.query.filter_by(artist=artist).order_by(Song.rating.desc()).limit(SONG_LIMIT).all()
 
     if not track_entries:
         return None

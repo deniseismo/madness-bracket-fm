@@ -1,14 +1,9 @@
-import pickle
 import random
-
 import tekore as tk
 from flask import current_app
-from madnessbracket import create_app
-from madnessbracket.utilities.track_processing import get_filtered_name
-from madnessbracket.dev.lastfm import lastfm_api
 
-app = create_app()
-app.app_context().push()
+from madnessbracket.utilities.track_processing import get_filtered_name
+
 
 
 def get_spotify_tekore_client():
