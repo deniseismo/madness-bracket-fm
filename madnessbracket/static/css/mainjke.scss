@@ -12,13 +12,14 @@ body,
   overflow: hidden;
   background-color: $backgroundColor;
   color: $whitishColor;
+  font-family: 'nowayregular', Georgia, serif;
 }
 p {
   margin: 0;
+  display: flex;
 }
 header {
   @include flexContainer(row, space-around);
-  color: #ff3557;
   height: 60px;
   width: 100%;
   min-height: 6vh;
@@ -36,9 +37,7 @@ header {
 }
 
 button {
+  @include hoverable();
   border: none;
   color: $whitishColor;
-  &:hover {
-    cursor: pointer;
-  }
 }

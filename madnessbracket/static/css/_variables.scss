@@ -1,11 +1,31 @@
+@font-face {
+  font-family: 'nowayregular';
+  src: url('fonts/Noway-Regular-webfont/noway-regular-webfont.eot');
+  src: url('fonts/Noway-Regular-webfont/noway-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/Noway-Regular-webfont/noway-regular-webfont.woff2') format('woff2'),
+       url('fonts/Noway-Regular-webfont/noway-regular-webfont.woff') format('woff'),
+       url('fonts/Noway-Regular-webfont/noway-regular-webfont.ttf') format('truetype'),
+       url('fonts/Noway-Regular-webfont/noway-regular-webfont.svg#nowayregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
 $greenishColor: #26624c;
 $reddishColor: #ce4264;
 $backgroundColor: #1f1f1f;
 $whitishColor: #f5f5f5;
+$grayishColor: #616262;
 
 @mixin flexContainer($direction, $just) {
   display: flex;
   justify-content: $just;
   align-items: center;
   flex-direction: $direction;
+}
+
+@mixin hoverable() {
+  &:hover {
+    cursor: pointer;
+  }
 }

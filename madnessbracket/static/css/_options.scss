@@ -96,11 +96,18 @@
   box-shadow: none;
 }
 
+
 .options {
+  @include flexContainer(column, center);
+  width: 100%;
+  display: none;
+}
+
+.bracket_max_size_container {
   @include flexContainer(row, center);
   margin-top: 2rem;
 }
-.option {
+.bracket_max_size_option {
   /* margin: 5%; */
   width: 50px;
   height: 50px;
@@ -115,13 +122,26 @@
     background-color: $reddishColor;
   }
 }
+.bracket_max_size_option_active {
+  background-color: $reddishColor;
+}
 
 .generate-button {
 	background-color: $greenishColor;
 	padding: 1rem;
 	margin: 1rem;
 	width: 50%;
+  font-size: 1.5rem;
   &:hover {
     background-color: $reddishColor;
   }
+  &:disabled {
+    background-color: $grayishColor;
+    cursor: not-allowed;
+  }
+}
+
+.input-container {
+  width: 100%;
+  display: none;
 }
