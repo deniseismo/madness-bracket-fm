@@ -1,101 +1,57 @@
 {% extends "layout.html" %} {% block content %}
 <div class="wrapper flex">
-  <header>
-    <h1>MADNESS 🤪 BRACKET</h1>
-
-    <button class="get-tracks-button w-50 h-50">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="dice-icon"
-        viewBox="0 0 512 512"
+  <header></header>
+  <div class="container">
+    <div class="square-buttons-container">
+      <button
+        data-bracket-type="artist"
+        class="square-button square-button-artist"
       >
-        <title>Dice</title>
-        <path
-          fill="white"
-          stroke="#ff3557"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M448 341.37V170.61A32 32 0 00432.11 143l-152-88.46a47.94 47.94 0 00-48.24 0L79.89 143A32 32 0 0064 170.61v170.76A32 32 0 0079.89 369l152 88.46a48 48 0 0048.24 0l152-88.46A32 32 0 00448 341.37z"
-        />
-        <path
-          fill="white"
-          stroke="#ff3557"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M69 153.99l187 110 187-110M256 463.99v-200"
-        />
-        <ellipse cx="256" cy="152" rx="24" ry="16" />
-        <ellipse cx="208" cy="296" rx="16" ry="24" />
-        <ellipse cx="112" cy="328" rx="16" ry="24" />
-        <ellipse cx="304" cy="296" rx="16" ry="24" />
-        <ellipse cx="400" cy="240" rx="16" ry="24" />
-        <ellipse cx="304" cy="384" rx="16" ry="24" />
-        <ellipse cx="400" cy="328" rx="16" ry="24" />
-      </svg>
-    </button>
-    <button class="reset-button"></button>
-    <button class="shuffle-button"></button>
-
-    <div class="spotify-login-container">
-      {% if logged_in %} {% if user_info %}
-      <div class="spotify-avatar">
-        {% if user_info.user_image %}
-        <img class="spotify-avatar-image" src="{{ user_info.user_image }}" />
-        {% else %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="spotify-avatar-image"
-          viewBox="0 0 512 512"
-        >
-          <title>Avatar</title>
-          <path
-            d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z"
-            fill="#ebecf1"
-          />
-          <path
-            fill="#ebecf1"
-            d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z"
-          />
-        </svg>
-        {% endif %}
-      </div>
-      {% else %}
-      <form action="{{ url_for('spotify.spotify_logout') }}" method="POST">
-        <a href="#" onclick="$(this).parent().submit()">
-          <p class="spotify-login no-margin spotify-logged-in">LOG OUT</p>
-        </a>
-      </form>
-      {% endif %} {% else %}
-      <a class="login-svg-link" href="{{ url_for('spotify.spotify_login') }}">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="login-svg"
-          viewBox="0 0 512 512"
-        >
-          <title>Log In</title>
-          <path
-            d="M192 176v-40a40 40 0 0140-40h160a40 40 0 0140 40v240a40 40 0 01-40 40H240c-22.09 0-48-17.91-48-40v-40"
-            fill="none"
-            stroke="#ebecf1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-          <path
-            fill="none"
-            stroke="#ebecf1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-            d="M288 336l80-80-80-80M80 256h272"
-          />
-        </svg>
-      </a>
-      {% endif %}
+        <p>ARTIST</p>
+        <p>BOWIE</p>
+        <p>ARTIST</p>
+        <p>ARTIST</p>
+        <p>ADELE</p>
+        <p>ARTIST</p>
+      </button>
+      <button
+        data-bracket-type="charts"
+        class="square-button square-button-best"
+      >
+        <p>CHARTS</p>
+        <p>TOP</p>
+        <p>CHARTS</p>
+        <p>BEST</p>
+        <p>PITCHFORK</p>
+        <p>RS500</p>
+      </button>
     </div>
-  </header>
-  <div class="container"></div>
+    <div class="options">
+      <div class="bracket_max_size_container" wfd-id="18">
+        <button class="bracket_max_size_option" data-max-size="4">4</button>
+        <button class="bracket_max_size_option" data-max-size="8">8</button>
+        <button class="bracket_max_size_option bracket_max_size_option_active" data-max-size="16">16</button>
+        <button class="bracket_max_size_option" data-max-size="32">32</button>
+      </div>
+      <form
+        class="form__group field"
+        action=""
+        onsubmit="return false;"
+        enctype="multipart/form-data"
+      >
+        <div class="input-container">
+          <input
+            type="text"
+            class="form__field"
+            placeholder="artist name"
+            maxlength="99"
+            id="name"
+          />
+          <label for="name" class="form__label">ARTIST</label>
+        </div>
+        <button class="generate-button" type="submit">GENERATE</button>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock content %}
