@@ -7,6 +7,7 @@ export class Cell {
     this.song = {
       songName: null,
       artistName: null,
+      previewURL: null,
     };
     this.opponent = null; // opponent's Cell object
     this.advanceable = false; // a property of being advanceable further up the bracket
@@ -33,12 +34,31 @@ export class Cell {
   getCurrentSong() {
     return this.song["songName"];
   }
+  setArtistName(artistName) {
+    this.song["artistName"] = artistName;
+  }
+  getArtistName() {
+    return this.song["artistName"];
+  }
+  setPreviewURL(url) {
+    this.song["previewURL"] = url;
+  }
+  getPreviewURL() {
+    return this.song["previewURL"];
+  }
+  setSongObject(songObject) {
+    this.song = songObject;
+  }
+  getSongObject() {
+    return this.song;
+  }
   // set DOMelement's contents
   setElementText(textContent = null) {
     if (textContent) {
       this.element.textContent = textContent;
     } else {
       this.element.textContent = this.getCurrentSong();
+      this.element.title = this.getArtistName();
     }
     console.log("setting element text");
   }
