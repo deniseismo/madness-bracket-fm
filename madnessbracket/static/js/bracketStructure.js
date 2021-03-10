@@ -1,8 +1,11 @@
 import { Cell } from "./cell.js";
 import { bracket } from "./main.js";
 import { traverseAllCells } from "./bracketData.js";
+import { removeAllChildNodes } from "./utilities.js";
 
 export function createBracketStructure(tracksData) {
+  const container = document.querySelector('.container');
+  removeAllChildNodes(container);
   const tracksLength = tracksData["tracks"].length;
   bracket.setStructure(tracksLength);
   const tracks = {

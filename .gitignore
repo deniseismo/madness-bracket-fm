@@ -5,6 +5,7 @@ etc
 *.sqlite
 migrations/
 songscrape/
+fonts/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

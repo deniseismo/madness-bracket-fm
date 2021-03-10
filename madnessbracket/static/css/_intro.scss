@@ -6,7 +6,6 @@
 .intro-title {
   @include hoverable();
   font-size: 3rem;
-  margin-bottom: 1rem;
   margin-left: 1rem;
   background-color: $greenishColor;
   color: $whitishColor;

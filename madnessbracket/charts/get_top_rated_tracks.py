@@ -8,9 +8,10 @@ def get_top_rated_songs():
     picks random selection of songs considered best*
     * by Pitchfork, (Rolling Stones, …) # TODO: add RS500/NME
     """
-    filename = os.path.join(current_app.root_path, 'charts\songs_considered_best.json')
+    filename = 'songs_considered_best.json'
+    filepath = os.path.join(current_app.root_path, 'charts', filename)
     try:
-        with open(filename, encoding='utf-8') as f:
+        with open(filepath, encoding='utf-8') as f:
             songs = json.load(f)
     except IOError as e:
         print('file not found', e)

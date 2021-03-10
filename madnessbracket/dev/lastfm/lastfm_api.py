@@ -1,4 +1,3 @@
-
 import requests_cache
 import requests
 import random
@@ -8,9 +7,9 @@ import sys
 
 
 from flask import current_app
-from madnessbracket import create_app
-app = create_app()
-app.app_context().push()
+# from madnessbracket import create_app
+# app = create_app()
+# app.app_context().push()
 
 
 requests_cache.install_cache()
