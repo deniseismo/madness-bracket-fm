@@ -13,3 +13,22 @@ export function createElement(type, classes) {
   }
   return element;
 }
+
+export function pickRandomElement(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
+export function showElement(element) {
+  element.style.display = 'flex';
+}
+
+export function hideElement(element) {
+  element.style.display = 'none';
+}
+
+export function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+};
