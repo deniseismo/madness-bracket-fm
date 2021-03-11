@@ -21,64 +21,6 @@
   min-width: 250px;
 }
 
-.cell {
-  border: 1px solid black;
-  /* display: flex;
-      flex: 0 1 auto; */
-  justify-content: center;
-  align-items: flex-start;
-  position: relative;
-  width: auto;
-  transition: padding 0.2s linear;
-  white-space: nowrap;
-  overflow: hidden;
-  margin: 2% 0;
-  text-align: center;
-  background: #fff;
-  padding: 2%;
-  color: #3700b3;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-  max-width: 175px;
-  min-width: 175px;
-  display: block;
-  min-height: 25px;
-  line-height: 25px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    background-color: #fff;
-    right: 0;
-    top: 50%;
-    transform: translateX(100%);
-    width: 25px;
-    height: 2px;
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    background-color: #fff;
-    right: -25px;
-    height: calc(50% + 22px);
-    width: 2px;
-    top: 50%;
-  }
-  &:hover {
-    background: #ff3557;
-    cursor: pointer;
-    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px,
-      rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px,
-      rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
-    color: white;
-    transition: all 0.2s ease-out;
-  }
-}
-
-.final-cell {
-  padding: 1%;
-  margin: 8% 2%;
-}
-
 .finalists {
   @include flexContainer(row, center);
 }

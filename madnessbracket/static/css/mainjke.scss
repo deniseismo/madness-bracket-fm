@@ -2,6 +2,7 @@
 @import "./bracket";
 @import "./intro";
 @import "./options";
+@import "./cell";
 
 html,
 body,
@@ -12,7 +13,11 @@ body,
   overflow: hidden;
   background-color: $backgroundColor;
   color: $whitishColor;
-  font-family: 'nowayregular', Georgia, serif;
+  font-family: "nowayregular", Georgia, serif;
+}
+a {
+  color: inherit;
+  text-decoration: none;
 }
 p {
   margin: 0;
