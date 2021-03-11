@@ -4,7 +4,7 @@ import { traverseAllCells } from "./bracketData.js";
 import { removeAllChildNodes } from "./utilities.js";
 
 export function createBracketStructure(tracksData) {
-  const container = document.querySelector('.container');
+  const container = document.querySelector(".container");
   removeAllChildNodes(container);
   const tracksLength = tracksData["tracks"].length;
   bracket.setStructure(tracksLength);
@@ -47,13 +47,19 @@ export function createBracketStructure(tracksData) {
       // distributes all the song across the first round cells on both sides of the bracket
       if (roundIndex === 0) {
         const trackTitle = tracks[side][j]["track_title"];
-        const artistName = tracks[side][j]['artist_name'];
-        console.log(trackTitle, artistName)
+        const artistName = tracks[side][j]["artist_name"];
+        const albumColors = tracks[side][j]["album_colors"];
+        console.log(trackTitle, artistName);
         cellObject.setCurrentSong(trackTitle);
         cellObject.setArtistName(artistName);
         cellObject.setElementText();
         cellObject.makeAdvanceable();
         cellObject.activate();
+
+        cellObject.setAlbumColors(albumColors);
+        cellObject.applyColors();
+      } else {
+        cell.classList.add("cell_empty");
       }
       // fill the bracketData object will all the cell objects
       bracket[side][roundIndex][j] = cellObject;
@@ -65,7 +71,7 @@ export function createBracketStructure(tracksData) {
       // half the number of tracks per round
       tracksPerRound /= 2;
     } else if (i > numberOfRounds / 2 - 1) {
-      // mutiply number of tracks per round by 2
+      // multiply number of tracks per round by 2
       tracksPerRound *= 2;
     }
     tournamentBracket.appendChild(round);
@@ -85,7 +91,7 @@ function createFinalRound() {
   const winnerContainer = document.createElement("div");
   winnerContainer.classList.add("winner-container");
   const winnerCell = document.createElement("div");
-  winnerCell.classList.add("cell", "winner-cell");
+  winnerCell.classList.add("cell", "winner-cell", "cell_empty");
   const winnerCellObject = new Cell(-2, 0, winnerCell);
   winnerCell.addEventListener(
     "click",
@@ -99,7 +105,7 @@ function createFinalRound() {
   const finalists = document.createElement("div");
   finalists.classList.add("finalists");
   const leftCell = document.createElement("div");
-  leftCell.classList.add("cell", "left-final-cell", "final-cell");
+  leftCell.classList.add("cell", "left-final-cell", "final-cell", "cell_empty");
   const leftCellObject = new Cell(-1, 0, leftCell);
   leftCell.addEventListener(
     "click",
@@ -107,7 +113,12 @@ function createFinalRound() {
   );
   bracket.final["left"] = leftCellObject;
   const rightCell = document.createElement("div");
-  rightCell.classList.add("cell", "right-final-cell", "final-cell");
+  rightCell.classList.add(
+    "cell",
+    "right-final-cell",
+    "final-cell",
+    "cell_empty"
+  );
   const rightCellObject = new Cell(-1, 1, rightCell);
   rightCell.addEventListener(
     "click",

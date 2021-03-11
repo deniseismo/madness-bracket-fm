@@ -12,6 +12,7 @@ export class Cell {
     this.opponent = null; // opponent's Cell object
     this.advanceable = false; // a property of being advanceable further up the bracket
     this.active = false;
+    this.albumColors = null;
   }
   // sets the next cell object to the given one (next cell is the one this cell can advance to)
   setNextCell(nextCell) {
@@ -52,6 +53,29 @@ export class Cell {
   getSongObject() {
     return this.song;
   }
+  setAlbumColors(albumColors) {
+    console.log("setting album colors");
+    this.albumColors = albumColors;
+  }
+  getAlbumColors() {
+    return this.albumColors;
+  }
+  applyColors() {
+    console.log("applying colors");
+    if (this.albumColors) {
+      const dominantColor = this.albumColors[0];
+      const secondaryColor = this.albumColors[1];
+      const tertiaryColor = this.albumColors[2];
+      console.log(dominantColor, secondaryColor);
+      this.element.style.background = `linear-gradient(to right, ${dominantColor}, ${secondaryColor}`;
+    }
+
+    //this.element.style.background = `linear-gradient(47deg, ${dominantColor} 0%, ${secondaryColor} 85%)`;
+    //this.element.style.background = `linear-gradient(90deg, ${dominantColor} 0%, ${secondaryColor} 50%, ${tertiaryColor} 100%)`;
+
+    // `linear-gradient(47deg, ${dominantColor} 0%, ${secondaryColor} 85%);`;
+    // linear-gradient(47deg, rgba(92,91,78,1) 0%, rgba(229,171,102,1) 60%, rgba(229,171,102,1) 85%);
+  }
   // set DOMelement's contents
   setElementText(textContent = null) {
     if (textContent) {
@@ -62,18 +86,38 @@ export class Cell {
     }
     console.log("setting element text");
   }
+  copyAllQualities(cellToCopyFrom) {
+    this.setSongObject(cellToCopyFrom.getSongObject());
+    this.setAlbumColors(cellToCopyFrom.getAlbumColors());
+    this.setElementText();
+    this.applyColors();
+  }
+  // advance song further up the bracket (win over its opponent in a matchup and go to the next round)
   advance() {
     console.log("advance method activated");
+    // check if this cell can be advanced
     if (this.isAdvanceable()) {
+      // make current cell unadvanceable
       this.makeUnadvanceable();
+      // deactivate current cell
       this.deactivate();
+      // check if this cell has an opponent
       if (this.getOpponent()) {
+        // disable opponent
         this.getOpponent().makeUnadvanceable();
+        // deactivate opponent
         this.getOpponent().deactivate();
+        // add class 'cell_loser'
+        this.getOpponent().element.classList.add("cell_loser");
       }
-      this.nextCell.setCurrentSong(this.getCurrentSong());
-      this.nextCell.setElementText();
+      // activate the next cell
       this.nextCell.activate();
+      this.nextCell.element.classList.remove("cell_empty");
+
+      // this.nextCell.setCurrentSong(this.getCurrentSong());
+      // this.nextCell.setElementText();
+      this.nextCell.copyAllQualities(this);
+
       // check if the next cell has an opponent
       if (this.nextCell.getOpponent()) {
         // if the next cell already has an opponent ready, make them both advanceable
@@ -99,9 +143,11 @@ export class Cell {
   // is this cell the 'head' of its chain — is it the farthest active cell in the chain
   activate() {
     this.active = true;
+    this.element.classList.add("cell_head");
   }
   // this cell is no longer the 'head' of its chain
   deactivate() {
     this.active = false;
+    this.element.classList.remove("cell_head");
   }
 }

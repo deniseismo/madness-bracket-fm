@@ -39,7 +39,8 @@ def get_artists_tracks(artist_name: str):
         track = {
             "track_title": track_entry.title,
             "artist_name": track_entry.artist.name,
-            "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None
+            "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None,
+            "album_colors": track_entry.album.album_cover_color.split(",")
         }
         tracks["tracks"].append(track)
     return tracks
