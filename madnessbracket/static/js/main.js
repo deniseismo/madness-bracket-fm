@@ -31,13 +31,18 @@ const getSpotifyTracks = async function (inputValue = null) {
     // if response is not ok (status ain't no 200)
     if (!response.ok) {
       // do something
+      return response.json().then((failData) => {
+        console.log(failData.message);
+        // throw new Error(failData.message);
+      });
     }
     const data = await response.json();
-    console.log(data);
+    console.log("data is", data);
     return data;
   } catch (error) {
     // Handle the error
     console.log(`error is ${error}`);
+    return Promise.reject();
   }
 };
 
@@ -46,8 +51,16 @@ document.querySelector(".form__group").onsubmit = function () {
   console.log("submitting!");
   const inputValue = document.querySelector(".form__field").value.trim();
   getSpotifyTracks(inputValue).then((data) => {
-    tracksData = data;
-    createBracketStructure(tracksData);
+    try {
+      if (data) {
+        tracksData = data;
+        createBracketStructure(tracksData);
+      } else {
+        console.log(data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   });
   return false;
 };

@@ -20,15 +20,16 @@ export function pickRandomElement(array) {
 }
 
 export function showElement(element) {
-  element.style.display = 'flex';
+  // element.style.display = 'flex';
+  element.style.visibility = "visible";
 }
 
 export function hideElement(element) {
-  element.style.display = 'none';
+  element.style.display = "none";
 }
 
 export function removeAllChildNodes(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
-};
+}
