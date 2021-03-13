@@ -78,11 +78,15 @@ export class Cell {
   }
   // set DOMelement's contents
   setElementText(textContent = null) {
+    const songTitleElement = this.element.querySelector(".song-title");
     if (textContent) {
-      this.element.textContent = textContent;
+      // this.element.textContent = textContent;
+      songTitleElement.textContent = textContent;
     } else {
-      this.element.textContent = this.getCurrentSong();
-      this.element.title = this.getArtistName();
+      // this.element.textContent = this.getCurrentSong();
+      // this.element.title = this.getArtistName();
+      songTitleElement.textContent = this.getCurrentSong();
+      songTitleElement.title = this.getArtistName();
     }
     console.log("setting element text");
   }
