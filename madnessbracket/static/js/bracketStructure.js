@@ -1,7 +1,9 @@
 import { Cell } from "./cell.js";
 import { bracket } from "./main.js";
 import { traverseAllCells } from "./bracketData.js";
-import { removeAllChildNodes } from "./utilities.js";
+import { removeAllChildNodes, createElement } from "./utilities.js";
+import { getIcon } from "./icons.js";
+import { playMusic } from "./music.js";
 
 export function createBracketStructure(tracksData) {
   const container = document.querySelector(".container");
@@ -38,14 +40,28 @@ export function createBracketStructure(tracksData) {
 
     // add a cell to the 'round' div 'tracksPerRound' times
     for (let j = 0; j < tracksPerRound; j++) {
-      const cell = document.createElement("div");
       const cellClassName = `${side}-${roundIndex}-${j}`;
+      const cell = createElement("div", ["cell", cellClassName]);
+      const songTitleElement = createElement("p", ["song-title"]);
+      cell.appendChild(songTitleElement);
       const cellObject = new Cell(roundIndex, j, cell);
       cell.addEventListener("click", cellObject.advance.bind(cellObject));
-      cell.classList.add("cell", cellClassName);
 
       // distributes all the song across the first round cells on both sides of the bracket
       if (roundIndex === 0) {
+        const previewURL = tracks[side][j]["spotify_preview_url"];
+        if (previewURL) {
+          const playIcon = getIcon("play");
+          const playButton = createElement("button", ["play-button"]);
+          playButton.appendChild(playIcon);
+          playButton.dataset.previewurl = previewURL;
+          playButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            playMusic(previewURL);
+          });
+          cell.appendChild(playButton);
+        }
         const trackTitle = tracks[side][j]["track_title"];
         const artistName = tracks[side][j]["artist_name"];
         const albumColors = tracks[side][j]["album_colors"];
@@ -85,13 +101,15 @@ export function createBracketStructure(tracksData) {
 }
 
 function createFinalRound() {
-  const finalRound = document.createElement("div");
-  finalRound.classList.add("round", "final-round");
-
-  const winnerContainer = document.createElement("div");
-  winnerContainer.classList.add("winner-container");
-  const winnerCell = document.createElement("div");
-  winnerCell.classList.add("cell", "winner-cell", "cell_empty");
+  const finalRound = createElement("div", ["round", "final-round"]);
+  const winnerContainer = createElement("div", ["winner-container"]);
+  const winnerCell = createElement("div", [
+    "cell",
+    "winner-cell",
+    "cell_empty",
+  ]);
+  const songWinnerTitleElement = createElement("p", ["song-title"]);
+  winnerCell.appendChild(songWinnerTitleElement);
   const winnerCellObject = new Cell(-2, 0, winnerCell);
   winnerCell.addEventListener(
     "click",
@@ -102,23 +120,29 @@ function createFinalRound() {
 
   finalRound.appendChild(winnerContainer);
 
-  const finalists = document.createElement("div");
-  finalists.classList.add("finalists");
-  const leftCell = document.createElement("div");
-  leftCell.classList.add("cell", "left-final-cell", "final-cell", "cell_empty");
+  const finalists = createElement("div", ["finalists"]);
+  const leftCell = createElement("div", [
+    "cell",
+    "left-final-cell",
+    "final-cell",
+    "cell_empty",
+  ]);
+  const songLeftTitleElement = createElement("p", ["song-title"]);
+  leftCell.appendChild(songLeftTitleElement);
   const leftCellObject = new Cell(-1, 0, leftCell);
   leftCell.addEventListener(
     "click",
     leftCellObject.advance.bind(leftCellObject)
   );
   bracket.final["left"] = leftCellObject;
-  const rightCell = document.createElement("div");
-  rightCell.classList.add(
+  const rightCell = createElement("div", [
     "cell",
     "right-final-cell",
     "final-cell",
-    "cell_empty"
-  );
+    "cell_empty",
+  ]);
+  const songRightTitleElement = createElement("p", ["song-title"]);
+  rightCell.appendChild(songRightTitleElement);
   const rightCellObject = new Cell(-1, 1, rightCell);
   rightCell.addEventListener(
     "click",
