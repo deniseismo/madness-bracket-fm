@@ -1,27 +1,19 @@
 .cell {
+  @include flexContainer(row, space-between);
   border: 1px solid black;
-  /* display: flex;
-        flex: 0 1 auto; */
-  justify-content: center;
-  align-items: flex-start;
   position: relative;
   width: auto;
   transition: padding 0.2s linear;
   white-space: nowrap;
   overflow: hidden;
   margin: 2% 0;
-  text-align: center;
   background: $greenishColor;
   padding: 0.5rem;
   color: $whitishColor;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   max-width: 175px;
   min-width: 175px;
-  display: block;
   min-height: 25px;
-  line-height: 25px;
-  text-overflow: ellipsis;
-
   &::before {
     content: "";
     position: absolute;
@@ -50,6 +42,11 @@
     color: white;
     transition: all 0.2s ease-out;
   }
+  .song-title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .cell_empty {
@@ -67,4 +64,13 @@
 
 .final-cell {
   margin: 8% 2%;
+}
+.play-button {
+  display: flex;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+.play-icon {
+  width: 25px;
 }

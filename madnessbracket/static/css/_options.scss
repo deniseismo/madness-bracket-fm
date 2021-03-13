@@ -3,7 +3,6 @@
   width: 50%;
   max-height: 250px;
   height: inherit;
-  margin-top: 5%;
 }
 
 .square-button {
@@ -96,11 +95,11 @@
   box-shadow: none;
 }
 
-
 .options {
   @include flexContainer(column, center);
   width: 100%;
-  display: none;
+  // display: none;
+  visibility: hidden;
 }
 
 .bracket_max_size_container {
@@ -127,10 +126,10 @@
 }
 
 .generate-button {
-	background-color: $greenishColor;
-	padding: 1rem;
-	margin: 1rem;
-	width: 50%;
+  background-color: $greenishColor;
+  padding: 1rem;
+  margin: 1rem;
+  width: 50%;
   font-size: 1.5rem;
   &:hover {
     background-color: $reddishColor;
