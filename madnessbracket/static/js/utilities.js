@@ -6,6 +6,7 @@ export function shuffleArray(array) {
   }
 }
 
+// creates element of a given type, adds given classes
 export function createElement(type, classes) {
   const element = document.createElement(type);
   for (const aClass of classes) {
@@ -14,6 +15,7 @@ export function createElement(type, classes) {
   return element;
 }
 
+// picks a random element from a given array
 export function pickRandomElement(array) {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
@@ -28,6 +30,7 @@ export function hideElement(element) {
   element.style.display = "none";
 }
 
+// removes all child nodes from a given parent
 export function removeAllChildNodes(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
