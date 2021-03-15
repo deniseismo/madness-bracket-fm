@@ -32,7 +32,7 @@ def cap_tracks(tracks: dict, limit: int = 16):
 def get_filtered_name(name_to_fix: str):
     """
     :param name_to_fix: a song name to fix
-    :return: a fitlered name
+    :return: a filtered name
     """
     # TODO: (mono/stereo) &/and
     # replace some weird characters with normal ones
