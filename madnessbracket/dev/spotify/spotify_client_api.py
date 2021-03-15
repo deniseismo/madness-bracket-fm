@@ -95,8 +95,11 @@ def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
         spotify_tekore_client = get_spotify_tekore_client()
     else:
         spotify_tekore_client = tekore_client
-    # artist_id = get_spotify_artist_id(artist_name, spotify_tekore_client) # get ID via tekore
-    artist_id = spotipy_get_artist_id(artist_name)  # get ID via spotipy
+    artist_id = get_spotify_artist_id(
+        artist_name, spotify_tekore_client)  # get ID via tekore
+    # artist_id = spotipy_get_artist_id(artist_name)  # get ID via spotipy
+    if not artist_id:
+        return None
     print("artist spotify id", artist_id)
     top_tracks = spotify_tekore_client.artist_top_tracks(artist_id, 'US')
     # in case of not getting any response

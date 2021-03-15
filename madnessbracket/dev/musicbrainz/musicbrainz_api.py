@@ -11,7 +11,7 @@ from musicbrainzngs.musicbrainz import ResponseError
 from flask import current_app
 from madnessbracket import create_app
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_track_rating
-from madnessbracket.utilities.logging import log_missing_info
+from madnessbracket.utilities.logging_handlers import log_missing_info
 
 app = create_app()
 app.app_context().push()
