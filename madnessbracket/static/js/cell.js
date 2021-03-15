@@ -13,6 +13,7 @@ export class Cell {
     this.advanceable = false; // a property of being advanceable further up the bracket
     this.active = false;
     this.albumColors = null;
+    this.textColor = "white";
   }
   // sets the next cell object to the given one (next cell is the one this cell can advance to)
   setNextCell(nextCell) {
@@ -60,6 +61,12 @@ export class Cell {
   getAlbumColors() {
     return this.albumColors;
   }
+  setTextColor(textColor) {
+    this.textColor = textColor;
+  }
+  getTextColor() {
+    return this.textColor;
+  }
   applyColors() {
     console.log("applying colors");
     if (this.albumColors) {
@@ -68,6 +75,7 @@ export class Cell {
       const tertiaryColor = this.albumColors[2];
       console.log(dominantColor, secondaryColor);
       this.element.style.background = `linear-gradient(to right, ${dominantColor}, ${secondaryColor}`;
+      this.element.style.color = this.getTextColor();
     }
 
     //this.element.style.background = `linear-gradient(47deg, ${dominantColor} 0%, ${secondaryColor} 85%)`;
@@ -93,6 +101,7 @@ export class Cell {
   copyAllQualities(cellToCopyFrom) {
     this.setSongObject(cellToCopyFrom.getSongObject());
     this.setAlbumColors(cellToCopyFrom.getAlbumColors());
+    this.setTextColor(cellToCopyFrom.getTextColor());
     this.setElementText();
     this.applyColors();
   }
