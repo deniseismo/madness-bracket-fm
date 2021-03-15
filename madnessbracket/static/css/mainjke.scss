@@ -3,7 +3,7 @@
 @import "./intro";
 @import "./options";
 @import "./cell";
-
+@import "./description";
 html,
 body,
 .wrapper,
@@ -13,7 +13,7 @@ body,
   overflow: hidden;
   background-color: $backgroundColor;
   color: $whitishColor;
-  font-family: "nowayregular", Georgia, serif;
+  font-family: "nowayregular", "Roboto Condensed", sans-serif;
 }
 a {
   color: inherit;
@@ -35,10 +35,10 @@ header {
 }
 
 .container {
-  @include flexContainer(column, flex-start);
+  @include flexContainer(column, center);
   margin: 0;
   overflow: hidden;
-  height: calc(100% - 60px);
+  height: calc(100% - 124px);
 }
 
 button {
