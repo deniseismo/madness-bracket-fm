@@ -5,7 +5,7 @@
   width: auto;
   transition: padding 0.2s linear;
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
   margin: 2% 0;
   background: $greenishColor;
   padding: 0.5rem;
@@ -21,17 +21,23 @@
     right: 0;
     top: 50%;
     transform: translateX(100%);
-    width: 25px;
+    width: 1.5em;
     height: 2px;
   }
   &::after {
     content: "";
     position: absolute;
     background-color: #fff;
-    right: -25px;
+    right: -1.5em;
     height: calc(50% + 22px);
     width: 2px;
     top: 50%;
+  }
+  &:nth-last-of-type(even)::after {
+    top: 50%;
+  }
+  &:nth-last-of-type(odd)::after {
+    top: -50%;
   }
   &:hover {
     background: #ff3557;
@@ -46,8 +52,25 @@
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: wheat;
+      right: calc(100% + 1.5em);
+      top: 50%;
+      transform: translateX(100%);
+      width: 1.5em;
+      height: 2px;
+    }
   }
 }
+.cell-right::after, .cell-right::before {
+  right: calc(100% + 1.5em);
+}
+.final-cell::after, .winner-cell::before, .right-final-cell::before {
+  content: none;
+}
+
 
 .cell_empty {
   background-color: $whitishColor;
@@ -70,7 +93,18 @@
   background: none;
   padding: 0;
   margin: 0;
+  color: green;
 }
 .play-icon {
   width: 25px;
+}
+.play-icon_playing {
+  color: wheat;
+  filter: drop-shadow(0 4px 4px rgba(232, 24, 24, 0.15))
+    drop-shadow(0 8px 8px rgba(203, 244, 53, 0.74));
+}
+.play-icon_standby {
+  color: #d2f4be;
+  filter: drop-shadow(0 4px 4px rgba(65, 157, 71, 0.08))
+    drop-shadow(0 8px 8px rgba(207, 238, 93, 0.49));
 }
