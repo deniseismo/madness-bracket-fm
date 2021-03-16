@@ -49,7 +49,9 @@ export class Cell {
     return this.song["previewURL"];
   }
   setSongObject(songObject) {
-    this.song = songObject;
+    this.song["songName"] = songObject["songName"];
+    this.song["artistName"] = songObject["artistName"];
+    this.song["previewURL"] = songObject["previewURL"];
   }
   getSongObject() {
     return this.song;
@@ -86,17 +88,19 @@ export class Cell {
   }
   // set DOMelement's contents
   setElementText(textContent = null) {
+    console.log("setting element text");
     const songTitleElement = this.element.querySelector(".song-title");
     if (textContent) {
       // this.element.textContent = textContent;
       songTitleElement.textContent = textContent;
     } else {
+      console.log(songTitleElement);
       // this.element.textContent = this.getCurrentSong();
       // this.element.title = this.getArtistName();
       songTitleElement.textContent = this.getCurrentSong();
       songTitleElement.title = this.getArtistName();
+      console.log("setting to ", songTitleElement.textContent);
     }
-    console.log("setting element text");
   }
   copyAllQualities(cellToCopyFrom) {
     this.setSongObject(cellToCopyFrom.getSongObject());
@@ -104,6 +108,20 @@ export class Cell {
     this.setTextColor(cellToCopyFrom.getTextColor());
     this.setElementText();
     this.applyColors();
+  }
+  resetCell() {
+    console.log("resetting cell:", this);
+    this.setCurrentSong("");
+    this.setElementText();
+    this.makeUnadvanceable();
+    this.deactivate();
+    this.resetStyleClasses();
+  }
+  resetStyleClasses() {
+    ["cell_loser", "cell_winner"].forEach((className) => {
+      this.element.classList.remove(className);
+    });
+    this.element.classList.add("cell_empty");
   }
   // advance song further up the bracket (win over its opponent in a matchup and go to the next round)
   advance() {
@@ -130,6 +148,8 @@ export class Cell {
       // this.nextCell.setCurrentSong(this.getCurrentSong());
       // this.nextCell.setElementText();
       this.nextCell.copyAllQualities(this);
+      console.log(this);
+      console.log(this.nextCell);
 
       // check if the next cell has an opponent
       if (this.nextCell.getOpponent()) {
