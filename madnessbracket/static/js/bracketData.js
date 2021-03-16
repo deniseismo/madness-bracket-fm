@@ -83,10 +83,7 @@ export function traverseAllCells(bracket) {
 export function resetBracket(bracket) {
   // supplementary function to reset a single cell's properties
   function resetCell(cell) {
-    cell.setCurrentSong("");
-    cell.setElementText();
-    cell.makeUnadvanceable();
-    cell.deactivate();
+    cell.resetCell();
   }
   // reset the final round
   ["left", "right", "winner"].forEach((side) => resetCell(bracket.final[side]));
@@ -103,6 +100,7 @@ export function resetBracket(bracket) {
         // reset the rest of the rounds
       } else {
         ["left", "right"].forEach((side) => resetCell(bracket[side][i][j]));
+        console.log(i);
       }
     }
   }
@@ -126,10 +124,15 @@ export function shuffleBracket(bracket, tracksData) {
     ["left", "right"].forEach((side) => {
       const trackTitle = tracks[side][i]["track_title"];
       const artistName = tracks[side][i]["artist_name"];
+      const albumColors = tracks[side][i]["album_colors"];
+      const textColor = tracks[side][i]["text_color"];
       console.log(artistName);
       bracket[side][0][i].setCurrentSong(trackTitle);
       bracket[side][0][i].setArtistName(artistName);
+      bracket[side][0][i].setTextColor(textColor);
+      bracket[side][0][i].setAlbumColors(albumColors);
       bracket[side][0][i].setElementText();
+      bracket[side][0][i].applyColors();
     });
   }
 }
