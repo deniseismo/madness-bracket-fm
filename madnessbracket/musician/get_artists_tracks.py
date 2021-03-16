@@ -1,6 +1,7 @@
 from madnessbracket.models import Artist, Song
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_artist_correct_name
 from madnessbracket.dev.spotify.spotify_client_api import get_spotify_artist_top_tracks
+from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
 from sqlalchemy import func
 
 
@@ -49,14 +50,23 @@ def get_tracks_via_database(artist_name: str):
     if not track_entries:
         return None
     tracks = {
-        "tracks": []
+        "tracks": [],
+        "description": artist_name
     }
     for track_entry in track_entries:
+        album_colors = track_entry.album.album_cover_color.split(",")
+        dominant_color = album_colors[0]
+        secondary_color = album_colors[1]
+        text_color = get_contrast_color_for_two_color_gradient(
+            dominant_color, secondary_color)
+        print(
+            f'track: {track_entry.title}, {dominant_color}, {secondary_color}, {text_color}')
         track = {
             "track_title": track_entry.title,
             "artist_name": track_entry.artist.name,
             "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None,
-            "album_colors": track_entry.album.album_cover_color.split(",")
+            "album_colors": album_colors,
+            "text_color": text_color
         }
         tracks["tracks"].append(track)
     return tracks
@@ -73,13 +83,15 @@ def get_tracks_via_spotify(artist_name: str):
     if not track_entries:
         print(f"could NOT find {artist_name} via Spotify")
         return None
+    print(track_entries)
     tracks = {
-        "tracks": []
+        "tracks": [],
+        "description": artist_name
     }
     for track_entry in track_entries:
         track = {
             "track_title": track_entry.name,
-            "artist_name": track_entry.artist.name,
+            "artist_name": track_entry.artists[0].name,
             "spotify_preview_url": track_entry.preview_url if track_entry.preview_url else None,
             "album_colors": None
         }

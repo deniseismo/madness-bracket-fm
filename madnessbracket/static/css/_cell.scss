@@ -1,6 +1,6 @@
 .cell {
   @include flexContainer(row, space-between);
-  border: 1px solid black;
+  border: 1px solid $whitishColor;
   position: relative;
   width: auto;
   transition: padding 0.2s linear;
@@ -73,8 +73,9 @@
 
 
 .cell_empty {
-  background-color: $whitishColor;
-  color: $backgroundColor;
+  background: none !important;
+  background-color: $backgroundColor !important;
+  color: $backgroundColor !important;
 }
 
 .cell_loser {
