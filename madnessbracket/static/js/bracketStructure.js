@@ -6,6 +6,7 @@ import { getSVGIcon } from "./svgGenerator.js";
 import { playButtonSVGData } from "./playButton.js";
 import { handlePlayButton } from "./music.js";
 import { displayBracketDescription } from "./description.js";
+import { getDashboard } from "./dashboardHandlers.js";
 
 export function createBracketStructure(tracksData) {
   const container = document.querySelector(".container");
@@ -168,5 +169,8 @@ function createFinalRound() {
   finalists.appendChild(rightCell);
 
   finalRound.appendChild(finalists);
+
+  const dashboardContainer = getDashboard();
+  finalRound.appendChild(dashboardContainer);
   return finalRound;
 }
