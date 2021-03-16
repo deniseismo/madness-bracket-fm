@@ -1,5 +1,6 @@
 import { removeAllChildNodes } from "./utilities.js";
-import { getIcon } from "./playButton.js";
+import { getSVGIcon } from "./svgGenerator.js";
+import { playButtonSVGData } from "./playButton.js";
 
 export var music = new Audio();
 export function playMusic(url, button) {
@@ -23,7 +24,7 @@ export function handlePlayButton(previewURL) {
     allButtons.forEach((button) => {
       if (button.dataset.status !== "standby") {
         removeAllChildNodes(button);
-        const playIcon = getIcon("play");
+        const playIcon = getSVGIcon(playButtonSVGData["play"]);
         button.appendChild(playIcon);
         button.dataset.status = "standby";
         button.classList.remove("play-icon_playing");
@@ -31,7 +32,7 @@ export function handlePlayButton(previewURL) {
       }
     });
     removeAllChildNodes(this);
-    const pauseIcon = getIcon("pause");
+    const pauseIcon = getSVGIcon(playButtonSVGData["pause"]);
     this.appendChild(pauseIcon);
     this.dataset.status = "playing";
     this.classList.remove("play-icon_standby");
@@ -39,7 +40,7 @@ export function handlePlayButton(previewURL) {
     playMusic(previewURL, this);
   } else {
     removeAllChildNodes(this);
-    const playIcon = getIcon("play");
+    const playIcon = getSVGIcon(playButtonSVGData["play"]);
     this.appendChild(playIcon);
     this.classList.remove("play-icon_playing");
     this.classList.add("play-icon_standby");

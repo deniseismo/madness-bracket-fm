@@ -2,7 +2,8 @@ import { Cell } from "./cell.js";
 import { bracket } from "./main.js";
 import { traverseAllCells } from "./bracketData.js";
 import { removeAllChildNodes, createElement } from "./utilities.js";
-import { getIcon } from "./playButton.js";
+import { getSVGIcon } from "./svgGenerator.js";
+import { playButtonSVGData } from "./playButton.js";
 import { handlePlayButton } from "./music.js";
 import { displayBracketDescription } from "./description.js";
 
@@ -59,19 +60,19 @@ export function createBracketStructure(tracksData) {
       if (roundIndex === 0) {
         const previewURL = tracks[side][j]["spotify_preview_url"];
         if (previewURL) {
-          const playIcon = getIcon("play");
-          const playButton = createElement("button", [
+          const playIcon = getSVGIcon(playButtonSVGData["play"]);
+          const playButtonElement = createElement("button", [
             "play-button",
             "play-icon_standby",
           ]);
-          playButton.appendChild(playIcon);
-          playButton.dataset.status = "standby";
-          playButton.addEventListener("click", function (event) {
+          playButtonElement.appendChild(playIcon);
+          playButtonElement.dataset.status = "standby";
+          playButtonElement.addEventListener("click", function (event) {
             event.preventDefault();
             event.stopPropagation();
-            handlePlayButton.bind(playButton)(previewURL);
+            handlePlayButton.bind(playButtonElement)(previewURL);
           });
-          cell.appendChild(playButton);
+          cell.appendChild(playButtonElement);
         }
         const trackTitle = tracks[side][j]["track_title"];
         const artistName = tracks[side][j]["artist_name"];
