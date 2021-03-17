@@ -7,6 +7,7 @@ export class optionStore {
     this.trackLimit = 16;
     // artist's name as per user's input
     this.inputValue = null;
+    this.tracks = null;
   }
   // sets the current bracket type: artist or charts
   setCurrentBracketType(bracketType) {
@@ -31,5 +32,11 @@ export class optionStore {
   // gets user's input
   getInputValue() {
     return this.inputValue;
+  }
+  setCurrentTracks(tracks) {
+    this.tracks = tracks;
+  }
+  getCurrentTracks() {
+    return this.tracks;
   }
 }

@@ -9,11 +9,9 @@ import {
 } from "./optionHandlers.js";
 export let bracket = new BracketData();
 
-export let tracksData;
-
 export let options = new optionStore();
 
-const getSpotifyTracks = async function (inputValue = null) {
+export const getSpotifyTracks = async function (inputValue = null) {
   try {
     const currentOptions = processOptions();
 
@@ -24,7 +22,7 @@ const getSpotifyTracks = async function (inputValue = null) {
       }),
       body: JSON.stringify({
         type: currentOptions["bracketType"],
-        value: inputValue,
+        value: currentOptions["inputValue"],
         limit: currentOptions["maxSize"],
       }),
     });
@@ -50,11 +48,12 @@ console.log(document.querySelector(".form__group"));
 document.querySelector(".form__group").onsubmit = function () {
   console.log("submitting!");
   const inputValue = document.querySelector(".form__field").value.trim();
-  getSpotifyTracks(inputValue).then((data) => {
+  options.setInputValue(inputValue);
+  getSpotifyTracks().then((data) => {
     try {
       if (data) {
-        tracksData = data;
-        createBracketStructure(tracksData);
+        options.setCurrentTracks(data);
+        createBracketStructure(options.getCurrentTracks());
       } else {
         console.log(data);
       }
@@ -68,9 +67,11 @@ document.querySelector(".form__group").onsubmit = function () {
 function processOptions() {
   const bracketType = options.getCurrentBracketType();
   const maxSize = options.getBracketMaxSize();
+  const inputValue = options.getInputValue();
   return {
     bracketType: bracketType,
     maxSize: maxSize,
+    inputValue: inputValue,
   };
 }
 
