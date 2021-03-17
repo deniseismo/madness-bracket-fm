@@ -2,7 +2,7 @@ import { getSVGIcon } from "./svgGenerator.js";
 import { dashboardButtonsSVGData } from "./dashboardButtons.js";
 import { createElement } from "./utilities.js";
 import { resetBracket, shuffleBracket } from "./bracketData.js";
-import { bracket, tracksData } from "./main.js";
+import { bracket, getSpotifyTracks, options } from "./main.js";
 
 export function getDashboard() {
   const dashboardContainer = createElement("div", ["dashboard-container"]);
@@ -24,7 +24,29 @@ export function getDashboard() {
   const shuffleIcon = getSVGIcon(dashboardButtonsSVGData["shuffle"]);
   shuffleButton.appendChild(shuffleIcon);
   shuffleButton.addEventListener("click", () => {
+    const tracksData = options.getCurrentTracks();
     shuffleBracket(bracket, tracksData);
+  });
+
+  const retryButton = createElement("button", [
+    "button-dashboard",
+    "button-retry",
+  ]);
+  const retryIcon = getSVGIcon(dashboardButtonsSVGData["retry"]);
+  retryButton.appendChild(retryIcon);
+  retryButton.addEventListener("click", () => {
+    getSpotifyTracks().then((data) => {
+      try {
+        if (data) {
+          options.setCurrentTracks(data);
+          shuffleBracket(bracket, options.getCurrentTracks());
+        } else {
+          console.log(data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
   });
 
   const shareButton = createElement("button", [
@@ -34,6 +56,11 @@ export function getDashboard() {
   const shareIcon = getSVGIcon(dashboardButtonsSVGData["share"]);
   shareButton.appendChild(shareIcon);
 
-  dashboardContainer.append(resetButton, shuffleButton, shareButton);
+  dashboardContainer.append(
+    resetButton,
+    shuffleButton,
+    retryButton,
+    shareButton
+  );
   return dashboardContainer;
 }
