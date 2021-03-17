@@ -1,0 +1,9 @@
+.trophy-icon {
+  width: 30px;
+  margin-left: 10px;
+}
+
+.trophy-icon_active {
+  filter: drop-shadow(0 4px 4px rgba(232, 24, 24, 0.15))
+    drop-shadow(0 8px 8px rgba(203, 244, 53, 0.74));
+}
