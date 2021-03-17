@@ -7,6 +7,7 @@ import { playButtonSVGData } from "./playButton.js";
 import { handlePlayButton } from "./music.js";
 import { displayBracketDescription } from "./description.js";
 import { getDashboard } from "./dashboardHandlers.js";
+import { trophySVGData } from "./winnerFX.js";
 
 export function createBracketStructure(tracksData) {
   const container = document.querySelector(".container");
@@ -62,6 +63,7 @@ export function createBracketStructure(tracksData) {
         const previewURL = tracks[side][j]["spotify_preview_url"];
         if (previewURL) {
           const playIcon = getSVGIcon(playButtonSVGData["play"]);
+          playIcon.classList.add("play-icon");
           const playButtonElement = createElement("button", [
             "play-button",
             "play-icon_standby",
@@ -133,6 +135,9 @@ function createFinalRound() {
   );
   bracket.final["winner"] = winnerCellObject;
   winnerContainer.appendChild(winnerCell);
+  const trophyIcon = getSVGIcon(trophySVGData["trophy"]);
+  trophyIcon.classList.add("trophy-icon");
+  winnerContainer.appendChild(trophyIcon);
 
   finalRound.appendChild(winnerContainer);
 

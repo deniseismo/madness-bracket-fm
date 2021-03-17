@@ -158,6 +158,10 @@ export class Cell {
           this.nextCell.makeAdvanceable();
           this.nextCell.getOpponent().makeAdvanceable();
         }
+      } else {
+        // if next cell has no opponent — it's the winner's cell
+        const trophyIcon = document.querySelector(".trophy-icon");
+        trophyIcon.classList.add("trophy-icon_active");
       }
     }
   }

@@ -104,6 +104,8 @@ export function resetBracket(bracket) {
       }
     }
   }
+  const trophyIcon = document.querySelector(".trophy-icon");
+  trophyIcon.classList.remove("trophy-icon_active");
 }
 
 // resets & then shuffles songs in the bracket
