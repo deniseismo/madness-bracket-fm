@@ -12,6 +12,7 @@ export function getDashboard() {
     "button-reset",
   ]);
   const resetIcon = getSVGIcon(dashboardButtonsSVGData["reset"]);
+  resetIcon.classList.add("dashboard-icon");
   resetButton.appendChild(resetIcon);
   resetButton.addEventListener("click", () => {
     resetBracket(bracket);
@@ -22,6 +23,7 @@ export function getDashboard() {
     "button-shuffle",
   ]);
   const shuffleIcon = getSVGIcon(dashboardButtonsSVGData["shuffle"]);
+  shuffleIcon.classList.add("dashboard-icon");
   shuffleButton.appendChild(shuffleIcon);
   shuffleButton.addEventListener("click", () => {
     const tracksData = options.getCurrentTracks();
@@ -33,6 +35,7 @@ export function getDashboard() {
     "button-retry",
   ]);
   const retryIcon = getSVGIcon(dashboardButtonsSVGData["retry"]);
+  retryIcon.classList.add("dashboard-icon");
   retryButton.appendChild(retryIcon);
   retryButton.addEventListener("click", () => {
     getSpotifyTracks().then((data) => {
@@ -54,6 +57,7 @@ export function getDashboard() {
     "button-share",
   ]);
   const shareIcon = getSVGIcon(dashboardButtonsSVGData["share"]);
+  shareIcon.classList.add("dashboard-icon");
   shareButton.appendChild(shareIcon);
 
   dashboardContainer.append(

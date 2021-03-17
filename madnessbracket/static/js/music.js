@@ -25,6 +25,7 @@ export function handlePlayButton(previewURL) {
       if (button.dataset.status !== "standby") {
         removeAllChildNodes(button);
         const playIcon = getSVGIcon(playButtonSVGData["play"]);
+        playIcon.classList.add("play-icon");
         button.appendChild(playIcon);
         button.dataset.status = "standby";
         button.classList.remove("play-icon_playing");
@@ -33,6 +34,7 @@ export function handlePlayButton(previewURL) {
     });
     removeAllChildNodes(this);
     const pauseIcon = getSVGIcon(playButtonSVGData["pause"]);
+    pauseIcon.classList.add("play-icon");
     this.appendChild(pauseIcon);
     this.dataset.status = "playing";
     this.classList.remove("play-icon_standby");
@@ -41,6 +43,7 @@ export function handlePlayButton(previewURL) {
   } else {
     removeAllChildNodes(this);
     const playIcon = getSVGIcon(playButtonSVGData["play"]);
+    playIcon.classList.add("play-icon");
     this.appendChild(playIcon);
     this.classList.remove("play-icon_playing");
     this.classList.add("play-icon_standby");
