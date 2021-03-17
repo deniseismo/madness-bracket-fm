@@ -1,14 +1,18 @@
 .dashboard-container {
+  @include flexContainer(row, center);
+  .button-dashboard {
     @include flexContainer(row, center);
-    .button-dashboard {
-        @include flexContainer(row, center);
-        @include hoverable();
-        width: 50px;
-        height: 50px;
-        background-color: $greenishColor;
-        margin: 0 1em;
-        &:hover {
-            background-color: $reddishColor;
-        }
+    @include hoverable();
+    width: 50px;
+    height: 50px;
+    background-color: $greenishColor;
+    margin: 0 1em;
+    &:hover {
+      background-color: $reddishColor;
     }
+    .dashboard-icon {
+      width: 25px;
+      height: 25px;
+    }
+  }
 }

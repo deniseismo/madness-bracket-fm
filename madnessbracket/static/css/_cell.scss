@@ -5,7 +5,7 @@
   width: auto;
   transition: padding 0.2s linear;
   white-space: nowrap;
-  // overflow: hidden;
+  overflow: hidden;
   margin: 2% 0;
   background: $greenishColor;
   padding: 0.5rem;
@@ -64,13 +64,15 @@
     }
   }
 }
-.cell-right::after, .cell-right::before {
+.cell-right::after,
+.cell-right::before {
   right: calc(100% + 1.5em);
 }
-.final-cell::after, .winner-cell::before, .right-final-cell::before {
+.final-cell::after,
+.winner-cell::before,
+.right-final-cell::before {
   content: none;
 }
-
 
 .cell_empty {
   background: none !important;
@@ -88,6 +90,10 @@
 
 .final-cell {
   margin: 8% 2%;
+}
+
+.winner-cell {
+  margin: 0 0 0 40px;
 }
 .play-button {
   display: flex;

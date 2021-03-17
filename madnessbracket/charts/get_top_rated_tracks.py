@@ -3,6 +3,7 @@ import random
 import json
 from flask import current_app
 
+
 def get_top_rated_songs():
     """
     picks random selection of songs considered best*
@@ -20,7 +21,8 @@ def get_top_rated_songs():
     random.shuffle(songs)
     # init dict
     tracks = {
-        "tracks": []
+        "tracks": [],
+        "description": "charts"
     }
     # iterate through tracks
     for song in songs:
