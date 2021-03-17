@@ -1,8 +1,8 @@
-import { BracketData, resetBracket, shuffleBracket } from "./bracketData.js";
+import { BracketData } from "./bracketData.js";
 import { createBracketStructure } from "./bracketStructure.js";
 import { introAnimation } from "./animation/introAnimation.js";
 import { createIntroElements } from "./intro.js";
-import { optionStore } from "./optionStore.js";
+import { optionStore } from "./optionStorage.js";
 import {
   handleSquareButtons,
   handleMaxBracketSizeOption,
