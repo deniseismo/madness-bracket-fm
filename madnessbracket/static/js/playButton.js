@@ -1,3 +1,6 @@
+import { playMusic, stopMusic } from "./music.js";
+import { removeAllChildNodes } from "./utilities.js";
+import { getSVGIcon } from "./svgGenerator.js";
 export const playButtonSVGData = {
   play: {
     path: [
@@ -24,3 +27,43 @@ export const playButtonSVGData = {
     ],
   },
 };
+
+export class PlayButton {
+  constructor(playButtonElement, previewURL) {
+    this.playButtonElement = playButtonElement;
+    this.previewURL = previewURL;
+  }
+  playPause() {
+    if (this.playButtonElement.dataset.status === "standby") {
+      this.resetAllButtons();
+      this.playButtonElement.dataset.status = "playing";
+      PlayButton.changePlayButtonIcon(this.playButtonElement, "pause");
+      this.playButtonElement.classList.remove("play-icon_standby");
+      this.playButtonElement.classList.add("play-icon_playing");
+      playMusic(this.previewURL, this.playButtonElement);
+    } else {
+      this.playButtonElement.dataset.status = "standby";
+      PlayButton.changePlayButtonIcon(this.playButtonElement, "play");
+      this.playButtonElement.classList.remove("play-icon_playing");
+      this.playButtonElement.classList.add("play-icon_standby");
+      stopMusic();
+    }
+  }
+  resetAllButtons() {
+    const allButtons = document.querySelectorAll(".play-button");
+    allButtons.forEach((button) => {
+      if (button.dataset.status !== "standby") {
+        PlayButton.changePlayButtonIcon(button, "play");
+        button.dataset.status = "standby";
+        button.classList.remove("play-icon_playing");
+        button.classList.add("play-icon_standby");
+      }
+    });
+  }
+  static changePlayButtonIcon(buttonToChange, iconType) {
+    removeAllChildNodes(buttonToChange);
+    const pauseIcon = getSVGIcon(playButtonSVGData[iconType]);
+    pauseIcon.classList.add("play-icon");
+    buttonToChange.appendChild(pauseIcon);
+  }
+}
