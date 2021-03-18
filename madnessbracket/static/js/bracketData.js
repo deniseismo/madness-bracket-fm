@@ -128,6 +128,13 @@ export function shuffleBracket(bracket, tracksData) {
       const artistName = tracks[side][i]["artist_name"];
       const albumColors = tracks[side][i]["album_colors"];
       const textColor = tracks[side][i]["text_color"];
+      const previewURL = tracks[side][i]["spotify_preview_url"];
+      if (previewURL) {
+        bracket[side][0][i].setPreviewURL(previewURL);
+        bracket[side][0][i].addPlayButton();
+      } else {
+        bracket[side][0][i].removePlayButton();
+      }
       console.log(artistName);
       bracket[side][0][i].setCurrentSong(trackTitle);
       bracket[side][0][i].setArtistName(artistName);
