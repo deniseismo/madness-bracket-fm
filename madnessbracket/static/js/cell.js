@@ -1,3 +1,6 @@
+import { getSVGIcon } from "./svgGenerator.js";
+import { playButtonSVGData, PlayButton } from "./playButton.js";
+import { createElement } from "./utilities.js";
 export class Cell {
   constructor(roundIndex, cellIndex, element) {
     this.roundIndex = roundIndex;
@@ -186,5 +189,32 @@ export class Cell {
   deactivate() {
     this.active = false;
     this.element.classList.remove("cell_head");
+  }
+  addPlayButton() {
+    this.removePlayButton();
+    const playIcon = getSVGIcon(playButtonSVGData["play"]);
+    playIcon.classList.add("play-icon");
+    const playButtonElement = createElement("button", [
+      "play-button",
+      "play-icon_standby",
+    ]);
+    playButtonElement.appendChild(playIcon);
+    playButtonElement.dataset.status = "standby";
+    const playButton = new PlayButton(
+      playButtonElement,
+      this.song["previewURL"]
+    );
+    playButtonElement.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      playButton.playPause();
+    });
+    this.element.appendChild(playButtonElement);
+  }
+  removePlayButton() {
+    const playButton = this.element.querySelector(".play-button");
+    if (playButton) {
+      playButton.remove();
+    }
   }
 }
