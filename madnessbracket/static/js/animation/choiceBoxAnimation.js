@@ -1,7 +1,7 @@
 import anime from "../third-party/anime.es.js";
 import { pickRandomElement } from "../utilities.js";
 // random words used for text animation
-const randomWords = {
+const FLASHING_WORDS = {
   // words for ARTIST 'square choice box'
   artist: [
     "ADELE",
@@ -32,7 +32,7 @@ const randomWords = {
   ],
 };
 
-// pick random paragraph from the 'square box of choice'
+// pick random paragraph (the word/words to animate afterwards) from the 'square box of choice'
 function getRandomElement(squareChoiceBox) {
   // get all paragraphs from the box
   const allParagraphs = squareChoiceBox.querySelectorAll(":scope > p");
@@ -41,7 +41,7 @@ function getRandomElement(squareChoiceBox) {
   // figure out what this square box type is: artist or charts
   const choiceBoxType = squareChoiceBox.dataset.bracketType;
   // pick random text (artist/charts) to change to
-  const randomWord = pickRandomElement(randomWords[choiceBoxType]);
+  const randomWord = pickRandomElement(FLASHING_WORDS[choiceBoxType]);
   // change text content to a random word
   randomParagraphElement.textContent = randomWord;
   // split text into letters

@@ -1,9 +1,12 @@
 import { shuffleArray } from "./utilities.js";
 
-//creates a special data structure to hold all the info about cells
+/*
+Creates a special data structure to hold all the info about cells.
+BracketData consists of left side of the bracket, right one, and the finale. 
+*/
 export class BracketData {
   constructor() {
-    // it has two sides (left and right) and the final round
+    // each side (and the finale) is a dict of dicts
     this.left = {};
     this.right = {};
     this.final = {};
@@ -79,12 +82,8 @@ export function traverseAllCells(bracket) {
   }
   console.log("traversing");
 }
-
+// resets current bracket to the initial state (basically resets all cells except for the first round)
 export function resetBracket(bracket) {
-  // supplementary function to reset a single cell's properties
-  function resetCell(cell) {
-    cell.resetCell();
-  }
   // reset the final round
   ["left", "right", "winner"].forEach((side) => resetCell(bracket.final[side]));
   const numberOfRounds = Object.keys(bracket.left).length;
@@ -94,26 +93,30 @@ export function resetBracket(bracket) {
       // revert the first round back to normal
       if (i === 0) {
         ["left", "right"].forEach((side) => {
+          // make cells from the first round advanceable and active again
           bracket[side][i][j].makeAdvanceable();
           bracket[side][i][j].activate();
         });
         // reset the rest of the rounds
       } else {
-        ["left", "right"].forEach((side) => resetCell(bracket[side][i][j]));
+        // reset the cell if it's not the first round
+        ["left", "right"].forEach((side) => bracket[side][i][j]).resetCell();
         console.log(i);
       }
     }
   }
+  // reset trophy icon back to normal
   const trophyIcon = document.querySelector(".trophy-icon");
   trophyIcon.classList.remove("trophy-icon_active");
 }
 
 // resets & then shuffles songs in the bracket
 export function shuffleBracket(bracket, tracksData) {
-  // reset first
+  // reset bracket first
   resetBracket(bracket);
-  // take out the array of all the tracks dicts
+  // take current bracket tracks data
   let tracks = tracksData["tracks"];
+  // shuffle tracks
   shuffleArray(tracks);
   tracks = {
     left: tracks.slice(0, tracks.length / 2),
@@ -129,13 +132,16 @@ export function shuffleBracket(bracket, tracksData) {
       const albumColors = tracks[side][i]["album_colors"];
       const textColor = tracks[side][i]["text_color"];
       const previewURL = tracks[side][i]["spotify_preview_url"];
+      // set preview url and the play button if a song has a preview url
       if (previewURL) {
         bracket[side][0][i].setPreviewURL(previewURL);
         bracket[side][0][i].addPlayButton();
       } else {
+        // remove play button otherwise
         bracket[side][0][i].removePlayButton();
       }
       console.log(artistName);
+      // set all the track data
       bracket[side][0][i].setCurrentSong(trackTitle);
       bracket[side][0][i].setArtistName(artistName);
       bracket[side][0][i].setTextColor(textColor);

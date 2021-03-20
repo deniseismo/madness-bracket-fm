@@ -7,6 +7,7 @@ import { displayBracketDescription } from "./description.js";
 import { getDashboard } from "./dashboardHandlers.js";
 import { trophySVGData } from "./winnerFX.js";
 
+// create madness bracket
 export function createBracketStructure(tracksData) {
   const container = document.querySelector(".container");
   const description = tracksData["description"];
@@ -31,12 +32,14 @@ export function createBracketStructure(tracksData) {
   for (let i = 0; i < numberOfRounds; i++) {
     const round = document.createElement("div");
     round.classList.add("round");
+    let roundIndex = i;
+    let side = "left";
     if (i < numberOfRounds / 2) {
-      var roundIndex = i;
-      var side = "left";
+      roundIndex = i;
+      side = "left";
     } else {
-      var roundIndex = numberOfRounds - i - 1;
-      var side = "right";
+      roundIndex = numberOfRounds - i - 1;
+      side = "right";
     }
     // add an appropriate class to the round specifying its index as well
     const roundClassName = `${side}-${roundIndex}`;
@@ -103,6 +106,7 @@ export function createBracketStructure(tracksData) {
   traverseAllCells(bracket);
 }
 
+// create final round (two finalist and the winner)
 function createFinalRound() {
   const finalRound = createElement("div", ["round", "final-round"]);
   const winnerContainer = createElement("div", ["winner-container"]);
