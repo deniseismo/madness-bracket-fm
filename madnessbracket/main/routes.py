@@ -10,23 +10,19 @@ main = Blueprint('main', __name__)
 @main.route("/", methods=["GET", "POST"])
 @main.route("/home", methods=["GET", "POST"])
 def home():
+    """renders home page
+
+    Returns:
+        home page template (home.html)
     """
-    renders home page
-    """
-    logged_in = False
-    user_info = None
-    user, token = check_spotify()
-    if user and token:
-        logged_in = True
-        user_info = get_spotify_user_info(token.access_token)
-    return render_template("home.html", logged_in=logged_in, user_info=user_info)
+    return render_template("home.html")
 
 
 @main.route('/bracket', methods=['POST'])
 def generate_bracket():
-    """
-    handles the main routing/logic of the app
-    receieves user's input → returns prepared tracks accordingly
+    """generates madness bracket depending on user's input/selected options
+    Returns:
+        jsonified dict with all the tracks and tracks' info needed for the bracket
     """
     # input's values/options
     content = request.get_json()
@@ -37,8 +33,10 @@ def generate_bracket():
         ),
             404)
     try:
+        # get all the needed info from the user
         tracks_type = content['type']
-        bracket_limit = content['limit']
+        bracket_limit = int(content['limit'])
+        # input value's used only for artist/musician
         input_value = content['value']
     except (KeyError, ValueError, TypeError):
         print('bogus input')
@@ -52,12 +50,13 @@ def generate_bracket():
         print('spotify mode')
         tracks = get_users_favorite_tracks()
     # get songs considered best
-    elif tracks_type == "best":
+    elif tracks_type == "charts":
         print('best songs mode')
         tracks = get_top_rated_songs()
         print(tracks)
     # get artist's top tracks
     elif tracks_type == "artist":
+        print(input_value)
         print('artist mode')
         tracks = get_artists_tracks(input_value)
     else:
@@ -66,6 +65,11 @@ def generate_bracket():
             {'message': f"something's gone wrong"}
         ),
             404)
-
+    if not tracks:
+        print('nothing found')
+        return make_response(jsonify(
+            {'message': f"nothing found"}
+        ),
+            404)
     tracks = cap_tracks(tracks, bracket_limit)
     return jsonify(tracks)

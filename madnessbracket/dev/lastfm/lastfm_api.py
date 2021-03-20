@@ -16,6 +16,10 @@ requests_cache.install_cache()
 
 
 def lastfm_get_response(payload: dict):
+    """
+    get response
+    :param: payload: a dict with all the info on a particular request
+    """
     # define headers and URL
     headers = {'user-agent': current_app.config['LASTFM_USER_AGENT']}
     url = 'http://ws.audioscrobbler.com/2.0/'

@@ -24,10 +24,12 @@ musicbrainzngs.set_useragent(
 
 
 def music_brainz_get_release_id_via_release_group(release_group_id: str):
-    """
-    get release id from a release_group id
-    :param release_group_id: release group id from Music Brainz
-    :return: realease id
+    """get release id from a release_group id
+    param:
+        release_group_id (str): release group id from Music Brainz
+
+    return:
+        (str): release id
     """
     try:
         release_group_info = musicbrainzngs.get_release_group_by_id(
@@ -47,10 +49,11 @@ def music_brainz_get_release_id_via_release_group(release_group_id: str):
 
 
 def music_brainz_get_release_tracklist(release_id: str):
-    """
-    get release group info by it id
-    :param release_group_id: release group id from Music Brainz
-    :return: info
+    """get release group info by it id
+    :param 
+        release_group_id (str): release group id from Music Brainz
+    :return: 
+        (list) a list of tracks (track titles) for the current release (album)
     """
     try:
         release_info = musicbrainzngs.get_release_by_id(

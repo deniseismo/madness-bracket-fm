@@ -14,9 +14,10 @@ spotify_tekore_client = tk.Spotify()
 
 @spotify.route("/spotify_login", methods=['GET'])
 def spotify_login():
-    """
-    get an authorization url and redirects to the spotify login page
-    :return: redirect url
+    """get an authorization url and redirects to the spotify login page
+
+    Returns:
+        redirect url
     """
     auth = get_spotify_auth()
     # store a random state in a server-side cookie-session
@@ -26,9 +27,10 @@ def spotify_login():
 
 @spotify.route('/spotify_logout', methods=['POST'])
 def spotify_logout():
-    """
-    logs user out
-    :return: redirects to the home page
+    """logs user out
+
+    Returns:
+        redirects to the home page
     """
     user = session.pop('user', None)
     return redirect(url_for('main.home'), 307)
@@ -36,9 +38,10 @@ def spotify_logout():
 
 @spotify.route("/spotify_callback", methods=["GET"])
 def spotify_callback():
-    """
-    a function that gets triggered after the user successfully granted the permission
-    :return:
+    """a function that gets triggered after the user successfully granted the permission
+
+    Returns:
+        redirects to the home page
     """
     print('spotify callback worked!')
     error = request.args.get('error', None)

@@ -8,6 +8,11 @@ from madnessbracket.utilities.track_processing import get_filtered_name
 
 
 def get_spotify_spotipy_client():
+    """get a spotify client via spotipy library
+
+    Returns:
+        an instance of a Spotify client
+    """
     spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
         client_id=current_app.config['SPOTIFY_CLIENT_ID'],
         client_secret=current_app.config['SPOTIFY_CLIENT_SECRET']
@@ -16,6 +21,11 @@ def get_spotify_spotipy_client():
 
 
 def get_spotify_tekore_client():
+    """get a spotify client via tekore library
+
+    Returns:
+        an instance of a Spotify client
+    """
     client_id = current_app.config['SPOTIFY_CLIENT_ID']
     client_secret = current_app.config['SPOTIFY_CLIENT_SECRET']
 
@@ -26,10 +36,14 @@ def get_spotify_tekore_client():
 
 
 def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=None):
-    """
-    search for a track & get the track info
-    :param track_title: track's title
-    :param artist_name: artist's name
+    """search for a track → get track info
+    Args:
+        track_title (str): track's title
+        artist_name (str): artist's name
+        tekore_client (optional): an instance of a Spotify client. Defaults to None.
+
+    Returns:
+        (tekore.FullTrack): tekore.FullTrack (track info object)
     """
     if not track_title or not artist_name:
         return None
@@ -50,8 +64,14 @@ def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=Non
 
 
 def get_spotify_artist_id(artist_name: str, tekore_client=None):
-    """
-    get artist's spotify id
+    """get spotify ID for an artist (via tekore library)
+
+    Args:
+        artist_name (str): artist's name
+        tekore_client (optional): an instance of a Spotify client. Defaults to None.
+
+    Returns:
+        (str): spotify ID for an artist
     """
     if not artist_name:
         return None
@@ -84,9 +104,15 @@ def get_spotify_artist_id(artist_name: str, tekore_client=None):
 
 
 def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
-    """
-    get artist's top tracks according to spotify
-    :param artist_name: spotify's artist id
+    """get artist's top tracks according to spotify
+    #TODO: non-latin artist's names
+
+    Args:
+        artist_name (str): [description]
+        tekore_client ([type], optional): [description]. Defaults to None.
+
+    Returns:
+        (tekore.ListObject): a list-like object with all the top tracks and their info
     """
     if not artist_name:
         return None
@@ -109,10 +135,14 @@ def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
 
 
 def spotipy_get_artist_id(artist_name: str):
-    """
-    search for an artist's id
-    :param artist_name: artist's name
-    :return: album_image_url
+    """search for an artist's id (via spotipy library)
+    TODO: non-latin artist's names
+
+    Args:
+        artist_name (str): artist's name
+
+    Returns:
+        (str): spotify's artist's ID
     """
     spotify = get_spotify_spotipy_client()
     try:

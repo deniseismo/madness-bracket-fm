@@ -2,9 +2,10 @@ from madnessbracket.spotify_api.spotify_user_oauth import check_spotify, spotify
 
 
 def get_users_favorite_tracks():
-    """
-    get current user's top tracks for madness bracket
-    :return: jsonified tracks dict
+    """get current user's top tracks for madness bracket (spotify)
+
+    Returns:
+        (dict): a dict with tracks info
     """
     # check if the user's logged in and token's not expired
     user, token = check_spotify()
@@ -24,9 +25,14 @@ def get_users_favorite_tracks():
 
 
 def process_spotify_tracks(track_items):
-    """
-    process spotify's track items
+    """process spotify's track items
     :return: a fully prepared dict with all the tracks
+
+    Args:
+        track_items: track items from spotify (a list-like object from tekore library)
+
+    Returns:
+        (dict): a dict with tracks info
     """
     if not track_items:
         return None

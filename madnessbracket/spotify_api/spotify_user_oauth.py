@@ -11,9 +11,9 @@ spotify_tekore_client = tk.Spotify()
 
 
 def get_spotify_auth():
-    """
-    get a User auth object
-    :return: redirect url
+    """get a User auth object
+    Returns:
+        auth
     """
     conf = (
         current_app.config['SPOTIFY_CLIENT_ID'],
@@ -28,10 +28,11 @@ def get_spotify_auth():
 
 
 def check_spotify():
-    """
-    checks if the person's logged in the token's not expired
+    """checks if the person's logged in the token's not expired
     refreshes token if present
-    :return: (user, token)
+
+    Returns:
+        (user, token)
     """
     user = session.get('user', None)
     token = session.get('token', None)
@@ -69,10 +70,14 @@ def check_spotify():
 
 
 def get_spotify_user_info(token):
-    """
-
-    :param token: a Spotify access token
+    """a Spotify access token
     :return: user info {username, user_image}
+
+    Args:
+        token: token
+
+    Returns:
+        user info {username, user_image}
     """
     print('getting user info...')
     print(token)
@@ -102,9 +107,14 @@ def get_spotify_user_info(token):
 
 
 def spotify_get_users_top_tracks(token):
-    """
-    :param token: an access token
+    """get current user top tracks (items)
     :return: current user's top track items
+
+    Args:
+        token: access token
+
+    Returns:
+        current user's top track items
     """
     # spotify's internal 'time spans': gives different selections of your fav. tracks based on time period
     time_periods = ['short_term', 'medium_term', 'long_term']

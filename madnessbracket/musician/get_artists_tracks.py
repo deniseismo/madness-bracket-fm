@@ -6,9 +6,15 @@ from sqlalchemy import func
 
 
 def get_artists_tracks(artist_name: str):
-    """
-    :param artist_name: artist's name
-    :return: a dict with a list of 'track info' dicts
+    """gets top tracks by a particular artist
+    first it goes through database,
+    if nothing found, goes through spotify fallback function
+
+    Args:
+        artist_name (str): artist's name
+
+    Returns:
+        [dict]: a dict with a list of 'track info' dicts
     """
     if not artist_name:
         # no artist provided
@@ -30,10 +36,13 @@ def get_artists_tracks(artist_name: str):
 
 
 def get_tracks_via_database(artist_name: str):
-    """
-    get artist's top tracks/songs via database
-    :param: artist_name: artist's name
-    :return: return a dict with a list of 'track info' dicts
+    """get artist's top tracks/songs via database
+
+    Args:
+        artist_name (str): artist's name
+
+    Returns:
+        (dict): a dict with a list of 'track info' dicts
     """
     # set max song limit
     SONG_LIMIT = 50
@@ -73,10 +82,13 @@ def get_tracks_via_database(artist_name: str):
 
 
 def get_tracks_via_spotify(artist_name: str):
-    """
-    a fallback function for getting top tracks if artist's missing from db
-    :param: artist_name: artist's name
-    :return: return a dict with a list of 'track info' dicts
+    """a fallback function for getting top tracks if artist's missing from db
+
+    Args:
+        artist_name (str): artist's name
+
+    Returns:
+        (dict): a dict with a list of 'track info' dicts
     """
     print(f"trying to get {artist_name} via Spotify")
     track_entries = get_spotify_artist_top_tracks(artist_name)
