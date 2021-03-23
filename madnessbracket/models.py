@@ -1,4 +1,5 @@
 from madnessbracket import db
+from sqlalchemy import JSON
 
 
 class Artist(db.Model):
@@ -51,3 +52,15 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User('{self.spotify_id}')"
+
+
+class BracketData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bracket_id = db.Column(db.String(), unique=True,
+                           index=True, nullable=False)
+    title = db.Column(db.String(), nullable=False)
+    bracket_info = db.Column(JSON, nullable=False)
+    winner = db.Column(db.String(), nullable=True)
+
+    def __repr__(self):
+        return f"Bracket('{self.bracket_id}') — {self.title}"
