@@ -31,8 +31,10 @@ def create_app(config_class=Config):
     # import all necessary blueprints
     from madnessbracket.main.routes import main
     from madnessbracket.spotify_api.routes import spotify
+    from madnessbracket.share.routes import share
     # register all blueprints
     app.register_blueprint(main)
     app.register_blueprint(spotify)
+    app.register_blueprint(share)
 
     return app
