@@ -30,7 +30,10 @@ def get_top_rated_songs():
         artist_name = song['artist']
         a_track_info = {
             "artist_name": artist_name,
-            "track_title": name
+            "track_title": name,
+            "preview_url": None,
+            "album_colors": None,
+            "text_color": None
             # TODO: add preview urls to the original json file
         }
         tracks["tracks"].append(a_track_info)
