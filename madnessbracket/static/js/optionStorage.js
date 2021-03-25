@@ -1,5 +1,5 @@
 // a storage for bracket options
-export class optionStore {
+export class OptionStorage {
   constructor() {
     // bracket type: artist/charts
     this.currentBracketType = null;
@@ -8,6 +8,7 @@ export class optionStore {
     // artist's name as per user's input
     this.inputValue = null;
     this.tracks = null;
+    this.description = null;
   }
   // sets the current bracket type: artist or charts
   setCurrentBracketType(bracketType) {
@@ -38,5 +39,11 @@ export class optionStore {
   }
   getCurrentTracks() {
     return this.tracks;
+  }
+  setDescription(description) {
+    this.description = description;
+  }
+  getDescription() {
+    return this.description;
   }
 }
