@@ -58,6 +58,7 @@ class BracketData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bracket_id = db.Column(db.String(), unique=True,
                            index=True, nullable=False)
+    bracket_type = db.Column(db.String(), nullable=False)
     title = db.Column(db.String(), nullable=False)
     bracket_info = db.Column(JSON, nullable=False)
     winner = db.Column(db.String(), nullable=True)
