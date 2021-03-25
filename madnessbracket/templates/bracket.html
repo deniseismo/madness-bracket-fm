@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block content %}
+<div class="wrapper">
+  <header></header>
+  <div class="container"></div>
+</div>
+<script>
+  let sharedBracketData = JSON.parse({{ shared_bracket_data|tojson }});
+</script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='js/share/renderSharedBracket.js') }}"
+></script>
+{% endblock content %}
