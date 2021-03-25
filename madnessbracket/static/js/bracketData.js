@@ -113,11 +113,11 @@ export function resetBracket(bracket) {
 }
 
 // resets & then shuffles songs in the bracket
-export function shuffleBracket(bracket, tracksData) {
+export function shuffleBracket(bracket, options) {
   // reset bracket first
   resetBracket(bracket);
   // take current bracket tracks data
-  let tracks = tracksData["tracks"];
+  let tracks = options.getCurrentTracks();
   // shuffle tracks
   shuffleArray(tracks);
   tracks = {

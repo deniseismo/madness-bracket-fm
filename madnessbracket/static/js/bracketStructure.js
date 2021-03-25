@@ -10,14 +10,15 @@ import { trophySVGData } from "./winnerFX.js";
 export function createBracketStructure(bracket, options) {
   const container = document.querySelector(".container");
   const tracksData = options.getCurrentTracks();
-  const description = tracksData["description"];
+  const description = options.getDescription();
+  console.log("the description is ", description);
   removeAllChildNodes(container);
   displayBracketDescription(description);
-  const tracksLength = tracksData["tracks"].length;
+  const tracksLength = tracksData.length;
   bracket.setStructure(tracksLength);
   const tracks = {
-    left: tracksData["tracks"].slice(0, tracksLength / 2),
-    right: tracksData["tracks"].slice(tracksLength / 2),
+    left: tracksData.slice(0, tracksLength / 2),
+    right: tracksData.slice(tracksLength / 2),
   };
   // calculate the number of rounds (sans final round)
   const numberOfRounds = Math.log2(tracksLength / 2) * 2;

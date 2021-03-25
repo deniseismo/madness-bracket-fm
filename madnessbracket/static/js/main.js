@@ -20,7 +20,8 @@ document.querySelector(".form__group").onsubmit = function () {
   fetchTracks(options).then((data) => {
     try {
       if (data) {
-        options.setCurrentTracks(data);
+        options.setCurrentTracks(data["tracks"]);
+        options.setDescription(data["description"]);
         createBracketStructure(bracket, options);
         console.log(bracket);
       } else {

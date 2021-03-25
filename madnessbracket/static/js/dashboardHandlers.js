@@ -2,7 +2,7 @@ import { getSVGIcon } from "./svgGenerator.js";
 import { dashboardButtonsSVGData } from "./dashboardButtons.js";
 import { createElement } from "./utilities.js";
 import { resetBracket, shuffleBracket } from "./bracketData.js";
-import { saveBracketData } from "./share/saveBracket.js";
+import { shareBracket } from "./share/shareBracket.js";
 import { fetchTracks } from "./fetchTracks.js";
 
 export function getDashboard(bracket, options) {
@@ -27,8 +27,7 @@ export function getDashboard(bracket, options) {
   shuffleIcon.classList.add("dashboard-icon");
   shuffleButton.appendChild(shuffleIcon);
   shuffleButton.addEventListener("click", () => {
-    const tracksData = options.getCurrentTracks();
-    shuffleBracket(bracket, tracksData);
+    shuffleBracket(bracket, options);
   });
 
   const retryButton = createElement("button", [
@@ -42,8 +41,9 @@ export function getDashboard(bracket, options) {
     fetchTracks(options).then((data) => {
       try {
         if (data) {
-          options.setCurrentTracks(data);
-          shuffleBracket(bracket, options.getCurrentTracks());
+          options.setCurrentTracks(data["tracks"]);
+          options.setDescription(data["description"]);
+          shuffleBracket(bracket, options);
         } else {
           console.log(data);
         }
@@ -63,7 +63,7 @@ export function getDashboard(bracket, options) {
   shareButton.addEventListener("click", () => {
     console.log(bracket);
     console.log(options.getCurrentTracks());
-    saveBracketData(bracket, options.getCurrentTracks());
+    shareBracket(bracket, options);
   });
 
   dashboardContainer.append(
