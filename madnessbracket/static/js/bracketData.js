@@ -85,7 +85,9 @@ export function traverseAllCells(bracket) {
 // resets current bracket to the initial state (basically resets all cells except for the first round)
 export function resetBracket(bracket) {
   // reset the final round
-  ["left", "right", "winner"].forEach((side) => resetCell(bracket.final[side]));
+  ["left", "right", "winner"].forEach((side) =>
+    bracket.final[side].resetCell()
+  );
   const numberOfRounds = Object.keys(bracket.left).length;
   for (let i = 0; i < numberOfRounds; i++) {
     const numberOfCells = Object.keys(bracket.left[i]).length;
@@ -100,7 +102,7 @@ export function resetBracket(bracket) {
         // reset the rest of the rounds
       } else {
         // reset the cell if it's not the first round
-        ["left", "right"].forEach((side) => bracket[side][i][j]).resetCell();
+        ["left", "right"].forEach((side) => bracket[side][i][j].resetCell());
         console.log(i);
       }
     }

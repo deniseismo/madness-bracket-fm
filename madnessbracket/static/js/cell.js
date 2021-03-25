@@ -6,7 +6,7 @@ import { createElement } from "./utilities.js";
 export class Cell {
   constructor(roundIndex, cellIndex, element) {
     this.roundIndex = roundIndex;
-    this.callIndex = cellIndex;
+    this.cellIndex = cellIndex;
     this.element = element; // this cell's DOM element
     this.nextCell = null; // next (further up the bracket, next round) Cell object
     this.song = {
@@ -19,6 +19,13 @@ export class Cell {
     this.active = false;
     this.albumColors = null;
     this.textColor = "white";
+    this.trackID = null;
+  }
+  setTrackID(trackID) {
+    this.trackID = trackID;
+  }
+  getTrackID() {
+    return this.trackID;
   }
   // sets the next cell object to the given one (next cell is the one this cell can advance to)
   setNextCell(nextCell) {
