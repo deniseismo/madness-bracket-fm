@@ -45,6 +45,11 @@ def get_bracket_from_database(bracket_id):
     bracket = BracketData.query.filter_by(bracket_id=bracket_id).first()
     if not bracket:
         return None
-    bracket_info = json.loads(bracket.bracket_info)
-    winner = bracket_info["structure"]["final"]["winner"]["song"]["songName"]
-    return winner
+    bracket_structure = json.loads(bracket.bracket_info)
+    bracket_title = {
+        "description": bracket.title
+    }
+    bracket_info = bracket_title | bracket_structure
+    # winner = bracket_info["structure"]["final"]["winner"]["song"]["songName"]
+
+    return bracket_info

@@ -1,3 +1,4 @@
+import uuid
 from typing import List
 from pydantic import BaseModel, ValidationError, NoneStr, Field
 
@@ -72,9 +73,9 @@ def parse_bracket_data_for_sharing(bracket_data):
                 "left": bracket_data.structure.left,
                 "right": bracket_data.structure.right,
                 "final": {
-                    "left": bracket_data.structure.final.left.dict(),
-                    "right": bracket_data.structure.final.right.dict(),
-                    "winner": bracket_data.structure.final.winner.dict()
+                    "left": bracket_data.structure.final.left.dict(by_alias=True),
+                    "right": bracket_data.structure.final.right.dict(by_alias=True),
+                    "winner": bracket_data.structure.final.winner.dict(by_alias=True)
                 }
             }
         },

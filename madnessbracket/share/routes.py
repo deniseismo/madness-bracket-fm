@@ -1,6 +1,6 @@
 import uuid
 import json
-from flask import render_template, Blueprint, jsonify, request
+from flask import render_template, Blueprint, jsonify, request, make_response
 from madnessbracket.share.share_handlers import save_bracket_to_database, get_bracket_from_database
 from madnessbracket.share.bracket_data_validation import validate_bracket_data_for_sharing, parse_bracket_data_for_sharing, is_valid_uuid
 share = Blueprint('share', __name__)
@@ -41,6 +41,7 @@ def get_shared_bracket(bracket_id):
 
     if request.method == "GET":
         data = get_bracket_from_database(bracket_id)
+        data = json.dumps(data)
         if not data:
             return render_template("404.html")
         print("data:", data)
