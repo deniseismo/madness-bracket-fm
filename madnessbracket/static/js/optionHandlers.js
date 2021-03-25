@@ -1,9 +1,8 @@
-import { options } from "./main.js";
 import { animateLetters } from "./animation/choiceBoxAnimation.js";
 import { showElement } from "./utilities.js";
 
 // handles picking bracket type: ARTIST or CHARTS
-export function handleSquareButtons() {
+export function handleSquareButtons(options) {
   const squareButtons = document.querySelectorAll(".square-button");
   squareButtons.forEach((button) => {
     button.addEventListener("click", function () {
@@ -24,7 +23,7 @@ export function handleSquareButtons() {
   });
 }
 // handles picking bracket max size: 4, 8, 16, or 32 tracks (max)
-export function handleMaxBracketSizeOption() {
+export function handleMaxBracketSizeOption(options) {
   const maxBracketSizeButtons = document.querySelectorAll(
     ".bracket_max_size_option"
   );

@@ -1,5 +1,4 @@
 import { Cell } from "./cell.js";
-import { bracket } from "./main.js";
 import { traverseAllCells } from "./bracketData.js";
 import { removeAllChildNodes, createElement } from "./utilities.js";
 import { getSVGIcon } from "./svgGenerator.js";
@@ -8,8 +7,9 @@ import { getDashboard } from "./dashboardHandlers.js";
 import { trophySVGData } from "./winnerFX.js";
 
 // create madness bracket
-export function createBracketStructure(tracksData) {
+export function createBracketStructure(bracket, options) {
   const container = document.querySelector(".container");
+  const tracksData = options.getCurrentTracks();
   const description = tracksData["description"];
   removeAllChildNodes(container);
   displayBracketDescription(description);
@@ -59,7 +59,7 @@ export function createBracketStructure(tracksData) {
       const cellObject = new Cell(roundIndex, j, cell);
       cell.addEventListener("click", cellObject.advance.bind(cellObject));
 
-      // distributes all the song across the first round cells on both sides of the bracket
+      // distributes all the songs across the first round cells on both sides of the bracket
       if (roundIndex === 0) {
         const previewURL = tracks[side][j]["spotify_preview_url"];
         if (previewURL) {
@@ -80,6 +80,11 @@ export function createBracketStructure(tracksData) {
         cellObject.setTextColor(textColor);
         cellObject.setAlbumColors(albumColors);
         cellObject.applyColors();
+        if (side === "left") {
+          cellObject.setTrackID(j);
+        } else {
+          cellObject.setTrackID(j + tracksLength / 2);
+        }
       } else {
         cell.classList.add("cell_empty");
       }
@@ -99,7 +104,7 @@ export function createBracketStructure(tracksData) {
     tournamentBracket.appendChild(round);
 
     if (i === numberOfRounds / 2 - 1) {
-      const finalRound = createFinalRound();
+      const finalRound = createFinalRound(bracket, options);
       tournamentBracket.appendChild(finalRound);
     }
   }
@@ -107,7 +112,7 @@ export function createBracketStructure(tracksData) {
 }
 
 // create final round (two finalist and the winner)
-function createFinalRound() {
+function createFinalRound(bracket, options) {
   const finalRound = createElement("div", ["round", "final-round"]);
   const winnerContainer = createElement("div", ["winner-container"]);
   const winnerCell = createElement("div", [
@@ -165,7 +170,7 @@ function createFinalRound() {
 
   finalRound.appendChild(finalists);
 
-  const dashboardContainer = getDashboard();
+  const dashboardContainer = getDashboard(bracket, options);
   finalRound.appendChild(dashboardContainer);
   return finalRound;
 }

@@ -2,9 +2,10 @@ import { getSVGIcon } from "./svgGenerator.js";
 import { dashboardButtonsSVGData } from "./dashboardButtons.js";
 import { createElement } from "./utilities.js";
 import { resetBracket, shuffleBracket } from "./bracketData.js";
-import { bracket, getSpotifyTracks, options } from "./main.js";
+import { saveBracketData } from "./share/saveBracket.js";
+import { fetchTracks } from "./fetchTracks.js";
 
-export function getDashboard() {
+export function getDashboard(bracket, options) {
   const dashboardContainer = createElement("div", ["dashboard-container"]);
 
   const resetButton = createElement("button", [
@@ -38,7 +39,7 @@ export function getDashboard() {
   retryIcon.classList.add("dashboard-icon");
   retryButton.appendChild(retryIcon);
   retryButton.addEventListener("click", () => {
-    getSpotifyTracks().then((data) => {
+    fetchTracks(options).then((data) => {
       try {
         if (data) {
           options.setCurrentTracks(data);
@@ -59,6 +60,11 @@ export function getDashboard() {
   const shareIcon = getSVGIcon(dashboardButtonsSVGData["share"]);
   shareIcon.classList.add("dashboard-icon");
   shareButton.appendChild(shareIcon);
+  shareButton.addEventListener("click", () => {
+    console.log(bracket);
+    console.log(options.getCurrentTracks());
+    saveBracketData(bracket, options.getCurrentTracks());
+  });
 
   dashboardContainer.append(
     resetButton,
