@@ -20,6 +20,7 @@ export class Cell {
     this.albumColors = null;
     this.textColor = "white";
     this.trackID = null;
+    this.loser = false;
   }
   setTrackID(trackID) {
     this.trackID = trackID;
@@ -125,12 +126,14 @@ export class Cell {
     this.setSongObject(cellToCopyFrom.getSongObject());
     this.setAlbumColors(cellToCopyFrom.getAlbumColors());
     this.setTextColor(cellToCopyFrom.getTextColor());
+    this.setTrackID(cellToCopyFrom.getTrackID());
     this.setElementText();
     this.applyColors();
   }
   // resets cell
   resetCell() {
     console.log("resetting cell:", this);
+    this.setTrackID(null);
     this.setCurrentSong("");
     this.setElementText();
     this.makeUnadvanceable();
@@ -158,12 +161,12 @@ export class Cell {
         this.getOpponent().makeUnadvanceable();
         // deactivate opponent
         this.getOpponent().deactivate();
-        // add class 'cell_loser'
-        this.getOpponent().element.classList.add("cell_loser");
+        // add class 'cell_loser' and a status 'loser'
+        this.getOpponent().lose();
       }
       // activate the next cell
       this.nextCell.activate();
-      this.nextCell.element.classList.remove("cell_empty");
+      this.nextCell.removeClassEmpty();
 
       // this.nextCell.setCurrentSong(this.getCurrentSong());
       // this.nextCell.setElementText();
@@ -184,6 +187,13 @@ export class Cell {
         trophyIcon.classList.add("trophy-icon_active");
       }
     }
+  }
+  removeClassEmpty() {
+    this.element.classList.remove("cell_empty");
+  }
+  lose() {
+    this.loser = true;
+    this.element.classList.add("cell_loser");
   }
   // makes the current cell being advanceable — that is it can be advanced further up the bracket
   makeAdvanceable() {
