@@ -1,5 +1,5 @@
 import { createElement } from "../utilities.js";
-
+import MicroModal from "../third-party/micromodal.es.js";
 // Save current bracket structure with all the info about tracks,
 // cells, their position in the bracket and their status (i.e. active/advanceable/etc).
 // Used to send current bracket to backend for storing & sharing
@@ -12,7 +12,8 @@ export function shareBracket(bracketInfo, options) {
     try {
       if (data) {
         console.log(data);
-        addBracketLink(data["share_bracket_id"]);
+        triggerShareModal(data["share_bracket_id"]);
+        // addBracketLink(data["share_bracket_id"]);
       } else {
         console.log(data);
       }
@@ -20,17 +21,6 @@ export function shareBracket(bracketInfo, options) {
       console.log(e);
     }
   });
-}
-
-// testing share links
-function addBracketLink(link) {
-  const linkjke = document.querySelector(".link");
-  linkjke?.remove();
-  const finalRound = document.querySelector(".final-round");
-  const linkContainer = createElement("a", ["link"]);
-  linkContainer.href = link;
-  linkContainer.textContent = link;
-  finalRound.appendChild(linkContainer);
 }
 
 // prepares/parses all the needed bracket data for sending it to the backend
@@ -91,3 +81,10 @@ const sendBracketData = async function (bracketDataForSharing) {
     return Promise.reject();
   }
 };
+
+// show share modal with the share link ready
+function triggerShareModal(shareLink) {
+  const shareLinkElement = document.querySelector(".share-link");
+  shareLinkElement.value = shareLink;
+  MicroModal.show("modal-1");
+}
