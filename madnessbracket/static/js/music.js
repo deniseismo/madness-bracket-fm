@@ -1,16 +1,20 @@
 import { PlayButton } from "./playButton.js";
 
-export var music = new Audio();
+export let music = new Audio();
+
+// play music handler
 export function playMusic(url, button) {
   music.pause();
   music = new Audio(url);
   music.volume = 0.2;
   music.play();
+  // change play icon to pause when finished playing
   music.onended = function () {
     PlayButton.changePlayButtonIcon(button, "play");
   };
 }
 
+// stops music
 export function stopMusic() {
   music.pause();
 }

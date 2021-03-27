@@ -2,9 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    {% if title %}
+    <title>Madness Bracket - {{ title }}</title>
+    {% else %}
     <title>Madness Bracket</title>
-    <!-- <link href="{{ url_for('static', filename='css/tailwind/styles.css') }}"
-              rel="stylesheet"> -->
+    {% endif %}
     <link
       href="{{ url_for('static', filename='css/normalize.css') }}"
       rel="stylesheet"
@@ -21,9 +23,5 @@
   </head>
   <body>
     {% block content %}{% endblock %}
-    <script
-      type="module"
-      src="{{ url_for('static', filename='js/main.js') }}"
-    ></script>
   </body>
 </html>

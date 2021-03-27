@@ -7,10 +7,12 @@ export function shuffleArray(array) {
 }
 
 // creates element of a given type, adds given classes
-export function createElement(type, classes) {
+export function createElement(type, classes = null) {
   const element = document.createElement(type);
-  for (const aClass of classes) {
-    element.classList.add(aClass);
+  if (classes) {
+    for (const aClass of classes) {
+      element.classList.add(aClass);
+    }
   }
   return element;
 }

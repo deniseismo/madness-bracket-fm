@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block content %}
-<div class="wrapper flex">
-  <header></header>
+<div class="wrapper">
+  <header class="intro-header"></header>
   <div class="container">
     <div class="square-buttons-container">
       <button
@@ -30,7 +30,12 @@
       <div class="bracket_max_size_container" wfd-id="18">
         <button class="bracket_max_size_option" data-max-size="4">4</button>
         <button class="bracket_max_size_option" data-max-size="8">8</button>
-        <button class="bracket_max_size_option bracket_max_size_option_active" data-max-size="16">16</button>
+        <button
+          class="bracket_max_size_option bracket_max_size_option_active"
+          data-max-size="16"
+        >
+          16
+        </button>
         <button class="bracket_max_size_option" data-max-size="32">32</button>
       </div>
       <form
@@ -54,4 +59,8 @@
     </div>
   </div>
 </div>
+<script
+  type="module"
+  src="{{ url_for('static', filename='js/main.js') }}"
+></script>
 {% endblock content %}
