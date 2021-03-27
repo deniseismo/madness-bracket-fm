@@ -1,0 +1,37 @@
+.button-social {
+  background: none;
+  color: $whitishColor;
+  :hover {
+    transition: filter 0.2s;
+    filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+  }
+  transition: filter 0.2s;
+}
+.social-media-icon,
+.copy-icon {
+  width: 32px;
+  fill: $whitishColor;
+}
+.share-link-container {
+  @include flexContainer("row", "center");
+  .share-link {
+    @include hoverable();
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75%;
+    white-space: nowrap;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    border: 2px solid $whitishColor;
+    border-radius: 0.5rem;
+    width: 100%;
+    &:hover {
+      box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    }
+  }
+}
+
+.social-media-container {
+  @include flexContainer("row", "center");
+}
