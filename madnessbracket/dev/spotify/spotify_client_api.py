@@ -1,10 +1,7 @@
-import random
 import tekore as tk
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from flask import current_app
-
-from madnessbracket.utilities.track_processing import get_filtered_name
 
 
 def get_spotify_spotipy_client():
@@ -80,7 +77,6 @@ def get_spotify_artist_id(artist_name: str, tekore_client=None):
         spotify_tekore_client = get_spotify_tekore_client()
     else:
         spotify_tekore_client = tekore_client
-    spotify_tekore_client = get_spotify_tekore_client()
     query = f"{artist_name}"
     artist_info, = spotify_tekore_client.search(
         query=query, types=('artist',), limit=50, market="SE")
@@ -105,7 +101,7 @@ def get_spotify_artist_id(artist_name: str, tekore_client=None):
 
 def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
     """get artist's top tracks according to spotify
-    #TODO: non-latin artist's names
+    # TODO: non-latin artist's names
 
     Args:
         artist_name (str): [description]
@@ -164,3 +160,83 @@ def spotipy_get_artist_id(artist_name: str):
             except KeyError:
                 return None
     return artist_id
+
+
+def get_spotify_albums_tracks(album_title: str, artist_name: str, tekore_client=None):
+    """get particular album's tracks
+
+    Args:
+        album_title (str): album's title
+        artist_name (str): artist's name
+        tekore_client (optional): an instance of a Spotify client. Defaults to None.
+
+    Returns:
+        (List): a list of album's tracks
+    """
+    # if tekore client is not provided, get a new one
+    if not tekore_client:
+        spotify_tekore_client = get_spotify_tekore_client()
+    else:
+        spotify_tekore_client = tekore_client
+    # get album's id on spotify
+    album_spotify_id = get_spotify_album_id(
+        album_title, artist_name, tekore_client)
+    if not album_spotify_id:
+        return None
+    album_tracks = spotify_tekore_client.album_tracks(
+        album_spotify_id, limit=50)
+    print(album_tracks)
+    if not album_tracks:
+        print("nothing found")
+        return None
+    if album_tracks.total == 0:
+        print("no tracks found")
+        return None
+    for track in album_tracks.items:
+        print(track)
+        print(dir(track))
+    return album_tracks.items
+
+
+def get_spotify_album_id(album_title, artist_name, tekore_client=None):
+    """gets album's spotify ID
+
+    Args:
+        album_title (str): album's title
+        artist_name (str): artist's name
+        tekore_client (optional): an instance of a Spotify client. Defaults to None.
+
+    Returns:
+        (str): album's spotify ID
+    """
+    if not artist_name or not album_title:
+        return None
+    # if tekore client is not provided, get a new one
+    if not tekore_client:
+        spotify_tekore_client = get_spotify_tekore_client()
+    else:
+        spotify_tekore_client = tekore_client
+
+    query = f"{album_title}"
+    albums_found, = spotify_tekore_client.search(
+        query=query, types=('album',), limit=50)
+    print(albums_found)
+    # in case of not getting any response
+    if not albums_found:
+        print("no info about the artist returned at all")
+        return None
+    # in case no items found
+    if albums_found.total == 0:
+        print(albums_found)
+        print("no artists found")
+        return None
+    # iterate over artists found
+    print(albums_found.total)
+    for index, album in enumerate(albums_found.items):
+        print(index, album.name)
+        print(album.artists[0].name)
+        # find the right one
+        album_found_artist_name = album.artists[0].name
+        if album_found_artist_name.lower() == artist_name.lower():
+            return album.id
+    return None
