@@ -13,18 +13,20 @@ def validate_bracket_data_for_sharing(bracket_data):
         Track data with all the info about the song
         """
         track_title: str
+        artist_name: str
         spotify_preview_url: NoneStr = None
         text_color: NoneStr = None
         album_colors: list = None
 
     class Cell(BaseModel):
         round_index: int = Field(alias="roundIndex")
-        song: dict
         advanceable: bool
         active: bool
-        album_colors: list = Field(default=None, alias="albumColors")
-        text_color: str = Field(default=None, alias="textColor")
         track_id: int = Field(default=None, alias="trackID")
+        loser: bool
+        # song: dict
+        # album_colors: list = Field(default=None, alias="albumColors")
+        # text_color: str = Field(default=None, alias="textColor")
 
     class FinalRound(BaseModel):
         left: Cell
@@ -40,6 +42,7 @@ def validate_bracket_data_for_sharing(bracket_data):
         final: FinalRound
 
     class Bracket(BaseModel):
+        bracket_type: str = Field(alias="bracketType")
         description: str
         tracks: List[Track]
         structure: Structure
@@ -66,6 +69,7 @@ def parse_bracket_data_for_sharing(bracket_data):
         (dict): parsed dict with bracket data for sharing
     """
     parsed_bracket_data = {
+        "bracket_type": bracket_data.bracket_type,
         "title": bracket_data.description,
         "bracket_info": {
             "tracks": [track.dict() for track in bracket_data.tracks],
@@ -79,8 +83,11 @@ def parse_bracket_data_for_sharing(bracket_data):
                 }
             }
         },
-        "winner": bracket_data.structure.final.winner.song["songName"]
+        "winner": None
     }
+    if bracket_data.structure.final.winner.track_id:
+        track_id = bracket_data.structure.final.winner.track_id
+        parsed_bracket_data["winner"] = bracket_data.tracks[track_id].track_title
     print("-" * 5, "parsing", "-" * 5)
     print(parsed_bracket_data)
     print(parsed_bracket_data["title"])

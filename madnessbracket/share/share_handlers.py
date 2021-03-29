@@ -1,7 +1,5 @@
-import os
 import json
 import uuid
-from flask import current_app
 from madnessbracket.models import BracketData
 from madnessbracket import db
 
@@ -18,10 +16,12 @@ def save_bracket_to_database(shared_bracket_data):
     # generate unique id for saving & sharing
     bracket_id = str(uuid.uuid4())
     # prepare bracket data
+    bracket_type = shared_bracket_data["bracket_type"]
     title = shared_bracket_data["title"]
     bracket_info = shared_bracket_data["bracket_info"]
     bracket_info = json.dumps(bracket_info)
     bracket_entry = BracketData(bracket_id=bracket_id,
+                                bracket_type=bracket_type,
                                 title=title,
                                 bracket_info=bracket_info)
     # check if bracket has a winner, save if true
@@ -46,10 +46,10 @@ def get_bracket_from_database(bracket_id):
     if not bracket:
         return None
     bracket_structure = json.loads(bracket.bracket_info)
-    bracket_title = {
+    bracket_description = {
+        "bracket_type": bracket.bracket_type,
         "description": bracket.title
     }
-    bracket_info = bracket_title | bracket_structure
-    # winner = bracket_info["structure"]["final"]["winner"]["song"]["songName"]
+    bracket_data = bracket_description | bracket_structure
 
-    return bracket_info
+    return bracket_data
