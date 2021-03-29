@@ -4,6 +4,7 @@ import { introAnimation } from "../animation/introAnimation.js";
 import { createIntroElements } from "../intro.js";
 import { OptionStorage } from "../optionStorage.js";
 import { reconstructBracket } from "./reconstructBracket.js";
+import { addModal } from "./shareModal.js";
 
 export let bracket = new BracketData();
 
@@ -39,3 +40,4 @@ reconstructBracket(
   sharedBracketData["structure"],
   sharedBracketData["tracks"]
 );
+addModal();

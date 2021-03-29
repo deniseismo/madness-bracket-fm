@@ -2,7 +2,8 @@ import { BracketData } from "./bracketData.js";
 import { createBracketStructure } from "./bracketStructure.js";
 import { introAnimation } from "./animation/introAnimation.js";
 import { createIntroElements } from "./intro.js";
-import { optionStorage } from "./optionStorage.js";
+import { addModal } from "./share/shareModal.js";
+import { OptionStorage } from "./optionStorage.js";
 import {
   handleSquareButtons,
   handleMaxBracketSizeOption,
@@ -10,7 +11,7 @@ import {
 import { fetchTracks } from "./fetchTracks.js";
 export let bracket = new BracketData();
 
-export let options = new optionStorage();
+export let options = new OptionStorage();
 
 console.log(document.querySelector(".form__group"));
 document.querySelector(".form__group").onsubmit = function () {
@@ -23,6 +24,7 @@ document.querySelector(".form__group").onsubmit = function () {
         options.setCurrentTracks(data["tracks"]);
         options.setDescription(data["description"]);
         createBracketStructure(bracket, options);
+        addModal();
         console.log(bracket);
       } else {
         console.log(data);
