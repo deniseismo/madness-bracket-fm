@@ -1,11 +1,11 @@
 import pickle
 
 import tekore as tk
-from flask import request, url_for, Blueprint, redirect, session, jsonify, make_response
+from flask import request, url_for, Blueprint, redirect, session
 
 from madnessbracket import db
 from madnessbracket.models import User
-from madnessbracket.spotify_api.spotify_user_oauth import get_spotify_auth, check_spotify, spotify_get_users_top_tracks
+from madnessbracket.spotify_api.spotify_user_oauth import get_spotify_auth
 
 spotify = Blueprint('spotify', __name__)
 

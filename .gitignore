@@ -6,6 +6,7 @@ etc
 migrations/
 songscrape/
 fonts/
+third-party/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

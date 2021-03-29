@@ -1,5 +1,4 @@
 from flask import render_template, Blueprint, jsonify, request, make_response
-from madnessbracket.spotify_api.spotify_user_oauth import check_spotify, get_spotify_user_info
 from madnessbracket.spotify_api.get_users_fav_tracks import get_users_favorite_tracks
 from madnessbracket.utilities.track_processing import cap_tracks
 from madnessbracket.charts.get_top_rated_tracks import get_top_rated_songs
@@ -60,7 +59,7 @@ def generate_bracket():
         print('artist mode')
         tracks = get_artists_tracks(input_value)
     else:
-        print('bogus tracks type')
+        print('bogus tracks type:', tracks_type)
         return make_response(jsonify(
             {'message': f"something's gone wrong"}
         ),

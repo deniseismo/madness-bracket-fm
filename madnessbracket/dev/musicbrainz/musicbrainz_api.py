@@ -1,16 +1,9 @@
-import random
-import time
 from urllib.error import HTTPError
-from datetime import datetime
-import csv
-import json
 import musicbrainzngs
-import requests
 import requests_cache
 from musicbrainzngs.musicbrainz import ResponseError
 from flask import current_app
 from madnessbracket import create_app
-from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_track_rating
 from madnessbracket.utilities.logging_handlers import log_missing_info
 
 app = create_app()
