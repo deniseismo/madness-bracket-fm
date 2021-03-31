@@ -1,6 +1,6 @@
 .intro-container {
   @include flexContainer(row, flex-start);
-//   width: 100%;
+  //   width: 100%;
   height: 100%;
 }
 .intro-title {
@@ -13,15 +13,6 @@
   &:hover {
     background-color: $reddishColor;
   }
-}
-.intro-two-lines {
-  width: 0;
-  height: 1px;
-  left: 0;
-  transition: 0.1s all ease;
-  height: 100%;
-  border-top: 5px solid $whitishColor;
-  border-bottom: 5px solid $whitishColor;
 }
 
 .intro-line {

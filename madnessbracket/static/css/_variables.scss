@@ -1,14 +1,17 @@
 @font-face {
-  font-family: 'nowayregular';
-  src: url('fonts/Noway-Regular-webfont/noway-regular-webfont.eot');
-  src: url('fonts/Noway-Regular-webfont/noway-regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('fonts/Noway-Regular-webfont/noway-regular-webfont.woff2') format('woff2'),
-       url('fonts/Noway-Regular-webfont/noway-regular-webfont.woff') format('woff'),
-       url('fonts/Noway-Regular-webfont/noway-regular-webfont.ttf') format('truetype'),
-       url('fonts/Noway-Regular-webfont/noway-regular-webfont.svg#nowayregular') format('svg');
+  font-family: "nowayregular";
+  src: url("fonts/Noway-Regular-webfont/noway-regular-webfont.eot");
+  src: url("fonts/Noway-Regular-webfont/noway-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("fonts/Noway-Regular-webfont/noway-regular-webfont.woff2")
+      format("woff2"),
+    url("fonts/Noway-Regular-webfont/noway-regular-webfont.woff") format("woff"),
+    url("fonts/Noway-Regular-webfont/noway-regular-webfont.ttf")
+      format("truetype"),
+    url("fonts/Noway-Regular-webfont/noway-regular-webfont.svg#nowayregular")
+      format("svg");
   font-weight: normal;
   font-style: normal;
-
 }
 
 $greenishColor: #26624c;
@@ -28,4 +31,9 @@ $grayishColor: #616262;
   &:hover {
     cursor: pointer;
   }
+}
+
+@mixin innerBoxShadow() {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }

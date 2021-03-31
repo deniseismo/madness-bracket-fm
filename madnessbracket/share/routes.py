@@ -1,4 +1,5 @@
 import uuid
+import urllib.parse
 import json
 from flask import render_template, Blueprint, jsonify, request, make_response
 from madnessbracket.share.share_handlers import save_bracket_to_database, get_bracket_from_database
@@ -23,11 +24,11 @@ def get_share_link():
     # get bracket unique id used for sharing
     share_link_id = save_bracket_to_database(parsed_bracket_data)
     return jsonify({
-        "success": share_link_id
+        "share_bracket_id": urllib.parse.urljoin("http://192.168.1.62:5000/get/", share_link_id)
     })
 
 
-@share.route("/get/<bracket_id>", methods=["GET", "POST"])
+@share.route("/get/<bracket_id>", methods=["GET"])
 def get_shared_bracket(bracket_id):
     """get/generate a bracket from a given bracket id that is presumably stored in a database
 
@@ -37,15 +38,13 @@ def get_shared_bracket(bracket_id):
     Returns:
         html: template
     """
-    print(is_valid_uuid(bracket_id))
-
-    if request.method == "GET":
-        data = get_bracket_from_database(bracket_id)
-        data = json.dumps(data)
-        if not data:
-            return render_template("404.html")
-        print("data:", data)
-        return render_template("bracket.html", data=data)
-    else:
-        data = get_bracket_from_database(bracket_id)
-        return jsonify(data)
+    if not is_valid_uuid(bracket_id):
+        print("invalid bracket id")
+        return render_template("404.html")
+    shared_bracket_data = get_bracket_from_database(
+        bracket_id)
+    shared_bracket_data = json.dumps(shared_bracket_data)
+    if not shared_bracket_data:
+        print("bracket not found")
+        return render_template("404.html")
+    return render_template("bracket.html", shared_bracket_data=shared_bracket_data)

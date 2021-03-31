@@ -22,8 +22,8 @@ def get_artists_tracks(artist_name: str):
     # correct user's input via lastfm's api
     correct_name = lastfm_get_artist_correct_name(artist_name)
     artist_name = correct_name if correct_name else artist_name
-    artist_name = artist_name.lower()
-
+    # artist_name = artist_name.lower()
+    print('corrected name:', artist_name, len(artist_name))
     # go through database first
     tracks = get_tracks_via_database(artist_name)
     # if nothing found, go through a fallback function — via spotify
@@ -46,18 +46,21 @@ def get_tracks_via_database(artist_name: str):
     """
     # set max song limit
     SONG_LIMIT = 50
-    # artist = Artist.query.filter_by(name=artist_name).first()
+    artist = Artist.query.filter_by(name=artist_name).first()
     # find artist in the database
-    artist = Artist.query.filter(func.lower(
-        Artist.name) == artist_name).first()
+    # artist = Artist.query.filter(func.lower(
+    #     Artist.name) == artist_name).first()
     if not artist:
         # no such artist found
+        print("no artist found on db")
         return None
     # find top tracks in descending order (most listened first)
     track_entries = Song.query.filter_by(artist=artist).order_by(
         Song.rating.desc()).limit(SONG_LIMIT).all()
     if not track_entries:
         return None
+    print(track_entries, len(track_entries))
+    print(list(set(track_entries)), len(set(track_entries)))
     tracks = {
         "tracks": [],
         "description": artist_name
