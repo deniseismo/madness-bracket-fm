@@ -41,7 +41,7 @@ def lastfm_get_track_rating(track_title, artist_name: str):
     response = lastfm_get_response({
         'method': ' track.getInfo',
         'track': track_title,
-        'artist': artist_name
+        'artist': artist_name,
     })
     # in case of an error, return None
     if response.status_code != 200:
@@ -63,7 +63,6 @@ def lastfm_get_artist_correct_name(artist: str):
     :param artist: artist's name as is
     :return: corrected version of the artist's name
     """
-    print('getting artist correction')
     response = lastfm_get_response({
         'method': 'artist.getCorrection',
         'artist': artist
@@ -77,3 +76,29 @@ def lastfm_get_artist_correct_name(artist: str):
     except (KeyError, TypeError, json.decoder.JSONDecodeError):
         return None
     return correct_name
+
+
+def lastfm_get_artist_top_tracks(artist: str):
+    """get artist's top tracks on lastfm (by scrobbles)
+
+    Args:
+        artist (str): artist's name
+
+    Returns:
+        (list): of artist's top tracks
+    """
+    response = lastfm_get_response({
+        'method': 'artist.getTopTracks',
+        'artist': artist,
+        'limit': 32
+    })
+    # in case of an error, return None
+    if response.status_code != 200:
+        return None
+    try:
+        top_tracks = response.json(
+        )["toptracks"]["track"]
+    except (KeyError, TypeError, json.decoder.JSONDecodeError):
+        return None
+    print(len(top_tracks))
+    return top_tracks
