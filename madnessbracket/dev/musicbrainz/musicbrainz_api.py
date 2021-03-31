@@ -58,7 +58,40 @@ def music_brainz_get_release_tracklist(release_id: str):
         print(f'no release info returned for {release_id}')
         return None
     try:
-        tracklist = release_info['release']['medium-list'][0]['track-list']
+        tracklist = []
+        for album_cd in release_info['release']['medium-list']:
+            tracklist += album_cd['track-list']
+    except (IndexError, TypeError, KeyError, ValueError) as e:
+        print(e, f'could not find tracklist for {release_id}')
+        return None
+    tracklist = [track_info['recording']['title'] for track_info in tracklist]
+    return tracklist
+
+
+def music_brainz_get_release_tracklist_b_sides(release_id: str):
+    """extra function: GET ONLY B-SIDES, CD2, etc, skipping CD1 in medium-list
+    :param 
+        release_group_id (str): release group id from Music Brainz
+    :return: 
+        (list) a list of tracks (track titles) for the current release (album)
+    """
+    try:
+        release_info = musicbrainzngs.get_release_by_id(
+            release_id, includes=['media', 'recordings'])
+    except (HTTPError, ResponseError) as e:
+        print(f'a response error occurred for {release_id}', e)
+        return None
+    if not release_info:
+        print(f'no release info returned for {release_id}')
+        return None
+    try:
+        tracklist = []
+        if len(release_info['release']['medium-list']) > 1:
+            for album_cd in release_info['release']['medium-list'][1:]:
+                tracklist += album_cd['track-list']
+        else:
+            print("ONLY 1 CD FOUND")
+            return None
     except (IndexError, TypeError, KeyError, ValueError) as e:
         print(e, f'could not find tracklist for {release_id}')
         return None
