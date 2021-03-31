@@ -1,4 +1,5 @@
 import { shuffleArray } from "./utilities.js";
+import { stopMusic } from "./music.js";
 
 /*
 Creates a special data structure to hold all the info about cells.
@@ -114,6 +115,8 @@ export function resetBracket(bracket) {
 
 // resets & then shuffles songs in the bracket
 export function shuffleBracket(bracket, options) {
+  // stop music if there's any playing
+  stopMusic();
   // reset bracket first
   resetBracket(bracket);
   // take current bracket tracks data
