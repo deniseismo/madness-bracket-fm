@@ -70,3 +70,17 @@ def fix_quot_marks(song_name):
     song_name = song_name.replace("’", "'").replace(
         "‘", "'").replace('“', '"').replace('”', '"')
     return song_name
+
+
+def remove_quot_marks_on_both_sides(string_to_fix):
+    """removes quotation marks if they are present on both sides of the string only
+    e.g. Die Frau ohne Schatten: III. Aufzug. "Wenn das Herz aus Kristall zerbricht in einem Schrei" → nope
+    e.g. "Heroes" → yep
+    """
+    if not string_to_fix:
+        return None
+    pattern = r'(^[\"\'].*[\"\']$)'
+    match = re.findall(pattern, string_to_fix)
+    if match:
+        string_to_fix = string_to_fix.strip('"\'')
+    return string_to_fix
