@@ -1,5 +1,7 @@
 import tekore as tk
 import spotipy
+from fuzzywuzzy import fuzz
+from madnessbracket.utilities.track_processing import get_filtered_name
 from spotipy.oauth2 import SpotifyClientCredentials
 from flask import current_app
 
@@ -50,13 +52,25 @@ def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=Non
     else:
         spotify_tekore_client = tekore_client
     query = f"track:{track_title} artist:{artist_name}"
-    tracks_info, = spotify_tekore_client.search(query=query, types=('track',))
+    tracks_info, = spotify_tekore_client.search(
+        query=query, types=('track',), limit=15)
     # in case of not getting any response
     if not tracks_info:
         return None
     # in case no items found
     if tracks_info.total == 0:
         return None
+    track_title = track_title.lower()
+    for track in tracks_info.items:
+        filtered_name = get_filtered_name(track.name).lower()
+        if filtered_name == track_title:
+            print("track found: perfect match")
+            return track
+        print(track.name, "→", filtered_name, "vs.", track_title,
+              fuzz.ratio(filtered_name, track_title), sep=" | ")
+        if fuzz.ratio(filtered_name, track_title) > 90:
+            print(f"pretty close: {filtered_name} vs. {track_title}")
+            return track
     return tracks_info.items[0]
 
 
@@ -79,7 +93,7 @@ def get_spotify_artist_id(artist_name: str, tekore_client=None):
         spotify_tekore_client = tekore_client
     query = f"{artist_name}"
     artist_info, = spotify_tekore_client.search(
-        query=query, types=('artist',), limit=50, market="SE")
+        query=query, types=('artist',), limit=50, market="US")
     # in case of not getting any response
     if not artist_info:
         print("no info about the artist returned at all")
@@ -91,18 +105,18 @@ def get_spotify_artist_id(artist_name: str, tekore_client=None):
         return None
     # iterate over artists found
     print(artist_info.total)
+    artist_id = artist_info.items[0].id
     for index, artist in enumerate(artist_info.items):
         print(index, artist.name)
         # find the right one
         if artist.name.lower() == artist_name.lower():
-            return artist.id
-    return None
+            artist_id = artist.id
+            return artist_id
+    return artist_id
 
 
 def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
     """get artist's top tracks according to spotify
-    # TODO: non-latin artist's names
-
     Args:
         artist_name (str): [description]
         tekore_client ([type], optional): [description]. Defaults to None.
@@ -119,7 +133,6 @@ def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
         spotify_tekore_client = tekore_client
     artist_id = get_spotify_artist_id(
         artist_name, spotify_tekore_client)  # get ID via tekore
-    # artist_id = spotipy_get_artist_id(artist_name)  # get ID via spotipy
     if not artist_id:
         return None
     print("artist spotify id", artist_id)
@@ -143,7 +156,7 @@ def spotipy_get_artist_id(artist_name: str):
     spotify = get_spotify_spotipy_client()
     try:
         artist_info = spotify.search(
-            q=artist_name, type="artist", limit=5, market='SE')
+            q=artist_name, type="artist", limit=5, market='US')
     except spotipy.exceptions.SpotifyException:
         return None
     if not artist_info:
