@@ -9,7 +9,7 @@ def get_top_rated_songs():
     picks random selection of songs considered best*
     * by Pitchfork, (Rolling Stones, …) # TODO: add RS500/NME
     """
-    filename = 'songs_considered_best.json'
+    filename = 'extended_classics_list.json'
     filepath = os.path.join(current_app.root_path, 'charts', filename)
     try:
         with open(filepath, encoding='utf-8') as f:
@@ -27,13 +27,17 @@ def get_top_rated_songs():
     # iterate through tracks
     for song in songs:
         name = song['title']
-        artist_name = song['artist']
+        artist_name = song['artist_name']
+        preview_url = song["preview_url"]
+        album_colors = song["album_colors"]
+        text_color = song["text_color"]
+
         a_track_info = {
             "artist_name": artist_name,
             "track_title": name,
-            "preview_url": None,
-            "album_colors": None,
-            "text_color": None
+            "spotify_preview_url": preview_url,
+            "album_colors": album_colors,
+            "text_color": text_color
             # TODO: add preview urls to the original json file
         }
         tracks["tracks"].append(a_track_info)
