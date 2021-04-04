@@ -1,5 +1,6 @@
 import { createElement } from "../utilities.js";
-import MicroModal from "../third-party/micromodal.es.js";
+import MicroModal from "micromodal";
+//import MicroModal from "../third-party/micromodal.es.js";
 // Save current bracket structure with all the info about tracks,
 // cells, their position in the bracket and their status (i.e. active/advanceable/etc).
 // Used to send current bracket to backend for storing & sharing

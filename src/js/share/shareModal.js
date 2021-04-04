@@ -1,6 +1,7 @@
 import { createElement } from "../utilities.js";
 import { socialMediaSVGData } from "./socialMediaButtons.js";
 import { getSVGIcon } from "../svgGenerator.js";
+import Clipboard from "clipboard";
 
 // creates modal window
 function createModal() {
@@ -35,6 +36,7 @@ function createModal() {
   const socialMediaButtons = createSocialMediaButtons();
   modalContent.append(shareLinkContainer, socialMediaButtons);
   dialogModalContainer.append(header, modalContent);
+  clipboardInit();
   return mainModalContainer;
 }
 
@@ -46,7 +48,9 @@ function createShareLinkContainer() {
     shareLinkField.select();
   });
   const copyButton = createElement("button", ["button-copy", "button-social"]);
+  copyButton.dataset.clipboardTarget = ".share-link";
   const copyIcon = getSVGIcon(socialMediaSVGData["copy"]);
+  // data-clipboard-target="#foo"
   copyIcon.classList.add("copy-icon");
   copyButton.appendChild(copyIcon);
   shareLinkContainer.append(shareLinkField, copyButton);
@@ -85,7 +89,13 @@ function createSocialMediaButtons() {
 
 // adds a modal to the container element
 export function addModal() {
+  console.log("add modal triggered!");
   const modal = createModal();
   const container = document.querySelector(".container");
   container.append(modal);
+}
+
+// instantiate Clipboard by passing a button-copy selector
+function clipboardInit() {
+  new ClipboardJS(".button-copy");
 }
