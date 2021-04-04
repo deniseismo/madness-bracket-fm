@@ -1,7 +1,8 @@
 import os
 import json
 
-file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'etc'))
+file_path = os.path.abspath(os.path.join(
+    os.path.dirname(__file__), '..', 'etc'))
 with open(os.path.join(file_path, 'config.json')) as config_file:
     config = json.load(config_file)
 
@@ -17,3 +18,5 @@ class Config:
     LASTFM_API_KEY = config.get("LASTFM_API_KEY")
     LASTFM_USER_AGENT = config.get("LASTFM_USER_AGENT")
     MUSIC_BRAINZ_USER_AGENT = config.get("MUSIC_BRAINZ_USER_AGENT")
+    DISCOGS_USER_TOKEN = config.get("DISCOGS_USER_TOKEN")
+    APP_NAME = config.get("APP_NAME")
