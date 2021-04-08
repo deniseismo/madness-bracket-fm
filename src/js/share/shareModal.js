@@ -1,6 +1,8 @@
 import { createElement } from "../utilities.js";
-import { socialMediaSVGData } from "./socialMediaButtons.js";
+import { appIconsSVGData } from "../misc/appIcons.js";
+import { shareButtonSVGData } from "./shareButtons.js";
 import { getSVGIcon } from "../svgGenerator.js";
+import { takeScreenshot } from "./takeScreenshot.js";
 import Clipboard from "clipboard";
 
 // creates modal window
@@ -26,9 +28,14 @@ function createModal() {
   const modalTitle = createElement("h2", ["modal__title"]);
   modalTitle.id = "modal-1-title";
   modalTitle.textContent = "share your bracket";
-  const closeButton = createElement("button", ["modal__close"]);
+  const closeButton = createElement("button", ["modal__close", "button-close"]);
   closeButton.setAttribute("aria-label", "Close modal");
   closeButton.setAttribute("data-micromodal-close", "");
+  const closeIcon = getSVGIcon(appIconsSVGData["close"]);
+  closeIcon.setAttribute("data-micromodal-close", "");
+  closeIcon.classList.add("close-icon");
+  closeButton.appendChild(closeIcon);
+
   header.append(modalTitle, closeButton);
   const modalContent = createElement("div", ["modal__content"]);
   modalContent.id = "modal-1-content";
@@ -49,7 +56,7 @@ function createShareLinkContainer() {
   });
   const copyButton = createElement("button", ["button-copy", "button-social"]);
   copyButton.dataset.clipboardTarget = ".share-link";
-  const copyIcon = getSVGIcon(socialMediaSVGData["copy"]);
+  const copyIcon = getSVGIcon(shareButtonSVGData["copy"]);
   // data-clipboard-target="#foo"
   copyIcon.classList.add("copy-icon");
   copyButton.appendChild(copyIcon);
@@ -66,12 +73,12 @@ function createSocialMediaButtons() {
     "button-twitter",
     "button-social",
   ]);
-  const twitterIcon = getSVGIcon(socialMediaSVGData["twitter"]);
+  const twitterIcon = getSVGIcon(shareButtonSVGData["twitter"]);
   twitterIcon.classList.add("social-media-icon");
   twitterButton.appendChild(twitterIcon);
 
   const vkButton = createElement("button", ["button-vk", "button-social"]);
-  const vkIcon = getSVGIcon(socialMediaSVGData["vk"]);
+  const vkIcon = getSVGIcon(shareButtonSVGData["vk"]);
   vkIcon.classList.add("social-media-icon");
   vkButton.appendChild(vkIcon);
 
@@ -79,11 +86,25 @@ function createSocialMediaButtons() {
     "button-facebook",
     "button-social",
   ]);
-  const facebookIcon = getSVGIcon(socialMediaSVGData["facebook"]);
+  const facebookIcon = getSVGIcon(shareButtonSVGData["facebook"]);
   facebookIcon.classList.add("social-media-icon");
   facebookButton.appendChild(facebookIcon);
 
-  socialMediaButtonsContainer.append(twitterButton, vkButton, facebookButton);
+  const cameraButton = createElement("button", [
+    "button-screenshot",
+    "button-social",
+  ]);
+  cameraButton.addEventListener("click", takeScreenshot);
+  const cameraIcon = getSVGIcon(shareButtonSVGData["camera"]);
+  cameraIcon.classList.add("social-media-icon");
+  cameraButton.appendChild(cameraIcon);
+
+  socialMediaButtonsContainer.append(
+    twitterButton,
+    vkButton,
+    facebookButton,
+    cameraButton
+  );
   return socialMediaButtonsContainer;
 }
 
@@ -97,5 +118,5 @@ export function addModal() {
 
 // instantiate Clipboard by passing a button-copy selector
 function clipboardInit() {
-  new ClipboardJS(".button-copy");
+  new Clipboard(".button-copy");
 }
