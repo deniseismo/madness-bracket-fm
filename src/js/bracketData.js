@@ -1,6 +1,6 @@
 import { shuffleArray } from "./utilities.js";
 import { stopMusic } from "./music.js";
-
+import { addTooltipToCell } from "./cellToolTips.js";
 /*
 Creates a special data structure to hold all the info about cells.
 BracketData consists of left side of the bracket, right one, and the finale. 
@@ -153,6 +153,9 @@ export function shuffleBracket(bracket, options) {
       bracket[side][0][i].setAlbumColors(albumColors);
       bracket[side][0][i].setElementText();
       bracket[side][0][i].applyColors();
+      if (options.getCurrentBracketType() != "artist") {
+        addTooltipToCell(bracket[side][0][i], artistName, side);
+      }
     });
   }
 }

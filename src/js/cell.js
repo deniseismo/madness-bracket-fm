@@ -21,6 +21,7 @@ export class Cell {
     this.textColor = "white";
     this.trackID = null;
     this.loser = false;
+    this.tooltip = null;
   }
   setTrackID(trackID) {
     this.trackID = trackID;
@@ -245,5 +246,14 @@ export class Cell {
     if (playButton) {
       playButton.remove();
     }
+  }
+  setTooltip(tooltip) {
+    if (this.tooltip) {
+      this.tooltip.destroy();
+    }
+    this.tooltip = tooltip;
+  }
+  getTooltip() {
+    return this.tooltip;
   }
 }

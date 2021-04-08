@@ -3,7 +3,11 @@ import { traverseAllCells } from "./bracketData.js";
 import { removeAllChildNodes, createElement } from "./utilities.js";
 import { getSVGIcon } from "./svgGenerator.js";
 import { displayBracketDescription } from "./description.js";
-import { getDashboard } from "./dashboardHandlers.js";
+import {
+  activateDashboardTooltips,
+  getDashboard,
+} from "./dashboard/dashboardHandlers.js";
+import { addTooltipToCell } from "./cellToolTips.js";
 import { trophySVGData } from "./winnerFX.js";
 
 // create madness bracket
@@ -81,6 +85,9 @@ export function createBracketStructure(bracket, options) {
         cellObject.setTextColor(textColor);
         cellObject.setAlbumColors(albumColors);
         cellObject.applyColors();
+        if (options.getCurrentBracketType() != "artist") {
+          addTooltipToCell(cellObject, artistName, side);
+        }
         if (side === "left") {
           cellObject.setTrackID(j);
         } else {
@@ -109,6 +116,7 @@ export function createBracketStructure(bracket, options) {
       tournamentBracket.appendChild(finalRound);
     }
   }
+  activateDashboardTooltips();
   traverseAllCells(bracket);
 }
 
