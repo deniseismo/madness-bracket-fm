@@ -45,7 +45,7 @@ def get_tracks_via_database(artist_name: str):
         (dict): a dict with a list of 'track info' dicts
     """
     # set max song limit
-    SONG_LIMIT = 50
+    SONG_LIMIT = 100
     artist = Artist.query.filter_by(name=artist_name).first()
     # find artist in the database
     # artist = Artist.query.filter(func.lower(
@@ -66,13 +66,16 @@ def get_tracks_via_database(artist_name: str):
         "description": artist_name
     }
     for track_entry in track_entries:
-        album_colors = track_entry.album.album_cover_color.split(",")
-        dominant_color = album_colors[0]
-        secondary_color = album_colors[1]
-        text_color = get_contrast_color_for_two_color_gradient(
-            dominant_color, secondary_color)
-        print(
-            f'track: {track_entry.title}, {dominant_color}, {secondary_color}, {text_color}')
+        try:
+            album_colors = track_entry.album.album_cover_color.split(",")
+            dominant_color = album_colors[0]
+            secondary_color = album_colors[1]
+            text_color = get_contrast_color_for_two_color_gradient(
+                dominant_color, secondary_color)
+        except (AttributeError, NameError, TypeError, IndexError) as e:
+            print(e)
+            album_colors = None
+            text_color = "white"
         track = {
             "track_title": track_entry.title,
             "artist_name": track_entry.artist.name,

@@ -38,7 +38,6 @@ def get_top_rated_songs():
             "spotify_preview_url": preview_url,
             "album_colors": album_colors,
             "text_color": text_color
-            # TODO: add preview urls to the original json file
         }
         tracks["tracks"].append(a_track_info)
     return tracks

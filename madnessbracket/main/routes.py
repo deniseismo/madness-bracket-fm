@@ -70,5 +70,5 @@ def generate_bracket():
             {'message': f"nothing found"}
         ),
             404)
-    tracks = cap_tracks(tracks, bracket_limit)
+    tracks = cap_tracks(tracks, bracket_limit, tracks_type)
     return jsonify(tracks)
