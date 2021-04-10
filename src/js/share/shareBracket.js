@@ -43,7 +43,8 @@ function prepareBracketDataForSharing(bracketInfo, options) {
       // remove raw info about song/text color/album colors
       key === "albumColors" ||
       key === "textColor" ||
-      key === "song"
+      key === "song" ||
+      key === "tooltip"
     ) {
       return undefined;
     } else {
