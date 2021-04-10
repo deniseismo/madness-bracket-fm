@@ -23,6 +23,7 @@ export class Cell {
     this.loser = false;
     this.tooltip = null;
   }
+  static defaultCellColor = "#26624c";
   setTrackID(trackID) {
     this.trackID = trackID;
   }
@@ -107,6 +108,8 @@ export class Cell {
       console.log(dominantColor, secondaryColor);
       this.element.style.background = `linear-gradient(to right, ${dominantColor}, ${secondaryColor}`;
       this.element.style.color = this.getTextColor();
+    } else {
+      this.element.style.color = Cell.defaultCellColor;
     }
   }
   // set DOM element contents
