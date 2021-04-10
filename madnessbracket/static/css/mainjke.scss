@@ -6,6 +6,9 @@
 @import "./description";
 @import "./dashboard";
 @import "./winnerFX";
+@import "./modal";
+@import "./share";
+@import "./tooltip";
 html,
 body,
 .wrapper,
@@ -25,7 +28,7 @@ p {
   margin: 0;
   display: flex;
 }
-header {
+.intro-header {
   @include flexContainer(row, space-around);
   height: 60px;
   width: 100%;

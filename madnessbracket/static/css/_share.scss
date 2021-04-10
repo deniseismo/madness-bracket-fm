@@ -1,4 +1,5 @@
-.button-social {
+.button-social,
+.button-close {
   background: none;
   color: $whitishColor;
   :hover {
@@ -8,7 +9,8 @@
   transition: filter 0.2s;
 }
 .social-media-icon,
-.copy-icon {
+.copy-icon,
+.close-icon {
   width: 32px;
   fill: $whitishColor;
 }
@@ -28,6 +30,7 @@
     background-color: $whitishColor;
     width: 100%;
     &:hover {
+      transition: all 0.2s ease-out;
       box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
     }
   }
