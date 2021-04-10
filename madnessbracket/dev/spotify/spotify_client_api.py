@@ -2,8 +2,10 @@ import tekore as tk
 import spotipy
 from fuzzywuzzy import fuzz
 from madnessbracket.utilities.track_processing import get_filtered_name
+from madnessbracket.utilities.fuzzymatch import fuzzy_match_song, fuzzy_match_artist
 from spotipy.oauth2 import SpotifyClientCredentials
 from flask import current_app
+from madnessbracket.utilities.helpers import timeit
 
 
 def get_spotify_spotipy_client():
@@ -34,6 +36,7 @@ def get_spotify_tekore_client():
     return spotify_tekore_client
 
 
+@timeit
 def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=None):
     """search for a track → get track info
     Args:
@@ -56,22 +59,54 @@ def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=Non
         query=query, types=('track',), limit=15)
     # in case of not getting any response
     if not tracks_info:
+        print("no tracks info")
         return None
+    # special flag that is used for double-checking an artist
+    # if it went through searching the track without specifying artist's name
+    artist_match = True
     # in case no items found
     if tracks_info.total == 0:
+        print("tracks info total 0")
+        query = f"track:{track_title}"
+        # try finding a song without specifying artist inside the query
+        tracks_info, = spotify_tekore_client.search(
+            query=query, types=('track',), limit=15)
+        # change "artist match" flag to False
+        artist_match = False
+    if tracks_info.total == 0:
+        # no tracks found whatsoever
         return None
     track_title = track_title.lower()
+    matches = []
     for track in tracks_info.items:
         filtered_name = get_filtered_name(track.name).lower()
-        if filtered_name == track_title:
+        if not artist_match:
+            # double check the artist, artist's match being false means it went through search without specifying the artist's name
+            # so we need to double check the artist
+            artist_match = fuzzy_match_artist(
+                artist_name, track.artists[0].name)
+            print(artist_match)
+        if filtered_name == track_title and artist_match:
             print("track found: perfect match")
             return track
         print(track.name, "→", filtered_name, "vs.", track_title,
               fuzz.ratio(filtered_name, track_title), sep=" | ")
-        if fuzz.ratio(filtered_name, track_title) > 90:
+        ratio = fuzz.ratio(filtered_name, track_title)
+        if ratio > 90 and artist_match:
             print(f"pretty close: {filtered_name} vs. {track_title}")
             return track
-    return tracks_info.items[0]
+        # append a match to matches list
+        if artist_match:
+            matches.append((track, ratio))
+    # if there are any matches
+    if matches:
+        try:
+            # pick with the highest ratio
+            return sorted(matches, key=lambda x: x[1], reverse=True)[0][0]
+        except IndexError as e:
+            print(e)
+            return None
+    return None
 
 
 def get_spotify_artist_id(artist_name: str, tekore_client=None):
