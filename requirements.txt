@@ -10,3 +10,6 @@ pydantic~=1.8.1
 tekore~=3.6.2
 colormath~=3.0.0
 spotipy~=2.17.1
+colorthief~=0.2.1
+fuzzywuzzy~=0.18.0
+pandas~=1.2.3
