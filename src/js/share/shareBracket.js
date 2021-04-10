@@ -1,4 +1,3 @@
-import { createElement } from "../utilities.js";
 import MicroModal from "micromodal";
 //import MicroModal from "../third-party/micromodal.es.js";
 // Save current bracket structure with all the info about tracks,

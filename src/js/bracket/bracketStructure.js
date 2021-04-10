@@ -1,14 +1,14 @@
-import { Cell } from "./cell.js";
+import { Cell } from "../cell/cell.js";
 import { traverseAllCells } from "./bracketData.js";
-import { removeAllChildNodes, createElement } from "./utilities.js";
-import { getSVGIcon } from "./svgGenerator.js";
-import { displayBracketDescription } from "./description.js";
+import { removeAllChildNodes, createElement } from "../misc/utilities.js";
+import { getSVGIcon } from "../misc/svgGenerator.js";
+import { displayBracketDescription } from "../visuals/description.js";
 import {
   activateDashboardTooltips,
   getDashboard,
-} from "./dashboard/dashboardHandlers.js";
-import { addTooltipToCell } from "./cellToolTips.js";
-import { trophySVGData } from "./winnerFX.js";
+} from "../dashboard/dashboardHandlers.js";
+import { addTooltipToCell } from "../cell/cellToolTips.js";
+import { trophySVGData } from "../visuals/winnerFX.js";
 
 // create madness bracket
 export function createBracketStructure(bracket, options) {

@@ -1,4 +1,4 @@
-import { createElement } from "./utilities.js";
+import { createElement } from "../misc/utilities.js";
 
 // creates intro/header
 export function createIntroElements() {

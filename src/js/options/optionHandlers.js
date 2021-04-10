@@ -1,5 +1,5 @@
-import { animateLetters } from "./animation/choiceBoxAnimation.js";
-import { showElement } from "./utilities.js";
+import { animateLetters } from "../animation/choiceBoxAnimation.js";
+import { showElement } from "../misc/utilities.js";
 
 // handles picking bracket type: ARTIST or CHARTS
 export function handleSquareButtons(options) {

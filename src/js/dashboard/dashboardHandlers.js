@@ -1,7 +1,7 @@
-import { getSVGIcon } from "../svgGenerator.js";
+import { getSVGIcon } from "../misc/svgGenerator.js";
 import { dashboardButtonsSVGData } from "./dashboardButtons.js";
-import { createElement } from "../utilities.js";
-import { resetBracket, shuffleBracket } from "../bracketData.js";
+import { createElement } from "../misc/utilities.js";
+import { resetBracket, shuffleBracket } from "../bracket/bracketData.js";
 import { shareBracket } from "../share/shareBracket.js";
 import { fetchTracks } from "../fetchTracks.js";
 import tippy from "tippy.js";

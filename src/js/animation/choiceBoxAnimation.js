@@ -1,6 +1,6 @@
 //import anime from "../third-party/anime.es.js";
 import anime from "animejs/lib/anime.es.js";
-import { pickRandomElement } from "../utilities.js";
+import { pickRandomElement } from "../misc/utilities.js";
 // random words used for text animation
 const FLASHING_WORDS = {
   // words for ARTIST 'square choice box'

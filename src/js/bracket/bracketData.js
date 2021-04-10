@@ -1,6 +1,6 @@
-import { shuffleArray } from "./utilities.js";
-import { stopMusic } from "./music.js";
-import { addTooltipToCell } from "./cellToolTips.js";
+import { shuffleArray } from "../misc/utilities.js";
+import { stopMusic } from "../music/music.js";
+import { addTooltipToCell } from "../cell/cellToolTips.js";
 /*
 Creates a special data structure to hold all the info about cells.
 BracketData consists of left side of the bracket, right one, and the finale. 

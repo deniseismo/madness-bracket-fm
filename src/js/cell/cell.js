@@ -1,6 +1,6 @@
-import { getSVGIcon } from "./svgGenerator.js";
-import { playButtonSVGData, PlayButton } from "./playButton.js";
-import { createElement } from "./utilities.js";
+import { getSVGIcon } from "../misc/svgGenerator.js";
+import { playButtonSVGData, PlayButton } from "../music/playButton.js";
+import { createElement } from "../misc/utilities.js";
 
 // Cell is responsible for holding all the data about the song and the corresponding DOM element (the cell in the bracket)
 export class Cell {
@@ -22,8 +22,8 @@ export class Cell {
     this.trackID = null;
     this.loser = false;
     this.tooltip = null;
+    this.defaultCellColor = "#26624c";
   }
-  static defaultCellColor = "#26624c";
   setTrackID(trackID) {
     this.trackID = trackID;
   }
@@ -109,7 +109,7 @@ export class Cell {
       this.element.style.background = `linear-gradient(to right, ${dominantColor}, ${secondaryColor}`;
       this.element.style.color = this.getTextColor();
     } else {
-      this.element.style.color = Cell.defaultCellColor;
+      this.element.style.color = this.defaultCellColor;
     }
   }
   // set DOM element contents

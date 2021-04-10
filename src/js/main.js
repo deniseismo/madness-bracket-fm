@@ -1,13 +1,13 @@
-import { BracketData } from "./bracketData.js";
-import { createBracketStructure } from "./bracketStructure.js";
+import { BracketData } from "./bracket/bracketData.js";
+import { createBracketStructure } from "./bracket/bracketStructure.js";
 import { introAnimation } from "./animation/introAnimation.js";
-import { createIntroElements } from "./intro.js";
+import { createIntroElements } from "./visuals/intro.js";
 import { addModal } from "./share/shareModal.js";
-import { OptionStorage } from "./optionStorage.js";
+import { OptionStorage } from "./options/optionStorage.js";
 import {
   handleSquareButtons,
   handleMaxBracketSizeOption,
-} from "./optionHandlers.js";
+} from "./options/optionHandlers.js";
 import { fetchTracks } from "./fetchTracks.js";
 export let bracket = new BracketData();
 

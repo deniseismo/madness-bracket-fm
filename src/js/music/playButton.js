@@ -1,6 +1,6 @@
 import { playMusic, stopMusic } from "./music.js";
-import { removeAllChildNodes } from "./utilities.js";
-import { getSVGIcon } from "./svgGenerator.js";
+import { removeAllChildNodes } from "../misc/utilities.js";
+import { getSVGIcon } from "../misc/svgGenerator.js";
 export const playButtonSVGData = {
   play: {
     path: [

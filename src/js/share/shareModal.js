@@ -1,7 +1,7 @@
-import { createElement } from "../utilities.js";
+import { createElement } from "../misc/utilities.js";
 import { appIconsSVGData } from "../misc/appIcons.js";
 import { shareButtonSVGData } from "./shareButtons.js";
-import { getSVGIcon } from "../svgGenerator.js";
+import { getSVGIcon } from "../misc/svgGenerator.js";
 import { takeScreenshot } from "./takeScreenshot.js";
 import Clipboard from "clipboard";
 

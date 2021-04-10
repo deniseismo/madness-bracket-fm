@@ -1,8 +1,8 @@
-import { BracketData } from "../bracketData.js";
-import { createBracketStructure } from "../bracketStructure.js";
+import { BracketData } from "../bracket/bracketData.js";
+import { createBracketStructure } from "../bracket/bracketStructure.js";
 import { introAnimation } from "../animation/introAnimation.js";
-import { createIntroElements } from "../intro.js";
-import { OptionStorage } from "../optionStorage.js";
+import { createIntroElements } from "../visuals/intro.js";
+import { OptionStorage } from "../options/optionStorage.js";
 import { reconstructBracket } from "./reconstructBracket.js";
 import { addModal } from "./shareModal.js";
 

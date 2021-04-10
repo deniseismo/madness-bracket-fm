@@ -1,4 +1,4 @@
-import { createElement } from "./utilities.js";
+import { createElement } from "../misc/utilities.js";
 
 export function displayBracketDescription(description) {
   const container = document.querySelector(".container");
