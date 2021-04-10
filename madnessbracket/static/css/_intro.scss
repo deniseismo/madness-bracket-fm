@@ -12,6 +12,7 @@
   padding: 0 0.5rem;
   &:hover {
     background-color: $reddishColor;
+    transition: all 0.2s ease-out;
   }
 }
 

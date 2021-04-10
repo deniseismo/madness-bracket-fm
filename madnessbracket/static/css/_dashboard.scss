@@ -9,6 +9,7 @@
     margin: 0 1em;
     &:hover {
       background-color: $reddishColor;
+      transition: all 0.2s ease-out;
     }
     .dashboard-icon {
       width: 25px;

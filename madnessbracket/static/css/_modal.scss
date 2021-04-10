@@ -42,10 +42,8 @@
   background: transparent;
   border: 0;
   color: $whitishColor;
-}
-
-.modal__header .modal__close:before {
-  content: "\2715";
+  padding: 0;
+  margin-bottom: 1.5rem;
 }
 
 .modal__content {

@@ -39,15 +39,22 @@
   &:nth-last-of-type(odd)::after {
     top: -50%;
   }
-  &:hover {
-    background: #ff3557;
+  &:not(.cell_empty):hover {
     cursor: pointer;
-    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px,
-      rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px,
-      rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
     color: white;
     transition: all 0.2s ease-out;
   }
+  &.cell-left:not(.cell_empty):hover {
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px,
+      rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px,
+      rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+  }
+  &.cell-right:not(.cell_empty):hover {
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px,
+      rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px,
+      rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+  }
+
   .song-title {
     display: block;
     overflow: hidden;

@@ -114,11 +114,12 @@
   margin: 1rem;
   /* display: flex; */
   text-align: center;
-  line-height: 50px;
+  line-height: 1.5rem;
   border: 2px solid $whitishColor;
   font-size: 1.5rem;
   &:hover {
     background-color: $reddishColor;
+    transition: all 0.2s ease-out;
   }
 }
 .bracket_max_size_option_active {
@@ -133,6 +134,7 @@
   font-size: 1.5rem;
   &:hover {
     background-color: $reddishColor;
+    transition: all 0.2s ease-out;
   }
   &:disabled {
     background-color: $grayishColor;
