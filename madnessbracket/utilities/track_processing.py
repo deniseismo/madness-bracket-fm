@@ -3,7 +3,7 @@ import re
 from madnessbracket.utilities.randomize_track_selection import get_weighted_random_selection_of_tracks
 
 
-def cap_tracks(tracks: dict, limit: int = 16):
+def cap_tracks(tracks: dict, limit: int = 16, tracks_type="artist"):
     """
     randomizes & caps (at a given limit, default=32) tracks/songs
     :param limit: maximum number of tracks in a bracket
@@ -18,9 +18,16 @@ def cap_tracks(tracks: dict, limit: int = 16):
     number_of_tracks = len(tracks['tracks'])
     print('total amount of tracks: ', number_of_tracks)
     # figure out what the tracks cap should be: the closest maximum number out of the bracket standards
-    tracks_cap = max(list(filter(lambda x: x <= number_of_tracks, capped_standards)))
-    randomized_tracks = get_weighted_random_selection_of_tracks(tracks['tracks'], tracks_cap)
-    return randomized_tracks
+    tracks_cap = max(
+        list(filter(lambda x: x <= number_of_tracks, capped_standards)))
+    if tracks_type == "artist":
+        randomized_tracks = get_weighted_random_selection_of_tracks(
+            tracks['tracks'], tracks_cap)
+        tracks['tracks'] = randomized_tracks
+    else:
+        random.shuffle(tracks['tracks'])
+        tracks['tracks'] = tracks['tracks'][:tracks_cap]
+    return tracks
 
 
 def get_filtered_name(name_to_fix: str):
