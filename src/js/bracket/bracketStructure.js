@@ -3,12 +3,11 @@ import { traverseAllCells } from "./bracketData.js";
 import { removeAllChildNodes, createElement } from "../misc/utilities.js";
 import { getSVGIcon } from "../misc/svgGenerator.js";
 import { displayBracketDescription } from "../visuals/description.js";
-import {
-  activateDashboardTooltips,
-  getDashboard,
-} from "../dashboard/dashboardHandlers.js";
+import { getDashboard } from "../dashboard/dashboardHandlers.js";
 import { addTooltipToCell } from "../cell/cellToolTips.js";
 import { trophySVGData } from "../visuals/winnerFX.js";
+import { activateDashboardTooltips } from "../dashboard/dashboardTooltips.js";
+import { fixSVGDimensions } from "../misc/svgGenerator.js";
 
 // create madness bracket
 export function createBracketStructure(bracket, options) {
@@ -141,6 +140,7 @@ function createFinalRound(bracket, options) {
   winnerContainer.appendChild(winnerCell);
   const trophyIcon = getSVGIcon(trophySVGData["trophy"]);
   trophyIcon.classList.add("trophy-icon");
+  fixSVGDimensions(trophyIcon, "32px");
   winnerContainer.appendChild(trophyIcon);
 
   finalRound.appendChild(winnerContainer);

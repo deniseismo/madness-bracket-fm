@@ -10,7 +10,7 @@ export function socialShareInit(url, title) {
 
   twitterButton.setAttribute(
     "href",
-    `https://twitter.com/share?url=${shareUrl}&text=${shareTitle}&hashtags=[madnessbracket]`
+    `https://twitter.com/share?url=${shareUrl}&text=${shareTitle}&hashtags=madnessbracket`
   );
   redditButton.setAttribute(
     "href",

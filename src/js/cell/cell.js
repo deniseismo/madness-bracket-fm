@@ -109,7 +109,8 @@ export class Cell {
       this.element.style.background = `linear-gradient(to right, ${dominantColor}, ${secondaryColor}`;
       this.element.style.color = this.getTextColor();
     } else {
-      this.element.style.color = this.defaultCellColor;
+      this.element.style.background = this.defaultCellColor;
+      this.element.style.color = "white";
     }
   }
   // set DOM element contents

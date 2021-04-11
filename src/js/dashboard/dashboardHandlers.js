@@ -1,10 +1,10 @@
-import { getSVGIcon } from "../misc/svgGenerator.js";
+import { fixSVGDimensions, getSVGIcon } from "../misc/svgGenerator.js";
 import { dashboardButtonsSVGData } from "./dashboardButtons.js";
 import { createElement } from "../misc/utilities.js";
 import { resetBracket, shuffleBracket } from "../bracket/bracketData.js";
 import { shareBracket } from "../share/shareBracket.js";
 import { fetchTracks } from "../fetchTracks.js";
-import tippy from "tippy.js";
+import { activateDashboardTooltips } from "./dashboardTooltips.js";
 
 export function getDashboard(bracket, options) {
   const dashboardContainer = createElement("div", ["dashboard-container"]);
@@ -62,9 +62,11 @@ export function getDashboard(bracket, options) {
   shareIcon.classList.add("dashboard-icon");
   shareButton.appendChild(shareIcon);
   shareButton.addEventListener("click", () => {
-    console.log(bracket);
-    console.log(options.getCurrentTracks());
     shareBracket(bracket, options);
+  });
+
+  [resetIcon, shuffleIcon, retryIcon, shareIcon].forEach((icon) => {
+    fixSVGDimensions(icon, "25px");
   });
 
   dashboardContainer.append(
@@ -73,30 +75,5 @@ export function getDashboard(bracket, options) {
     retryButton,
     shareButton
   );
-  activateDashboardTooltips();
   return dashboardContainer;
-}
-
-export function activateDashboardTooltips() {
-  console.log("tooltips activated");
-  tippy(".button-reset", {
-    arrow: true,
-    placement: "bottom",
-    content: "reset",
-  });
-  tippy(".button-shuffle", {
-    arrow: true,
-    placement: "bottom",
-    content: "shuffle",
-  });
-  tippy(".button-retry", {
-    arrow: true,
-    placement: "bottom",
-    content: "new tracks",
-  });
-  tippy(".button-share", {
-    arrow: true,
-    placement: "bottom",
-    content: "share",
-  });
 }
