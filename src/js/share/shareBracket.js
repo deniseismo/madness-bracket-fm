@@ -1,5 +1,5 @@
 import MicroModal from "micromodal";
-//import MicroModal from "../third-party/micromodal.es.js";
+import { socialShareInit } from "./socials/socials.js";
 // Save current bracket structure with all the info about tracks,
 // cells, their position in the bracket and their status (i.e. active/advanceable/etc).
 // Used to send current bracket to backend for storing & sharing
@@ -13,7 +13,7 @@ export function shareBracket(bracketInfo, options) {
       if (data) {
         console.log(data);
         triggerShareModal(data["share_bracket_id"]);
-        // addBracketLink(data["share_bracket_id"]);
+        socialShareInit(data["share_bracket_id"], options.getDescription());
       } else {
         console.log(data);
       }
