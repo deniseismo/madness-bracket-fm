@@ -4,7 +4,7 @@ import { shareButtonSVGData } from "./shareButtons.js";
 import { getSVGIcon } from "../misc/svgGenerator.js";
 import { takeScreenshot } from "./takeScreenshot.js";
 import Clipboard from "clipboard";
-
+import { activateShareTooltips } from "./shareTooltips.js";
 // creates modal window
 function createModal() {
   const mainModalContainer = createElement("div", [
@@ -126,6 +126,7 @@ export function addModal() {
   const modal = createModal();
   const container = document.querySelector(".container");
   container.append(modal);
+  activateShareTooltips();
 }
 
 // instantiate Clipboard by passing a button-copy selector
