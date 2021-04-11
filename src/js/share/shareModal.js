@@ -69,20 +69,30 @@ function createSocialMediaButtons() {
   const socialMediaButtonsContainer = createElement("div", [
     "social-media-container",
   ]);
-  const twitterButton = createElement("button", [
-    "button-twitter",
-    "button-social",
-  ]);
+  const twitterButton = createElement("a", ["button-twitter", "button-social"]);
   const twitterIcon = getSVGIcon(shareButtonSVGData["twitter"]);
   twitterIcon.classList.add("social-media-icon");
   twitterButton.appendChild(twitterIcon);
 
-  const vkButton = createElement("button", ["button-vk", "button-social"]);
+  const vkButton = createElement("a", ["button-vk", "button-social"]);
   const vkIcon = getSVGIcon(shareButtonSVGData["vk"]);
   vkIcon.classList.add("social-media-icon");
   vkButton.appendChild(vkIcon);
 
-  const facebookButton = createElement("button", [
+  const telegramButton = createElement("a", [
+    "button-telegram",
+    "button-social",
+  ]);
+  const telegramIcon = getSVGIcon(shareButtonSVGData["telegram"]);
+  telegramIcon.classList.add("social-media-icon");
+  telegramButton.appendChild(telegramIcon);
+
+  const redditButton = createElement("a", ["button-reddit", "button-social"]);
+  const redditIcon = getSVGIcon(shareButtonSVGData["reddit"]);
+  redditIcon.classList.add("social-media-icon");
+  redditButton.appendChild(redditIcon);
+
+  const facebookButton = createElement("a", [
     "button-facebook",
     "button-social",
   ]);
@@ -102,6 +112,8 @@ function createSocialMediaButtons() {
   socialMediaButtonsContainer.append(
     twitterButton,
     vkButton,
+    telegramButton,
+    redditButton,
     facebookButton,
     cameraButton
   );
