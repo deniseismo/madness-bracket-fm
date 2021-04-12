@@ -30,3 +30,8 @@ export function getSVGIcon(svgData) {
   }
   return svgIcon;
 }
+
+export function fixSVGDimensions(svg, size) {
+  svg.setAttribute("width", size);
+  svg.setAttribute("height", size);
+}
