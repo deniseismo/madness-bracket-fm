@@ -37,4 +37,13 @@ export function activateShareTooltips() {
       content: group[1],
     });
   });
+  tippy(copyButton, {
+    trigger: "click",
+    content: "copied!",
+    placement: "top",
+    duration: [300, 500],
+    onShown(instance) {
+      instance.hide();
+    },
+  });
 }
