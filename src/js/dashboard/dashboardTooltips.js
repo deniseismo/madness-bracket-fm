@@ -1,5 +1,6 @@
 import tippy from "tippy.js";
 
+// activate tooltips for dashboard buttons: reset, shuffle, retry, share
 export function activateDashboardTooltips() {
   tippy(".button-reset", {
     arrow: true,

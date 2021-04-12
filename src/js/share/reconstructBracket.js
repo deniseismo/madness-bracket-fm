@@ -1,3 +1,4 @@
+// reconstruct bracket from the given data: used to render the shared bracket
 export function reconstructBracket(
   currentBracketData,
   sharedBracketData,

@@ -1,5 +1,6 @@
 import { createElement } from "../misc/utilities.js";
 
+// show bracket description/title: artist's name/classics/charts/secret, etc.
 export function displayBracketDescription(description) {
   const container = document.querySelector(".container");
   const descriptionContainer = createElement("div", ["description-container"]);

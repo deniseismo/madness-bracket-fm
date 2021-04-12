@@ -13,9 +13,7 @@ export let bracket = new BracketData();
 
 export let options = new OptionStorage();
 
-console.log(document.querySelector(".form__group"));
 document.querySelector(".form__group").onsubmit = function () {
-  console.log("submitting!");
   const inputValue = document.querySelector(".form__field").value.trim();
   options.setInputValue(inputValue);
   fetchTracks(options).then((data) => {
@@ -25,7 +23,6 @@ document.querySelector(".form__group").onsubmit = function () {
         options.setDescription(data["description"]);
         createBracketStructure(bracket, options);
         addModal();
-        console.log(bracket);
       } else {
         console.log(data);
       }

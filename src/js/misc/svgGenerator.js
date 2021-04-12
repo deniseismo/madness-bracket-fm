@@ -1,3 +1,4 @@
+// generates svg given data
 export function getSVGIcon(svgData) {
   const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svgIcon.setAttribute("viewBox", "0 0 512 512");
@@ -31,6 +32,7 @@ export function getSVGIcon(svgData) {
   return svgIcon;
 }
 
+// add width & height attributes to fix an html2canvas screenshot bug w/ svgs
 export function fixSVGDimensions(svg, size) {
   svg.setAttribute("width", size);
   svg.setAttribute("height", size);

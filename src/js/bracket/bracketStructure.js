@@ -8,6 +8,7 @@ import { addTooltipToCell } from "../cell/cellToolTips.js";
 import { trophySVGData } from "../visuals/winnerFX.js";
 import { activateDashboardTooltips } from "../dashboard/dashboardTooltips.js";
 import { fixSVGDimensions } from "../misc/svgGenerator.js";
+import { bracketAnimation } from "../animation/bracketAnimation.js";
 
 // create madness bracket
 export function createBracketStructure(bracket, options) {
@@ -47,7 +48,7 @@ export function createBracketStructure(bracket, options) {
     }
     // add an appropriate class to the round specifying its index as well
     const roundClassName = `${side}-${roundIndex}`;
-    round.classList.add(roundClassName);
+    round.classList.add(roundClassName, `round-${side}`);
 
     // add a cell to the 'round' div 'tracksPerRound' times
     for (let j = 0; j < tracksPerRound; j++) {
@@ -65,6 +66,7 @@ export function createBracketStructure(bracket, options) {
 
       // distributes all the songs across the first round cells on both sides of the bracket
       if (roundIndex === 0) {
+        cell.classList.add("cell-first");
         const previewURL = tracks[side][j]["spotify_preview_url"];
         if (previewURL) {
           cellObject.setPreviewURL(previewURL);
@@ -93,6 +95,7 @@ export function createBracketStructure(bracket, options) {
           cellObject.setTrackID(j + tracksLength / 2);
         }
       } else {
+        cell.classList.add("cell-not-first");
         cell.classList.add("cell_empty");
       }
       // fill the bracketData object will all the cell objects
@@ -117,6 +120,7 @@ export function createBracketStructure(bracket, options) {
   }
   activateDashboardTooltips();
   traverseAllCells(bracket);
+  bracketAnimation(numberOfRounds);
 }
 
 // create final round (two finalist and the winner)
@@ -151,6 +155,8 @@ function createFinalRound(bracket, options) {
     "left-final-cell",
     "final-cell",
     "cell_empty",
+    "cell-left",
+    "cell-not-first",
   ]);
   const songLeftTitleElement = createElement("p", ["song-title"]);
   leftCell.appendChild(songLeftTitleElement);
@@ -165,6 +171,8 @@ function createFinalRound(bracket, options) {
     "right-final-cell",
     "final-cell",
     "cell_empty",
+    "cell-right",
+    "cell-not-first",
   ]);
   const songRightTitleElement = createElement("p", ["song-title"]);
   rightCell.appendChild(songRightTitleElement);

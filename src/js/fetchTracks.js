@@ -1,3 +1,4 @@
+// fetch tracks from the server
 export const fetchTracks = async function (options) {
   try {
     const response = await fetch("http://192.168.1.62:5000/bracket", {

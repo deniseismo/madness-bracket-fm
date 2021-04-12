@@ -4,8 +4,8 @@ import { createElement } from "../misc/utilities.js";
 import { resetBracket, shuffleBracket } from "../bracket/bracketData.js";
 import { shareBracket } from "../share/shareBracket.js";
 import { fetchTracks } from "../fetchTracks.js";
-import { activateDashboardTooltips } from "./dashboardTooltips.js";
 
+// create a dashboard (reset, shuffle, retry, share buttons)
 export function getDashboard(bracket, options) {
   const dashboardContainer = createElement("div", ["dashboard-container"]);
 

@@ -1,6 +1,8 @@
 import { playMusic, stopMusic } from "./music.js";
 import { removeAllChildNodes } from "../misc/utilities.js";
 import { getSVGIcon } from "../misc/svgGenerator.js";
+
+// play & pause button svg data
 export const playButtonSVGData = {
   play: {
     path: [
@@ -28,11 +30,13 @@ export const playButtonSVGData = {
   },
 };
 
+// handles PlayButton logic
 export class PlayButton {
   constructor(playButtonElement, previewURL) {
     this.playButtonElement = playButtonElement;
     this.previewURL = previewURL;
   }
+  // switch between play & pause modes
   playPause() {
     if (this.playButtonElement.dataset.status === "standby") {
       this.resetAllButtons();
@@ -49,6 +53,7 @@ export class PlayButton {
       stopMusic();
     }
   }
+  // resets (reverts all buttons to standby mode)
   resetAllButtons() {
     const allButtons = document.querySelectorAll(".play-button");
     allButtons.forEach((button) => {
@@ -60,6 +65,7 @@ export class PlayButton {
       }
     });
   }
+  // change play button icon to play or pause one
   static changePlayButtonIcon(buttonToChange, iconType) {
     removeAllChildNodes(buttonToChange);
     const pauseIcon = getSVGIcon(playButtonSVGData[iconType]);

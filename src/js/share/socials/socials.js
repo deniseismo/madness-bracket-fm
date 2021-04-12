@@ -1,3 +1,4 @@
+// initialize social sharing: add urls & titles to social share links
 export function socialShareInit(url, title) {
   const twitterButton = document.querySelector(".button-twitter");
   const redditButton = document.querySelector(".button-reddit");

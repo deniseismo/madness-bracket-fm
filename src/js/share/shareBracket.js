@@ -34,7 +34,7 @@ function prepareBracketDataForSharing(bracketInfo, options) {
   // omit these properties when stringify
   function replacer(key, value) {
     if (
-      // remove unnecessary and/or circular properties
+      // remove unnecessary and/or cyclic properties/objects
       key === "nextCell" ||
       key === "cellIndex" ||
       key === "element" ||

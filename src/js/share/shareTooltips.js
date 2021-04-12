@@ -1,5 +1,6 @@
 import tippy from "tippy.js";
 
+// activates tooltips for share buttons
 export function activateShareTooltips() {
   const twitterButton = document.querySelector(".button-twitter");
   const redditButton = document.querySelector(".button-reddit");

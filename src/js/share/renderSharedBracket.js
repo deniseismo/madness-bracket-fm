@@ -15,6 +15,7 @@ function checkShareBracketInfo() {
   return typeof sharedBracketData !== "undefined";
 }
 
+// renders intro/header
 function getIntroHeaderReady() {
   createIntroElements();
   introAnimation();
@@ -22,6 +23,7 @@ function getIntroHeaderReady() {
 
 getIntroHeaderReady();
 
+// ready up all the options
 function getOptionsReady() {
   options.setInputValue(sharedBracketData["description"]);
   options.setCurrentTracks(sharedBracketData["tracks"]);
@@ -30,11 +32,10 @@ function getOptionsReady() {
 }
 getOptionsReady();
 
-console.log("options:", options);
+// create bracket structure
 createBracketStructure(bracket, options);
-console.log(sharedBracketData["structure"]);
-console.log(sharedBracketData["tracks"]);
 
+// reconstruct bracket from the given data
 reconstructBracket(
   bracket,
   sharedBracketData["structure"],

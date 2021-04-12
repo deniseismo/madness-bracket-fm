@@ -38,3 +38,8 @@ export function removeAllChildNodes(parent) {
     parent.removeChild(parent.firstChild);
   }
 }
+
+export function doesArrayContainSomethingTruthy(array) {
+  const exist = (element) => element;
+  return array.some(exist);
+}

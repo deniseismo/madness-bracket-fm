@@ -1,3 +1,4 @@
+// dashboard buttons svg data: reset, retry, shuffle, share
 export const dashboardButtonsSVGData = {
   reset: {
     path: [

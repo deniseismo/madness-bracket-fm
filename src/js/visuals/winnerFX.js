@@ -1,3 +1,4 @@
+// winner's trophy svg data
 export const trophySVGData = {
   trophy: {
     path: [
