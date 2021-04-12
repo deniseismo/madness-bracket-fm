@@ -5,7 +5,6 @@
   width: auto;
   transition: padding 0.2s linear;
   white-space: nowrap;
-  overflow: hidden;
   margin: 2% 0;
   background: $greenishColor;
   padding: 0.5rem;
@@ -18,26 +17,33 @@
     content: "";
     position: absolute;
     background-color: #fff;
-    right: 0;
     top: 50%;
-    transform: translateX(100%);
-    width: 1.5em;
+    width: 1.5rem;
     height: 2px;
   }
   &::after {
     content: "";
     position: absolute;
     background-color: #fff;
-    right: -1.5em;
-    height: calc(50% + 22px);
+    height: calc(50% + 1.5rem);
     width: 2px;
     top: 50%;
   }
+  &.cell-left::after,
+  &.cell-left::before {
+    right: calc(-1.5rem - 1px);
+  }
+  &.cell-right::after,
+  &.cell-right::before {
+    left: calc(-1.5rem - 1px);
+  }
+
   &:nth-last-of-type(even)::after {
     top: 50%;
   }
   &:nth-last-of-type(odd)::after {
-    top: -50%;
+    bottom: 50%;
+    top: auto;
   }
   &:not(.cell_empty):hover {
     cursor: pointer;
@@ -54,27 +60,57 @@
       rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px,
       rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
   }
-
   .song-title {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
-    &::before {
-      content: "";
-      position: absolute;
-      background-color: wheat;
-      right: calc(100% + 1.5em);
-      top: 50%;
-      transform: translateX(100%);
-      width: 1.5em;
-      height: 2px;
+  }
+}
+
+.round.left-1,
+.round.right-1 {
+  .cell {
+    &::after {
+      height: calc(50% + 3rem);
     }
   }
 }
-.cell-right::after,
-.cell-right::before {
-  right: calc(100% + 1.5em);
+
+.round.left-2,
+.round.right-2 {
+  .cell {
+    &::after {
+      height: calc(50% + 6rem);
+    }
+  }
 }
+
+.cell-not-first .song-title {
+  &::before {
+    content: "";
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    top: 50%;
+    width: 1.5rem;
+    height: 2px;
+  }
+}
+
+.cell-not-first.cell-right {
+  .song-title {
+    &::before {
+      right: -1.5rem;
+    }
+  }
+}
+.cell-not-first.cell-left {
+  .song-title {
+    &::before {
+      left: -1.5rem;
+    }
+  }
+}
+
 .final-cell::after,
 .winner-cell::before,
 .right-final-cell::before {
@@ -96,11 +132,11 @@
 }
 
 .final-cell {
-  margin: 8% 2%;
+  margin: 8% 0;
 }
 
 .winner-cell {
-  margin: 0 0 0 40px;
+  margin: 0 10px 0 40px;
 }
 .play-button {
   display: flex;
