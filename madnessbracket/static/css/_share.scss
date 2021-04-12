@@ -1,12 +1,18 @@
 .button-social,
 .button-close {
+  @include hoverable();
   background: none;
+  margin: 0.5rem;
+  padding: 0;
   color: $whitishColor;
-  :hover {
-    transition: filter 0.2s;
+  &:hover {
     filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+    transform: scale(1.2);
   }
-  transition: filter 0.2s;
+  transition: all 0.2s ease;
+}
+.button-copy {
+  margin-left: 1rem;
 }
 .social-media-icon,
 .copy-icon,
@@ -15,7 +21,7 @@
   fill: $whitishColor;
 }
 .share-link-container {
-  @include flexContainer("row", "center");
+  @include flexContainer(row, center);
   .share-link {
     @include hoverable();
     display: block;
@@ -37,5 +43,5 @@
 }
 
 .social-media-container {
-  @include flexContainer("row", "center");
+  @include flexContainer(row, flex-start);
 }

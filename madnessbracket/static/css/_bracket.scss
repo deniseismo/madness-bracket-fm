@@ -1,7 +1,5 @@
 .tournament-bracket {
   @include flexContainer(row, center);
-  height: auto;
-  width: 95%;
 }
 .round {
   @include flexContainer(column, space-around);
@@ -10,14 +8,19 @@
   min-height: 100%;
   padding-bottom: 2em;
   transition: padding 0.2s ease-in-out, margin 0.2s ease-in-out;
-  margin: auto;
+}
+
+.round-left {
+  margin-right: calc(3rem - 2px);
+}
+.round-right {
+  margin-left: calc(3rem - 2px);
 }
 
 .final-round {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
   min-width: 250px;
 }
 
