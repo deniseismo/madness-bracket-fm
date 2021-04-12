@@ -2,6 +2,7 @@ from madnessbracket.models import Artist, Song
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_artist_correct_name
 from madnessbracket.dev.spotify.spotify_client_api import get_spotify_artist_top_tracks
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
+from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 from sqlalchemy import func
 
 
@@ -114,4 +115,7 @@ def get_tracks_via_spotify(artist_name: str):
             "album_colors": None
         }
         tracks["tracks"].append(track)
+    # log newly found artist
+    if tracks["tracks"]:
+        log_artist_missing_from_db(artist_name)
     return tracks
