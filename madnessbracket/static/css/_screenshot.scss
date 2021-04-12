@@ -1,0 +1,11 @@
+.screenshot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  border: 2px solid $whitishColor;
+  transform: scale(0.8);
+  transform: 0.3s cubic-bezier(0.42, 0, 0.58, 1) 0s,
+    opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1) 0s,
+    transform 0.3s cubic-bezier(0.42, 0, 0.58, 1) 0s;
+}
