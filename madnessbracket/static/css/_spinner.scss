@@ -1,0 +1,27 @@
+.spinner-wrapper {
+  @include flexContainer(row, center);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $backgroundColor;
+  opacity: 0.9;
+}
+.spinner {
+  @include flexContainer(row, center);
+  height: 60px;
+  background-color: transparent;
+  .line {
+    background-color: $whitishColor;
+    height: 2px;
+  }
+  .horizontal-line,
+  .median-line {
+    width: 100px;
+  }
+  .vertical-line {
+    height: 100%;
+    width: 2px;
+  }
+}
