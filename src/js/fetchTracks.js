@@ -1,11 +1,19 @@
 // fetch tracks from the server
+let controller = null;
 export const fetchTracks = async function (options) {
+  // abort any ongoing fetching
+  if (controller) {
+    controller.abort();
+  }
+  controller = new AbortController();
+  const signal = controller.signal;
   try {
     const response = await fetch("http://192.168.1.62:5000/bracket", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
       }),
+      signal: signal,
       body: JSON.stringify({
         type: options.getCurrentBracketType(),
         value: options.getInputValue(),
