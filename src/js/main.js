@@ -9,6 +9,7 @@ import {
   handleMaxBracketSizeOption,
 } from "./options/optionHandlers.js";
 import { fetchTracks } from "./fetchTracks.js";
+import { showSpinner, hideSpinner } from "./visuals/spinner.js";
 export let bracket = new BracketData();
 
 export let options = new OptionStorage();
@@ -16,7 +17,9 @@ export let options = new OptionStorage();
 document.querySelector(".form__group").onsubmit = function () {
   const inputValue = document.querySelector(".form__field").value.trim();
   options.setInputValue(inputValue);
+  showSpinner();
   fetchTracks(options).then((data) => {
+    hideSpinner();
     try {
       if (data) {
         options.setCurrentTracks(data["tracks"]);
