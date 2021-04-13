@@ -5,14 +5,13 @@
   width: auto;
   transition: padding 0.2s linear;
   white-space: nowrap;
-  margin: 2% 0;
+  margin: 3% 0;
   background: $greenishColor;
   padding: 0.5rem;
   color: $whitishColor;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-  max-width: 175px;
-  min-width: 175px;
-  min-height: 25px;
+  width: 12rem;
+  min-height: 3rem;
   &::before {
     content: "";
     position: absolute;
@@ -133,6 +132,9 @@
 
 .final-cell {
   margin: 8% 0;
+}
+.left-final-cell {
+  margin-right: 1rem;
 }
 
 .winner-cell {

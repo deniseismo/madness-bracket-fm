@@ -19,7 +19,12 @@
   box-shadow: rgba(72, 242, 57, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   color: white;
-  transition: 0.5s transform cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: 0.5s transform cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    0.3s box-shadow ease-out;
+  &:hover {
+    box-shadow: rgba(206, 66, 100, 0.5) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
 }
 .square-button.active {
   transform: translateY(10%);
@@ -115,7 +120,7 @@
   /* display: flex; */
   text-align: center;
   line-height: 1.5rem;
-  border: 2px solid $whitishColor;
+  border: 1px solid $whitishColor;
   font-size: 1.5rem;
   &:hover {
     background-color: $reddishColor;
