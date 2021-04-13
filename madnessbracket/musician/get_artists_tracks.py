@@ -1,6 +1,7 @@
 from madnessbracket.models import Artist, Song
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_artist_correct_name
 from madnessbracket.dev.spotify.spotify_client_api import get_spotify_artist_top_tracks
+from madnessbracket.dev.db_mgmt.color_mgmt.dominant_colors import get_file_from_url, get_image_dominant_colors
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 from sqlalchemy import func
@@ -108,11 +109,19 @@ def get_tracks_via_spotify(artist_name: str):
         "description": artist_name
     }
     for track_entry in track_entries:
+        try:
+            album_image_url = track_entry.album.images[-1].url
+            image_file = get_file_from_url(album_image_url)
+            album_colors = get_image_dominant_colors(
+                image_file)
+        except (IndexError, ValueError) as e:
+            print(e)
+            album_colors = None
         track = {
             "track_title": track_entry.name,
             "artist_name": track_entry.artists[0].name,
             "spotify_preview_url": track_entry.preview_url if track_entry.preview_url else None,
-            "album_colors": None
+            "album_colors": album_colors
         }
         tracks["tracks"].append(track)
     # log newly found artist
