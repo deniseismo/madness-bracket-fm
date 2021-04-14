@@ -28,12 +28,19 @@ def create_app(config_class=Config):
 
     db.init_app(app)
 
-    # import all necessary blueprints
+    # import all blueprints necessary
     from madnessbracket.main.routes import main
     from madnessbracket.spotify_api.routes import spotify
     from madnessbracket.share.routes import share
+    from madnessbracket.charts.routes import charts
+    from madnessbracket.musician.routes import musician
+    from madnessbracket.secret.routes import secret
+
     # register all blueprints
     app.register_blueprint(main)
+    app.register_blueprint(musician)
+    app.register_blueprint(charts)
+    app.register_blueprint(secret)
     app.register_blueprint(spotify)
     app.register_blueprint(share)
 
