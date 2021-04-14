@@ -4,7 +4,7 @@ import json
 from flask import current_app
 
 
-def get_top_rated_songs():
+def get_songs_considered_best():
     """
     picks random selection of songs considered best*
     * by Pitchfork, (Rolling Stones, …) # TODO: add RS500/NME
@@ -19,18 +19,28 @@ def get_top_rated_songs():
         return None
     # shuffle the songs
     random.shuffle(songs)
-    # init dict
+    processed_tracks = process_charts_songs(songs)
     tracks = {
-        "tracks": [],
+        "tracks": processed_tracks,
         "description": "charts"
     }
+    return tracks
+
+
+def process_charts_songs(tracks: list):
+    """
+    processes songs from charts creating a list of dicts with all the needed info about tracks
+    :param tracks:
+    :return: a list of dict with all the info about particular songs
+    """
     # iterate through tracks
-    for song in songs:
-        name = song['title']
-        artist_name = song['artist_name']
-        preview_url = song["preview_url"]
-        album_colors = song["album_colors"]
-        text_color = song["text_color"]
+    processed_tracks = []
+    for track in tracks:
+        name = track['title']
+        artist_name = track['artist_name']
+        preview_url = track["preview_url"]
+        album_colors = track["album_colors"]
+        text_color = track["text_color"]
 
         a_track_info = {
             "artist_name": artist_name,
@@ -39,5 +49,5 @@ def get_top_rated_songs():
             "album_colors": album_colors,
             "text_color": text_color
         }
-        tracks["tracks"].append(a_track_info)
-    return tracks
+        processed_tracks.append(a_track_info)
+    return processed_tracks

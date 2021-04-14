@@ -4,7 +4,6 @@ from madnessbracket.dev.spotify.spotify_client_api import get_spotify_artist_top
 from madnessbracket.dev.db_mgmt.color_mgmt.dominant_colors import get_file_from_url, get_image_dominant_colors
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
-from sqlalchemy import func
 
 
 def get_artists_tracks(artist_name: str):
@@ -63,29 +62,11 @@ def get_tracks_via_database(artist_name: str):
         return None
     print(track_entries, len(track_entries))
     print(list(set(track_entries)), len(set(track_entries)))
+    processed_tracks = process_tracks_from_db(track_entries)
     tracks = {
-        "tracks": [],
+        "tracks": processed_tracks,
         "description": artist_name
     }
-    for track_entry in track_entries:
-        try:
-            album_colors = track_entry.album.album_cover_color.split(",")
-            dominant_color = album_colors[0]
-            secondary_color = album_colors[1]
-            text_color = get_contrast_color_for_two_color_gradient(
-                dominant_color, secondary_color)
-        except (AttributeError, NameError, TypeError, IndexError) as e:
-            print(e)
-            album_colors = None
-            text_color = "white"
-        track = {
-            "track_title": track_entry.title,
-            "artist_name": track_entry.artist.name,
-            "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None,
-            "album_colors": album_colors,
-            "text_color": text_color
-        }
-        tracks["tracks"].append(track)
     return tracks
 
 
@@ -104,11 +85,44 @@ def get_tracks_via_spotify(artist_name: str):
         print(f"could NOT find {artist_name} via Spotify")
         return None
     print(track_entries)
+    processed_tracks = process_tracks_from_spotify(track_entries)
     tracks = {
-        "tracks": [],
+        "tracks": processed_tracks,
         "description": artist_name
     }
-    for track_entry in track_entries:
+    # log newly found artist
+    if processed_tracks:
+        log_artist_missing_from_db(artist_name)
+    return tracks
+
+
+def process_tracks_from_db(tracks: list):
+    processed_tracks = []
+    for track_entry in tracks:
+        try:
+            album_colors = track_entry.album.album_cover_color.split(",")
+            dominant_color = album_colors[0]
+            secondary_color = album_colors[1]
+            text_color = get_contrast_color_for_two_color_gradient(
+                dominant_color, secondary_color)
+        except (AttributeError, NameError, TypeError, IndexError) as e:
+            print(e)
+            album_colors = None
+            text_color = "white"
+        track = {
+            "track_title": track_entry.title,
+            "artist_name": track_entry.artist.name,
+            "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None,
+            "album_colors": album_colors,
+            "text_color": text_color
+        }
+        processed_tracks.append(track)
+    return processed_tracks
+
+
+def process_tracks_from_spotify(tracks: list):
+    processed_tracks = []
+    for track_entry in tracks:
         try:
             album_image_url = track_entry.album.images[-1].url
             image_file = get_file_from_url(album_image_url)
@@ -123,8 +137,5 @@ def get_tracks_via_spotify(artist_name: str):
             "spotify_preview_url": track_entry.preview_url if track_entry.preview_url else None,
             "album_colors": album_colors
         }
-        tracks["tracks"].append(track)
-    # log newly found artist
-    if tracks["tracks"]:
-        log_artist_missing_from_db(artist_name)
-    return tracks
+        processed_tracks.append(track)
+    return processed_tracks
