@@ -31,12 +31,26 @@ const FLASHING_WORDS = {
     "CHARTS",
     "CHARTS",
   ],
+  // words for SECRET 'square choice box'
+  secret: [
+    "SECRET",
+    "WILD CARD",
+    "???",
+    "WAIT, WHAT?",
+    "WHO KNOWS?",
+    "SECRET",
+    "SECRET",
+    "SECRET",
+    "SECRET",
+    "SECRET",
+  ],
 };
 
 // pick random paragraph (the word/words to animate afterwards) from the 'square box of choice'
 function getRandomElement(squareChoiceBox) {
   // get all paragraphs from the box
   const allParagraphs = squareChoiceBox.querySelectorAll(":scope > p");
+  console.log("paragraphs:", allParagraphs);
   // get a random paragraph
   const randomParagraphElement = pickRandomElement(allParagraphs);
   // figure out what this square box type is: artist or charts
