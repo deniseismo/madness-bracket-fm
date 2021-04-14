@@ -10,3 +10,11 @@ export function displayBracketDescription(description) {
   descriptionContainer.append(descriptionText, hr);
   container.appendChild(descriptionContainer);
 }
+
+/* updates bracket's description with the new one (in case it somehow changed, 
+ e.g. if one click retry button in SECRET mode) 
+*/
+export function updateDescription(description) {
+  const descriptionText = document.querySelector(".description-text");
+  descriptionText.textContent = description.toUpperCase();
+}
