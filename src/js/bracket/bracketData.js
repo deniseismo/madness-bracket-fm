@@ -123,11 +123,17 @@ export function shuffleBracket(bracket, options) {
   let tracks = options.getCurrentTracks();
   // shuffle tracks
   shuffleArray(tracks);
+  options.setCurrentTracks(tracks);
+  updateBracket(bracket, options);
+}
+
+export function updateBracket(bracket, options) {
+  // take current bracket tracks data
+  let tracks = options.getCurrentTracks();
   tracks = {
     left: tracks.slice(0, tracks.length / 2),
     right: tracks.slice(tracks.length / 2),
   };
-  console.log("shuffled array now is ", tracks);
   // the length of each side's first round
   const numberOfCells = Object.keys(bracket.left[0]).length;
   for (let i = 0; i < numberOfCells; i++) {
@@ -158,4 +164,12 @@ export function shuffleBracket(bracket, options) {
       }
     });
   }
+}
+
+export function retryBracket(bracket, options) {
+  // stop music if there's any playing
+  stopMusic();
+  // reset bracket first
+  resetBracket(bracket);
+  updateBracket(bracket, options);
 }
