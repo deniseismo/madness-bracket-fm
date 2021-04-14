@@ -1,9 +1,14 @@
 import { fixSVGDimensions, getSVGIcon } from "../misc/svgGenerator.js";
 import { dashboardButtonsSVGData } from "./dashboardButtons.js";
 import { createElement } from "../misc/utilities.js";
-import { resetBracket, shuffleBracket } from "../bracket/bracketData.js";
+import {
+  resetBracket,
+  retryBracket,
+  shuffleBracket,
+} from "../bracket/bracketData.js";
 import { shareBracket } from "../share/shareBracket.js";
 import { fetchTracks } from "../fetchTracks.js";
+import { updateDescription } from "../visuals/description.js";
 
 // create a dashboard (reset, shuffle, retry, share buttons)
 export function getDashboard(bracket, options) {
@@ -44,7 +49,8 @@ export function getDashboard(bracket, options) {
         if (data) {
           options.setCurrentTracks(data["tracks"]);
           options.setDescription(data["description"]);
-          shuffleBracket(bracket, options);
+          updateDescription(options.getDescription());
+          retryBracket(bracket, options);
         } else {
           console.log(data);
         }
