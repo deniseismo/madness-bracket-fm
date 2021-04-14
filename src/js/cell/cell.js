@@ -122,7 +122,7 @@ export class Cell {
     } else {
       console.log(songTitleElement);
       songTitleElement.textContent = this.getCurrentSong();
-      songTitleElement.title = this.getArtistName();
+      songTitleElement.title = this.getCurrentSong();
       console.log("setting to ", songTitleElement.textContent);
     }
   }
