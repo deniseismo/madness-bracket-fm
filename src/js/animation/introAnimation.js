@@ -1,4 +1,3 @@
-//import anime from "../third-party/anime.es.js";
 import anime from "animejs/lib/anime.es.js";
 // animate intro/header lines and the title
 export function introAnimation() {
