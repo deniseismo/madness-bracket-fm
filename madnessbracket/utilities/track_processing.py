@@ -3,31 +3,23 @@ import re
 from madnessbracket.utilities.randomize_track_selection import get_weighted_random_selection_of_tracks
 
 
-def cap_tracks(tracks: dict, limit: int = 16, tracks_type="artist"):
+def get_capped_bracket_size(number_of_tracks: int, chosen_upper_limit: int):
     """
-    randomizes & caps (at a given limit, default=32) tracks/songs
-    :param limit: maximum number of tracks in a bracket
-    :param tracks: a tracks dict with the list of 'track info' dicts
-    :return: randomized & capped tracks
+    cap the bracket size at a maximum appropriate bracket size possible,
+        that is within [4, 8, 16, 32] but <= upper limit
+    :param number_of_tracks:
+    :param chosen_upper_limit:
+    :return: capped bracket size
     """
     # standard measurements of the bracket: 4, 8, 16, or 32 tracks
     bracket_standards = [4, 8, 16, 32]
     # capping the standards with the limit given
-    capped_standards = list(filter(lambda x: x <= limit, bracket_standards))
-    # get the total amount of tracks
-    number_of_tracks = len(tracks['tracks'])
-    print('total amount of tracks: ', number_of_tracks)
+    capped_standards = list(
+        filter(lambda x: x <= chosen_upper_limit, bracket_standards))
     # figure out what the tracks cap should be: the closest maximum number out of the bracket standards
     tracks_cap = max(
         list(filter(lambda x: x <= number_of_tracks, capped_standards)))
-    if tracks_type == "artist":
-        randomized_tracks = get_weighted_random_selection_of_tracks(
-            tracks['tracks'], tracks_cap)
-        tracks['tracks'] = randomized_tracks
-    else:
-        random.shuffle(tracks['tracks'])
-        tracks['tracks'] = tracks['tracks'][:tracks_cap]
-    return tracks
+    return tracks_cap
 
 
 def get_filtered_name(name_to_fix: str):
@@ -53,6 +45,7 @@ def get_filtered_name(name_to_fix: str):
         r"(- .*edit)",
         r"(b-side)",
         r"((BBC)\s(.*)\s(session).*)",
+        r"((from)\s(.*)\s(soundtrack))",
         r"((MTV)\s.*)",
         r"(\(from\s.*\))",
         # no weird characters
@@ -66,13 +59,22 @@ def get_filtered_name(name_to_fix: str):
     return ultimate_filtered_name
 
 
-def fix_quot_marks(song_name):
+def fix_quot_marks(song_name: str):
     """
     fixes (’,“, ”)
     """
     song_name = song_name.replace("’", "'").replace(
         "‘", "'").replace('“', '"').replace('”', '"')
     return song_name
+
+
+def fix_hyphen(string_to_fix: str):
+    """replaces weird hyphen sign (often found on MusicBrainz) with the normal one (hyphen-minus)
+
+    Args:
+        string_to_fix (str): fixed string
+    """
+    return string_to_fix.replace("‐", "-")
 
 
 def remove_quot_marks_on_both_sides(string_to_fix):
