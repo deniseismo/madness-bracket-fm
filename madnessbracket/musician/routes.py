@@ -30,7 +30,7 @@ def generate_musician_bracket():
             {'message': f"something's gone wrong"}
         ),
             404)
-    tracks = get_artists_tracks(artist_name)
+    tracks = get_artists_tracks(artist_name, bracket_limit)
     print(tracks)
     if not tracks:
         print('nothing found')
@@ -38,5 +38,4 @@ def generate_musician_bracket():
             {'message': f"nothing found"}
         ),
             404)
-    tracks = prepare_tracks_for_musician(tracks, bracket_limit)
     return jsonify(tracks)
