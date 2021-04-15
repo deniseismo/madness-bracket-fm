@@ -1,9 +1,9 @@
 from flask import Flask
+from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 
 from madnessbracket.config import Config
 from sqlalchemy import MetaData
-
 
 my_naming_convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -13,8 +13,9 @@ my_naming_convention = {
     "pk": "pk_%(table_name)s"
 }
 mtd = MetaData(naming_convention=my_naming_convention)
-
 db = SQLAlchemy(metadata=mtd)
+
+cache = Cache(config={'CACHE_TYPE': 'simple'})
 
 
 def create_app(config_class=Config):
@@ -35,6 +36,7 @@ def create_app(config_class=Config):
     from madnessbracket.charts.routes import charts
     from madnessbracket.musician.routes import musician
     from madnessbracket.secret.routes import secret
+    from madnessbracket.errors.handlers import errors
 
     # register all blueprints
     app.register_blueprint(main)
@@ -43,5 +45,6 @@ def create_app(config_class=Config):
     app.register_blueprint(secret)
     app.register_blueprint(spotify)
     app.register_blueprint(share)
+    app.register_blueprint(errors)
 
     return app
