@@ -1,4 +1,4 @@
-import { shuffleArray } from "../misc/utilities.js";
+import { shuffleArray, shuffleTracks } from "../misc/utilities.js";
 import { stopMusic } from "../music/music.js";
 import { addTooltipToCell } from "../cell/cellToolTips.js";
 /*
@@ -42,7 +42,6 @@ and the next cell where it can progress to. (makes every cell a part of a corres
 */
 export function traverseAllCells(bracket) {
   const numberOfRounds = Object.keys(bracket.left).length;
-  console.log("numberOfRounds" + numberOfRounds);
   // traversing through the rounds
   for (let i = 0; i < numberOfRounds; i++) {
     const numberOfCells = Object.keys(bracket.left[i]).length;
@@ -53,6 +52,23 @@ export function traverseAllCells(bracket) {
         bracket[side][i][j].setOpponent(bracket[side][i][j + 1]);
         bracket[side][i][j + 1].setOpponent(bracket[side][i][j]);
       });
+      // check if there's a previous round
+      if (bracket.left.hasOwnProperty(i - 1)) {
+        // set previous cells (two cells from the previous round that are connected to this cell)
+        ["left", "right"].forEach((side) => {
+          // figure out what these previous cells indices are
+          let previousCellsIndices = [j * 2, j * 2 + 1];
+          bracket[side][i][j].setPreviousCells([
+            bracket[side][i - 1][previousCellsIndices[0]],
+            bracket[side][i - 1][previousCellsIndices[1]],
+          ]);
+          previousCellsIndices = [(j + 1) * 2, (j + 1) * 2 + 1];
+          bracket[side][i][j + 1].setPreviousCells([
+            bracket[side][i - 1][previousCellsIndices[0]],
+            bracket[side][i - 1][previousCellsIndices[1]],
+          ]);
+        });
+      }
       // check if there's a next round
       if (bracket.left.hasOwnProperty(i + 1)) {
         // set the appropriate cell from the next round to be this cell's 'nextCell'
@@ -76,12 +92,15 @@ export function traverseAllCells(bracket) {
     ["left", "right"].forEach((side) => {
       // final pair of cells has the ultimate 'nextCell' — the winner cell
       bracket.final[side].setNextCell(bracket.final["winner"]);
+      bracket.final[side].setPreviousCells([
+        bracket[side][numberOfRounds - 1][0],
+        bracket[side][numberOfRounds - 1][1],
+      ]);
     });
     // configure matchup for two finalists
     bracket.final["left"].setOpponent(bracket.final["right"]);
     bracket.final["right"].setOpponent(bracket.final["left"]);
   }
-  console.log("traversing");
 }
 // resets current bracket to the initial state (basically resets all cells except for the first round)
 export function resetBracket(bracket) {
@@ -104,7 +123,6 @@ export function resetBracket(bracket) {
       } else {
         // reset the cell if it's not the first round
         ["left", "right"].forEach((side) => bracket[side][i][j].resetCell());
-        console.log(i);
       }
     }
   }
@@ -122,7 +140,8 @@ export function shuffleBracket(bracket, options) {
   // take current bracket tracks data
   let tracks = options.getCurrentTracks();
   // shuffle tracks
-  shuffleArray(tracks);
+  //shuffleArray(tracks);
+  tracks = shuffleTracks(tracks, options);
   options.setCurrentTracks(tracks);
   updateBracket(bracket, options);
 }
@@ -151,7 +170,6 @@ export function updateBracket(bracket, options) {
         // remove play button otherwise
         bracket[side][0][i].removePlayButton();
       }
-      console.log(artistName);
       // set all the track data
       bracket[side][0][i].setCurrentSong(trackTitle);
       bracket[side][0][i].setArtistName(artistName);
@@ -172,4 +190,5 @@ export function retryBracket(bracket, options) {
   // reset bracket first
   resetBracket(bracket);
   updateBracket(bracket, options);
+  shuffleTracks(options.getCurrentTracks(), options);
 }

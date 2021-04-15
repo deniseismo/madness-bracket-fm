@@ -9,6 +9,7 @@ export class Cell {
     this.cellIndex = cellIndex;
     this.element = element; // this cell's DOM element
     this.nextCell = null; // next (further up the bracket, next round) Cell object
+    this.previousCells = null; // previous two cells (cells that are connected to this cell from the previous round)
     this.song = {
       songName: null,
       artistName: null,
@@ -37,6 +38,14 @@ export class Cell {
   // gets the next cell
   getNextCell() {
     return this.nextCell;
+  }
+  // sets previous cells
+  setPreviousCells(cells) {
+    this.previousCells = cells;
+  }
+  // gets previous cells
+  getPreviousCells() {
+    return this.previousCells;
   }
   // sets the opponent (the cell object)
   setOpponent(opponentCell) {
@@ -82,7 +91,6 @@ export class Cell {
   }
   // sets album colors (two dominant colors of the album cover art)
   setAlbumColors(albumColors) {
-    console.log("setting album colors");
     this.albumColors = albumColors;
   }
   // gets album colors
@@ -99,13 +107,11 @@ export class Cell {
   }
   // apply colors to the corresponding DOM element
   applyColors() {
-    console.log("applying colors");
     // (if there are album colors)
     if (this.albumColors) {
       const dominantColor = this.albumColors[0];
       const secondaryColor = this.albumColors[1];
       // const tertiaryColor = this.albumColors[2];
-      console.log(dominantColor, secondaryColor);
       this.element.style.background = `linear-gradient(to right, ${dominantColor}, ${secondaryColor}`;
       this.element.style.color = this.getTextColor();
     } else {
@@ -115,15 +121,12 @@ export class Cell {
   }
   // set DOM element contents
   setElementText(textContent = null) {
-    console.log("setting element text");
     const songTitleElement = this.element.querySelector(".song-title");
     if (textContent) {
       songTitleElement.textContent = textContent;
     } else {
-      console.log(songTitleElement);
       songTitleElement.textContent = this.getCurrentSong();
       songTitleElement.title = this.getCurrentSong();
-      console.log("setting to ", songTitleElement.textContent);
     }
   }
   // copies all properties from the given cell object
@@ -137,7 +140,6 @@ export class Cell {
   }
   // resets cell
   resetCell() {
-    console.log("resetting cell:", this);
     this.setTrackID(null);
     this.setCurrentSong("");
     this.setElementText();
@@ -153,19 +155,23 @@ export class Cell {
   }
   // advance song further up the bracket (win over its opponent in a matchup and go to the next round)
   advance() {
-    console.log("advance method activated");
     // check if this cell can be advanced
     if (this.isAdvanceable()) {
+      if (this.getPreviousCells()) {
+        this.deactivatePreviousCells();
+      }
+
+      this.win();
       // make current cell unadvanceable
-      this.makeUnadvanceable();
-      // deactivate current cell
-      this.deactivate();
+      // this.makeUnadvanceable();
+      // // deactivate current cell
+      // this.deactivate();
       // check if this cell has an opponent
       if (this.getOpponent()) {
         // disable opponent
-        this.getOpponent().makeUnadvanceable();
-        // deactivate opponent
-        this.getOpponent().deactivate();
+        // this.getOpponent().makeUnadvanceable();
+        // // deactivate opponent
+        // this.getOpponent().deactivate();
         // add class 'cell_loser' and a status 'loser'
         this.getOpponent().lose();
       }
@@ -176,8 +182,6 @@ export class Cell {
       // this.nextCell.setCurrentSong(this.getCurrentSong());
       // this.nextCell.setElementText();
       this.nextCell.copyAllQualities(this);
-      console.log(this);
-      console.log(this.nextCell);
 
       // check if the next cell has an opponent
       if (this.nextCell.getOpponent()) {
@@ -199,6 +203,11 @@ export class Cell {
   lose() {
     this.loser = true;
     this.element.classList.add("cell_loser");
+    this.element.classList.remove("cell_head");
+  }
+  win() {
+    this.loser = false;
+    this.element.classList.remove("cell_loser");
   }
   // makes the current cell being advanceable — that is it can be advanced further up the bracket
   makeAdvanceable() {
@@ -259,5 +268,20 @@ export class Cell {
   }
   getTooltip() {
     return this.tooltip;
+  }
+
+  deactivatePreviousCells() {
+    const previousCells = this.getPreviousCells();
+    previousCells.forEach((cell) => {
+      cell.deactivate();
+      cell.makeUnadvanceable();
+    });
+    if (this.getOpponent()) {
+      const opponentPreviousCells = this.getOpponent().getPreviousCells();
+      opponentPreviousCells.forEach((cell) => {
+        cell.deactivate();
+        cell.makeUnadvanceable();
+      });
+    }
   }
 }
