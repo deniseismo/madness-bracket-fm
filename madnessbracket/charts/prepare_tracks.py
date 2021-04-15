@@ -1,5 +1,5 @@
 import random
-from madnessbracket.utilities.track_processing import get_capped_bracket_size
+from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 
 
 def prepare_tracks_for_charts(tracks: dict, limit=16):
