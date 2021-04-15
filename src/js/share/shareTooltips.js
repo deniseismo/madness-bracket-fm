@@ -30,7 +30,6 @@ export function activateShareTooltips() {
   const titledButtons = buttons.map(function (element, index) {
     return [element, titles[index]];
   });
-  console.log(buttons);
   titledButtons.forEach((group) => {
     tippy(group[0], {
       arrow: true,

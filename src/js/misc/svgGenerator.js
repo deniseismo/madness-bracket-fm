@@ -3,9 +3,7 @@ export function getSVGIcon(svgData) {
   const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svgIcon.setAttribute("viewBox", "0 0 512 512");
   const paths = svgData.path;
-  console.log("paths", paths);
   for (const pathProperties of paths) {
-    console.log(pathProperties);
     const aPath = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "path"

@@ -6,7 +6,6 @@ export function handleSquareButtons(options) {
   const squareButtons = document.querySelectorAll(".square-button");
   squareButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      console.log("clicked");
       // button 'activation'
       squareButtons.forEach((button) => button.classList.remove("active"));
       button.classList.add("active");

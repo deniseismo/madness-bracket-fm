@@ -1,7 +1,7 @@
 import tekore as tk
 import spotipy
 from fuzzywuzzy import fuzz
-from madnessbracket.utilities.track_processing import get_filtered_name
+from madnessbracket.utilities.track_filtering import get_filtered_name
 from madnessbracket.utilities.fuzzymatch import fuzzy_match_song, fuzzy_match_artist
 from spotipy.oauth2 import SpotifyClientCredentials
 from flask import current_app
@@ -54,7 +54,7 @@ def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=Non
         spotify_tekore_client = get_spotify_tekore_client()
     else:
         spotify_tekore_client = tekore_client
-    query = f"track:{track_title} artist:{artist_name}"
+    query = f"{track_title} artist:{artist_name}"
     tracks_info, = spotify_tekore_client.search(
         query=query, types=('track',), limit=15)
     # in case of not getting any response

@@ -9,7 +9,6 @@ export const fetchTracks = async function (options) {
   const signal = controller.signal;
   try {
     const bracketType = options.getCurrentBracketType();
-    console.log(bracketType);
     const response = await fetch(`http://192.168.1.62:5000/${bracketType}`, {
       method: "POST",
       headers: new Headers({

@@ -44,6 +44,7 @@ def validate_bracket_data_for_sharing(bracket_data):
     class Bracket(BaseModel):
         bracket_type: str = Field(alias="bracketType")
         description: str
+        secret: NoneStr = None
         tracks: List[Track]
         structure: Structure
 

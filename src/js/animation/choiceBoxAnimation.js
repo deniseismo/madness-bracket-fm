@@ -50,7 +50,6 @@ const FLASHING_WORDS = {
 function getRandomElement(squareChoiceBox) {
   // get all paragraphs from the box
   const allParagraphs = squareChoiceBox.querySelectorAll(":scope > p");
-  console.log("paragraphs:", allParagraphs);
   // get a random paragraph
   const randomParagraphElement = pickRandomElement(allParagraphs);
   // figure out what this square box type is: artist or charts

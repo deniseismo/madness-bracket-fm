@@ -15,7 +15,6 @@ export function createBracketStructure(bracket, options) {
   const container = document.querySelector(".container");
   const tracksData = options.getCurrentTracks();
   const description = options.getDescription();
-  console.log("the description is ", description);
   removeAllChildNodes(container);
   displayBracketDescription(description);
   const tracksLength = tracksData.length;
@@ -76,7 +75,6 @@ export function createBracketStructure(bracket, options) {
         const artistName = tracks[side][j]["artist_name"];
         const albumColors = tracks[side][j]["album_colors"];
         const textColor = tracks[side][j]["text_color"];
-        console.log(trackTitle, artistName);
         cellObject.setCurrentSong(trackTitle);
         cellObject.setArtistName(artistName);
         cellObject.setElementText();
