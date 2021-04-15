@@ -49,6 +49,7 @@ export function getDashboard(bracket, options) {
         if (data) {
           options.setCurrentTracks(data["tracks"]);
           options.setDescription(data["description"]);
+          options.setSecret(data["secret"]);
           updateDescription(options.getDescription());
           retryBracket(bracket, options);
         } else {

@@ -9,6 +9,7 @@ export class OptionStorage {
     this.inputValue = null;
     this.tracks = null;
     this.description = null;
+    this.secret = null;
   }
   // sets the current bracket type: artist or charts
   setCurrentBracketType(bracketType) {
@@ -45,5 +46,11 @@ export class OptionStorage {
   }
   getDescription() {
     return this.description;
+  }
+  setSecret(secret) {
+    this.secret = secret;
+  }
+  getSecret() {
+    return this.secret;
   }
 }

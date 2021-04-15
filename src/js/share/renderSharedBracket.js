@@ -28,6 +28,7 @@ function getOptionsReady() {
   options.setInputValue(sharedBracketData["description"]);
   options.setCurrentTracks(sharedBracketData["tracks"]);
   options.setDescription(sharedBracketData["description"]);
+  options.setSecret(sharedBracketData["secret"]);
   options.setCurrentBracketType(sharedBracketData["bracket_type"]);
 }
 getOptionsReady();

@@ -24,6 +24,7 @@ document.querySelector(".form__group").onsubmit = function () {
       if (data) {
         options.setCurrentTracks(data["tracks"]);
         options.setDescription(data["description"]);
+        options.setSecret(data["secret"]);
         createBracketStructure(bracket, options);
         addModal();
       } else {

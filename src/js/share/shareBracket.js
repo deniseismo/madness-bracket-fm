@@ -28,6 +28,7 @@ function prepareBracketDataForSharing(bracketInfo, options) {
   const bracket = {
     bracketType: options.getCurrentBracketType(),
     description: options.getDescription(),
+    secret: options.getSecret(),
     tracks: options.getCurrentTracks(),
     structure: bracketInfo,
   };
@@ -50,7 +51,6 @@ function prepareBracketDataForSharing(bracketInfo, options) {
       return value;
     }
   }
-  console.log(JSON.stringify(bracket, replacer));
   const bracketDataForSharing = JSON.stringify(bracket, replacer);
   return bracketDataForSharing;
 }
