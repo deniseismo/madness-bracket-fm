@@ -1,9 +1,11 @@
 // Durstenfeld shuffle © https://www.wikiwand.com/en/Fisher%E2%80%93Yates_shuffle
 export function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
   }
+  return shuffledArray;
 }
 
 // creates element of a given type, adds given classes
@@ -42,4 +44,31 @@ export function removeAllChildNodes(parent) {
 export function doesArrayContainSomethingTruthy(array) {
   const exist = (element) => element;
   return array.some(exist);
+}
+
+export function shuffleTracks(tracks, options) {
+  console.log(options.getSecret());
+  const isArtistBattle = options.getSecret() === "artists_battle";
+  if (isArtistBattle) {
+    const tracksLength = tracks.length / 2;
+    let firstArtist = [];
+    let secondArtist = [];
+    tracks.forEach((track, index) => {
+      if (index % 2 == 0) {
+        firstArtist.push(track);
+      } else {
+        secondArtist.push(track);
+      }
+    });
+    firstArtist = shuffleArray(firstArtist);
+    secondArtist = shuffleArray(secondArtist);
+    let battleTracks = [];
+    for (let i = 0; i < tracksLength; i++) {
+      battleTracks.push(firstArtist[i]);
+      battleTracks.push(secondArtist[i]);
+    }
+    console.log("battle tracks:", battleTracks);
+    return battleTracks;
+  }
+  return shuffleArray(tracks);
 }
