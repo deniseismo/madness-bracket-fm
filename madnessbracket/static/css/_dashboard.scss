@@ -11,9 +11,31 @@
       background-color: $reddishColor;
       transition: all 0.2s ease-out;
     }
+    &:disabled {
+      background-color: $grayishColor;
+      cursor: default;
+    }
     .dashboard-icon {
       width: 25px;
       height: 25px;
     }
+  }
+}
+
+.button-retry_animated {
+  .dashboard-icon {
+    animation: retryButtonSpinner 1.2s linear infinite;
+  }
+}
+
+@keyframes retryButtonSpinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

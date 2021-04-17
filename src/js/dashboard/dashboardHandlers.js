@@ -44,7 +44,11 @@ export function getDashboard(bracket, options) {
   retryIcon.classList.add("dashboard-icon");
   retryButton.appendChild(retryIcon);
   retryButton.addEventListener("click", () => {
+    retryButton.classList.add("button-retry_animated");
+    retryButton.disabled = true;
     fetchTracks(options).then((data) => {
+      retryButton.classList.remove("button-retry_animated");
+      retryButton.disabled = false;
       try {
         if (data) {
           options.setCurrentTracks(data["tracks"]);
