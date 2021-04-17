@@ -1,3 +1,4 @@
+import { showErrorMessage } from "./errors/errorMessageHandlers.js";
 // fetch tracks from the server
 let controller = null;
 export const fetchTracks = async function (options) {
@@ -26,6 +27,7 @@ export const fetchTracks = async function (options) {
       // do something
       return response.json().then((failData) => {
         console.log(failData.message);
+        showErrorMessage(failData.message);
         // throw new Error(failData.message);
       });
     }
