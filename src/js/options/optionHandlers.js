@@ -1,5 +1,5 @@
 import { animateLetters } from "../animation/choiceBoxAnimation.js";
-import { showElement } from "../misc/utilities.js";
+import { isInputValid, showElement } from "../misc/utilities.js";
 
 // handles picking bracket type: ARTIST or CHARTS
 export function handleSquareButtons(options) {
@@ -48,7 +48,13 @@ function showHideInputField(bracketType) {
     // focus
     const inputField = document.querySelector(".form__field");
     inputField.focus();
+    inputField.addEventListener("input", () => {
+      const submitButton = document.querySelector(".generate-button");
+      submitButton.disabled = !isInputValid(inputField.value);
+    });
   } else {
     inputContainer.style.display = "none";
+    const submitButton = document.querySelector(".generate-button");
+    submitButton.disabled = false;
   }
 }

@@ -46,6 +46,10 @@ export function doesArrayContainSomethingTruthy(array) {
   return array.some(exist);
 }
 
+export function isInputValid(value) {
+  return value.length > 0;
+}
+
 export function shuffleTracks(tracks, options) {
   console.log(options.getSecret());
   const isArtistBattle = options.getSecret() === "artists_battle";
