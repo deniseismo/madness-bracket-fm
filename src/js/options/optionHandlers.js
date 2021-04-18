@@ -42,19 +42,21 @@ export function handleMaxBracketSizeOption(options) {
 // show or hide input field depending on bracket type
 function showHideInputField(bracketType) {
   const inputContainer = document.querySelector(".input-container");
+  const submitButton = document.querySelector(".generate-button");
   if (bracketType === "artist") {
     // shows input field for an 'artist bracket type'
     inputContainer.style.display = "flex";
     // focus
     const inputField = document.querySelector(".form__field");
     inputField.focus();
+    // disable submit button if input's empty
+    submitButton.disabled = !isInputValid(inputField.value);
     inputField.addEventListener("input", () => {
-      const submitButton = document.querySelector(".generate-button");
+      // dynamically disable submit button if input's empty
       submitButton.disabled = !isInputValid(inputField.value);
     });
   } else {
     inputContainer.style.display = "none";
-    const submitButton = document.querySelector(".generate-button");
     submitButton.disabled = false;
   }
 }
