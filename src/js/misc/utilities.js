@@ -1,3 +1,4 @@
+// shuffle array
 // Durstenfeld shuffle © https://www.wikiwand.com/en/Fisher%E2%80%93Yates_shuffle
 export function shuffleArray(array) {
   let shuffledArray = [...array];
@@ -19,17 +20,19 @@ export function createElement(type, classes = null) {
   return element;
 }
 
-// picks a random element from a given array
+// pick a random element from a given array
 export function pickRandomElement(array) {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
 }
 
+// show element
 export function showElement(element) {
   // element.style.display = 'flex';
   element.style.visibility = "visible";
 }
 
+// hide element
 export function hideElement(element) {
   element.style.display = "none";
 }
@@ -40,23 +43,28 @@ export function removeAllChildNodes(parent) {
     parent.removeChild(parent.firstChild);
   }
 }
-
+// check if any of the array's elements is truthy
 export function doesArrayContainSomethingTruthy(array) {
   const exist = (element) => element;
   return array.some(exist);
 }
 
+// check if input's not empty
 export function isInputValid(value) {
   return value.length > 0;
 }
 
+// shuffle tracks
 export function shuffleTracks(tracks, options) {
-  console.log(options.getSecret());
   const isArtistBattle = options.getSecret() === "artists_battle";
+  /* shuffle tracks differently if it's "artist battle".
+  we need to keep 'artist vs artist' logic in all of the match-ups after shuffling
+  */
   if (isArtistBattle) {
     const tracksLength = tracks.length / 2;
     let firstArtist = [];
     let secondArtist = [];
+    // separate two artists tracks into different arrays
     tracks.forEach((track, index) => {
       if (index % 2 == 0) {
         firstArtist.push(track);
@@ -64,6 +72,7 @@ export function shuffleTracks(tracks, options) {
         secondArtist.push(track);
       }
     });
+    // shuffle each artist's tracks array separately
     firstArtist = shuffleArray(firstArtist);
     secondArtist = shuffleArray(secondArtist);
     let battleTracks = [];
@@ -74,5 +83,27 @@ export function shuffleTracks(tracks, options) {
     console.log("battle tracks:", battleTracks);
     return battleTracks;
   }
+  // shuffle normally
   return shuffleArray(tracks);
+}
+
+// get current screen size
+export function getScreenSize() {
+  const mediaQueryFull = window.matchMedia("(min-width: 900px)");
+  const mediaQuery640 = window.matchMedia("(min-width: 641px)");
+  const mediaQuery500 = window.matchMedia("(min-width: 500px)");
+  const mediaQuery400 = window.matchMedia("(min-width: 400px)");
+  if (mediaQueryFull.matches) {
+    return "full";
+  }
+  if (mediaQuery640.matches) {
+    return "640";
+  }
+  if (mediaQuery500.matches) {
+    return "500";
+  }
+  if (mediaQuery400.matches) {
+    return "400";
+  }
+  return "small";
 }
