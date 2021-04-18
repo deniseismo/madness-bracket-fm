@@ -11,7 +11,7 @@ export function displayBracketDescription(description) {
   container.appendChild(descriptionContainer);
 }
 
-/* updates bracket's description with the new one (in case it somehow changed, 
+/* update bracket's description with the new one (in case it somehow changed, 
  e.g. if one click retry button in SECRET mode) 
 */
 export function updateDescription(description) {

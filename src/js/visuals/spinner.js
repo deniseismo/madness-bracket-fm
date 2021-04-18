@@ -4,6 +4,7 @@ import {
   killSpinnerAnimation,
 } from "../animation/spinnerAnimation.js";
 
+// handle showing spinner when bracket's loading
 export function showSpinner() {
   const container = document.querySelector(".container");
   const spinner = createSpinner();
@@ -11,6 +12,7 @@ export function showSpinner() {
   animateSpinner();
 }
 
+// hide/remove spinner
 export function hideSpinner() {
   const spinner = document.querySelector(".spinner-wrapper");
   if (spinner) {
@@ -19,6 +21,7 @@ export function hideSpinner() {
   }
 }
 
+// create spinner element
 function createSpinner() {
   const spinnerWrapper = createElement("div", ["spinner-wrapper"]);
   const spinner = createElement("div", ["spinner"]);

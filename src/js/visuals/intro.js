@@ -1,6 +1,6 @@
 import { createElement } from "../misc/utilities.js";
 
-// creates intro/header
+// create intro/header
 export function createIntroElements() {
   const introContainer = createIntroLines();
   const introTitle = createElement("div", ["intro-title"]);
@@ -14,7 +14,7 @@ export function createIntroElements() {
   mainContainer.appendChild(introContainer);
 }
 
-// creates intro/header bracket lines -=
+// create intro/header bracket lines -=
 export function createIntroLines(reverse = false) {
   const introContainer = createElement("div", ["intro-container"]);
 

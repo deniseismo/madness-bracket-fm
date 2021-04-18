@@ -1,4 +1,4 @@
-import { shuffleArray, shuffleTracks } from "../misc/utilities.js";
+import { shuffleTracks } from "../misc/utilities.js";
 import { stopMusic } from "../music/music.js";
 import { addTooltipToCell } from "../cell/cellToolTips.js";
 /*
@@ -146,6 +146,7 @@ export function shuffleBracket(bracket, options) {
   updateBracket(bracket, options);
 }
 
+// update current bracket with newly loaded tracks
 export function updateBracket(bracket, options) {
   // take current bracket tracks data
   let tracks = options.getCurrentTracks();
@@ -184,6 +185,7 @@ export function updateBracket(bracket, options) {
   }
 }
 
+// shortcut function: reset & update bracket when retrying (getting new tracks with the same request)
 export function retryBracket(bracket, options) {
   // stop music if there's any playing
   stopMusic();

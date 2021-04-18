@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import MicroModal from "micromodal";
 
-// takes screenshot & renders it onto the page
+// take screenshot & render it onto the page
 export function takeScreenshot() {
   MicroModal.close("modal-1");
   html2canvas(document.querySelector(".wrapper")).then((canvas) => {
@@ -10,7 +10,7 @@ export function takeScreenshot() {
     document.body.appendChild(canvas);
   });
 }
-
+// close/remove screenshot
 function closeScreenshot() {
   const screenshot = document.querySelector(".screenshot");
   if (screenshot) {

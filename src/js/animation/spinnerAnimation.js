@@ -1,5 +1,6 @@
 import anime from "animejs/lib/anime.es.js";
 
+// animate spinner
 export function animateSpinner() {
   let tl = anime.timeline({
     duration: 300, // Can be inherited
@@ -25,6 +26,8 @@ export function animateSpinner() {
       rotate: 180,
     });
 }
+
+// stop spinner animation
 export function killSpinnerAnimation() {
   const spinner = document.querySelector(".spinner");
   const spinnerParts = spinner.querySelectorAll(":scope > div");
