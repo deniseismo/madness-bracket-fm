@@ -6,7 +6,7 @@ from madnessbracket.musician.prepare_tracks import prepare_tracks_for_musician, 
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 
 
-def get_artists_tracks(artist_name: str, bracket_limit):
+def get_artists_tracks(artist_name: str, bracket_limit: int):
     """gets top tracks by a particular artist
     first it goes through database,
     if nothing found, goes through spotify fallback function
@@ -18,7 +18,7 @@ def get_artists_tracks(artist_name: str, bracket_limit):
         [dict]: a dict with a list of 'track info' dicts
 
     """
-    if not artist_name:
+    if not artist_name or not bracket_limit:
         # no artist provided
         return None
     # correct user's input via lastfm's api
@@ -94,4 +94,3 @@ def get_tracks_via_spotify(artist_name: str):
     if processed_tracks:
         log_artist_missing_from_db(artist_name)
     return tracks
-

@@ -12,6 +12,8 @@ def get_weighted_random_selection_of_tracks(tracks: list, bracket_size: int):
     Returns:
         (list): list of weighted random tracks
     """
+    if not tracks or not bracket_size:
+        return None
     # get the total number of tracks
     tracks_to_choose_from = list(tracks)
     length = len(tracks)

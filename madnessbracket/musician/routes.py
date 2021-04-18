@@ -35,7 +35,7 @@ def generate_musician_bracket():
     if not tracks:
         print('nothing found')
         return make_response(jsonify(
-            {'message': f"nothing found"}
+            {'message': f"no tracks found for {artist_name}"}
         ),
             404)
     return jsonify(tracks)

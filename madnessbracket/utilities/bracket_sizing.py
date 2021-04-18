@@ -6,6 +6,10 @@ def get_capped_bracket_size(number_of_tracks: int, chosen_upper_limit: int):
     :param chosen_upper_limit:
     :return: capped bracket size
     """
+    if not number_of_tracks:
+        return None
+    if number_of_tracks < 4:
+        return None
     # standard measurements of the bracket: 4, 8, 16, or 32 tracks
     bracket_standards = [4, 8, 16, 32]
     # capping the standards with the limit given
