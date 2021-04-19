@@ -47,10 +47,19 @@
   background: $whitishColor;
 }
 
+@media screen and (max-width: 1300px) {
+  .intro-header {
+    height: 3rem;
+  }
+  .intro-title {
+    font-size: 2.5rem;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .intro-header {
-    margin: 1rem auto;
-    height: 3.5rem;
+    margin: 0.5rem auto;
+    height: 3rem;
   }
   .intro-title {
     font-size: 2.5rem;
@@ -85,5 +94,24 @@
 @media only screen and (max-width: 400px) {
   .intro-title {
     font-size: 1.75rem;
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 430px) {
+  .intro-title {
+    font-size: 1.75rem;
+  }
+  .intro-header {
+    height: 2rem;
+  }
+  .horizontal-line {
+    height: 0.2rem;
+  }
+  .vertical-line {
+    width: 0.2rem;
+  }
+  .intro-line {
+    height: 0.2rem;
   }
 }

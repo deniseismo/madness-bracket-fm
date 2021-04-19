@@ -1,3 +1,8 @@
 .description-line {
   color: $reddishColor;
 }
+@media screen and (max-width: 740px) {
+  .description-text {
+    font-size: 1rem;
+  }
+}

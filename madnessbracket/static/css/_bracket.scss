@@ -26,10 +26,12 @@
 
 .finalists {
   @include flexContainer(row, center);
+  width: 100%;
 }
 
 .winner-container {
   @include flexContainer(row, center);
+  width: 100%;
 }
 
 .center {
@@ -42,4 +44,34 @@
   /* flex-direction: column; */
   text-align: center;
   white-space: break-spaces;
+}
+
+@media screen and (max-width: 1900px) {
+}
+
+@media screen and (max-width: 1470px) {
+  .final-round {
+    max-width: 18rem;
+  }
+}
+
+@media screen and (max-width: 1380px) {
+  .round-left {
+    margin-right: calc(2rem - 2px);
+  }
+  .round-right {
+    margin-left: calc(2rem - 2px);
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .final-round {
+    min-width: auto;
+  }
+  .round-left {
+    margin-right: calc(1.5rem - 2px);
+  }
+  .round-right {
+    margin-left: calc(1.5rem - 2px);
+  }
 }

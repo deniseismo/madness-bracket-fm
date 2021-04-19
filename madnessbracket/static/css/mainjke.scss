@@ -11,6 +11,7 @@
 @import "./tooltip";
 @import "./screenshot";
 @import "./spinner";
+@import "./errors";
 html,
 body,
 .wrapper,
@@ -30,26 +31,24 @@ p {
   margin: 0;
   display: flex;
 }
-.intro-header {
-  @include flexContainer(row, space-around);
-  height: 60px;
-  width: 100%;
-  min-height: 6vh;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  padding: 2rem 0;
-}
 
 .container {
   @include flexContainer(column, center);
   margin: 0;
   overflow: hidden;
-  height: calc(100% - 124px);
+  height: calc(100% - 6rem);
 }
 
 button {
-  @include hoverable();
+  &:not([disabled]) {
+    @include hoverable();
+  }
   border: none;
   color: $whitishColor;
+}
+
+@media screen and (max-width: 740px) {
+  .container {
+    height: calc(100% - 3rem);
+  }
 }

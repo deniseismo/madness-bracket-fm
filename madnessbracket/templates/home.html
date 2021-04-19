@@ -10,9 +10,9 @@
         <p>ARTIST</p>
         <p>BOWIE</p>
         <p>ARTIST</p>
-        <p>ARTIST</p>
-        <p>ADELE</p>
-        <p>ARTIST</p>
+        <p class="optional">ARTIST</p>
+        <p class="optional">ADELE</p>
+        <p class="optional">ARTIST</p>
       </button>
       <button
         data-bracket-type="charts"
@@ -21,9 +21,9 @@
         <p>CHARTS</p>
         <p>TOP</p>
         <p>CHARTS</p>
-        <p>BEST</p>
-        <p>PITCHFORK</p>
-        <p>RS500</p>
+        <p class="optional">BEST</p>
+        <p class="optional">PITCHFORK</p>
+        <p class="optional">RS500</p>
       </button>
       <button
         data-bracket-type="secret"
@@ -32,9 +32,9 @@
         <p>SECRET</p>
         <p>WILD CARD</p>
         <p>???</p>
-        <p>SECRET</p>
-        <p>WAIT, WHAT?</p>
-        <p>SECRET</p>
+        <p class="optional">SECRET</p>
+        <p class="optional">WAIT, WHAT?</p>
+        <p class="optional">SECRET</p>
       </button>
     </div>
     <div class="options">
@@ -54,6 +54,7 @@
         action=""
         onsubmit="return false;"
         enctype="multipart/form-data"
+        autocomplete="off"
       >
         <div class="input-container">
           <input

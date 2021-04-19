@@ -3,7 +3,7 @@
   border: 1px solid $whitishColor;
   position: relative;
   width: auto;
-  transition: padding 0.2s linear;
+  transition: width 0.2s ease-in-out;
   white-space: nowrap;
   margin: 3% 0;
   background: $greenishColor;
@@ -148,7 +148,7 @@
   color: green;
 }
 .play-icon {
-  width: 25px;
+  width: 1.5rem;
 }
 .play-icon_playing {
   color: wheat;
@@ -159,4 +159,130 @@
   color: #d2f4be;
   filter: drop-shadow(0 4px 4px rgba(65, 157, 71, 0.08))
     drop-shadow(0 8px 8px rgba(207, 238, 93, 0.49));
+}
+
+@media screen and (max-width: 1900px) {
+  .cell {
+    width: 11rem;
+  }
+}
+
+@media screen and (max-width: 1700px) {
+  .cell {
+    width: 10rem;
+  }
+}
+
+@media screen and (max-width: 1580px) {
+  .cell {
+    width: 9rem;
+  }
+  .final-cell {
+    flex-grow: 1;
+    max-width: 50%;
+  }
+}
+
+@media screen and (max-width: 1470px) {
+  .cell {
+    width: 8.5rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .play-icon {
+    width: 1.25rem;
+  }
+  .song-title {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1380px) {
+  .cell {
+    &.cell-left::after,
+    &.cell-left::before {
+      right: calc(-1rem - 1px);
+    }
+    &.cell-right::after,
+    &.cell-right::before {
+      left: calc(-1rem - 1px);
+    }
+    &::before {
+      width: 1rem;
+    }
+  }
+  .cell-not-first .song-title {
+    &::before {
+      width: 1rem;
+    }
+  }
+  .cell-not-first.cell-right {
+    .song-title {
+      &::before {
+        right: -1rem;
+      }
+    }
+  }
+  .cell-not-first.cell-left {
+    .song-title {
+      &::before {
+        left: -1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .cell {
+    width: 8rem;
+    min-height: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .cell {
+    padding: 0.15rem 0.25rem;
+    width: 4.5rem;
+    min-height: 1.5rem;
+    &.cell-left::after,
+    &.cell-left::before {
+      right: calc(-0.75rem - 1px);
+    }
+    &.cell-right::after,
+    &.cell-right::before {
+      left: calc(-0.75rem - 1px);
+    }
+    &::before {
+      width: 0.75rem;
+    }
+    .song-title {
+      font-size: 0.75;
+    }
+  }
+  .round.left-1,
+  .round.right-1 {
+    .cell {
+      &::after {
+        height: calc(50% + 1.5rem);
+      }
+    }
+  }
+  .cell-not-first .song-title {
+    &::before {
+      width: 0.75rem;
+    }
+  }
+  .cell-not-first.cell-right {
+    .song-title {
+      &::before {
+        right: -0.75rem;
+      }
+    }
+  }
+  .cell-not-first.cell-left {
+    .song-title {
+      &::before {
+        left: -0.75rem;
+      }
+    }
+  }
 }

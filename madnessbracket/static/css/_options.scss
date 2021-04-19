@@ -249,3 +249,38 @@
     font-size: 1.25rem;
   }
 }
+
+@media screen and (orientation: landscape) and (max-height: 640px) {
+  .bracket_max_size_container {
+    margin-top: 0.25rem;
+  }
+  .bracket_max_size_option {
+    margin: 0.25rem 1rem;
+  }
+  .form__group {
+    margin-top: 0.25rem;
+  }
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 1.25rem;
+  }
+  .form__field {
+    font-size: 1.5rem;
+  }
+  .optional {
+    display: none;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 430px) {
+  .generate-button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+  .bracket_max_size_option {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .square-button {
+    font-size: 1.5rem;
+  }
+}
