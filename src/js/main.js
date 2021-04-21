@@ -8,7 +8,11 @@ import {
   handleSquareButtons,
   handleMaxBracketSizeOption,
 } from "./options/optionHandlers.js";
-import { fetchTracks } from "./fetchTracks.js";
+import {
+  fetchTracks,
+  pushHistory,
+  constructQueryString,
+} from "./fetchTracks.js";
 import { showSpinner, hideSpinner } from "./visuals/spinner.js";
 export let bracket = new BracketData();
 
@@ -22,11 +26,27 @@ document.querySelector(".form__group").onsubmit = function () {
     hideSpinner();
     try {
       if (data) {
+        const bracketType = options.getCurrentBracketType();
+        const name = options.getInputValue();
+        const limit = options.getBracketMaxSize();
+        const queryString = constructQueryString({
+          name: name,
+          limit: limit,
+        });
         options.setCurrentTracks(data["tracks"]);
         options.setDescription(data["description"]);
         options.setSecret(data["secret"]);
         createBracketStructure(bracket, options);
         addModal();
+        pushHistory({
+          state: {
+            bracketType: bracketType,
+            name: name,
+            limit: limit,
+          },
+          title: null,
+          url: `http://192.168.1.62:5000/${bracketType}?` + queryString,
+        });
       } else {
         console.log(data);
       }

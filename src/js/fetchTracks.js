@@ -10,18 +10,22 @@ export const fetchTracks = async function (options) {
   const signal = controller.signal;
   try {
     const bracketType = options.getCurrentBracketType();
-    const response = await fetch(`http://192.168.1.62:5000/${bracketType}`, {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-      signal: signal,
-      body: JSON.stringify({
-        type: options.getCurrentBracketType(),
-        value: options.getInputValue(),
-        limit: options.getBracketMaxSize(),
-      }),
+    const name = options.getInputValue();
+    const limit = options.getBracketMaxSize();
+    const queryString = constructQueryString({
+      name: name,
+      limit: limit,
     });
+    const response = await fetch(
+      `http://192.168.1.62:5000/${bracketType}?` + queryString,
+      {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+        signal: signal,
+      }
+    );
     // if response is not ok (status ain't no 200)
     if (!response.ok) {
       // do something
@@ -40,3 +44,19 @@ export const fetchTracks = async function (options) {
     return Promise.reject();
   }
 };
+
+export function constructQueryString(params) {
+  const searchParams = new URLSearchParams();
+  for (const prop in params) {
+    if (params[prop]) {
+      searchParams.append(prop, params[prop]);
+    }
+  }
+  return searchParams;
+}
+
+export function pushHistory(params) {
+  console.log("pushing history");
+  const { state, title, url } = params;
+  history.pushState(state, title, url);
+}
