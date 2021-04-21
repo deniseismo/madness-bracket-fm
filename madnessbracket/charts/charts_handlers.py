@@ -1,10 +1,13 @@
+import json
 import os
 import random
-import json
+
 from flask import current_app
 
+from madnessbracket.charts.prepare_tracks import prepare_tracks_for_charts
 
-def get_songs_considered_best():
+
+def get_songs_considered_best(upper_limit: int):
     """
     picks random selection of songs considered best*
     * by Pitchfork, (Rolling Stones, …) # TODO: add RS500/NME
@@ -22,8 +25,10 @@ def get_songs_considered_best():
     processed_tracks = process_charts_songs(songs)
     tracks = {
         "tracks": processed_tracks,
-        "description": "charts"
+        "description": "charts",
+        "secret": None,
     }
+    tracks = prepare_tracks_for_charts(tracks, upper_limit)
     return tracks
 
 
