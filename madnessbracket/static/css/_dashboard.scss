@@ -3,6 +3,7 @@
   .button-dashboard {
     @include flexContainer(row, center);
     @include hoverable();
+    @include bluishShadow();
     width: 3rem;
     height: 3rem;
     background-color: $greenishColor;

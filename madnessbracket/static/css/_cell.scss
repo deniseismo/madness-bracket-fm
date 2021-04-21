@@ -1,5 +1,6 @@
 .cell {
   @include flexContainer(row, space-between);
+  @include bluishShadow();
   border: 1px solid $whitishColor;
   position: relative;
   width: auto;
@@ -9,7 +10,6 @@
   background: $greenishColor;
   padding: 0.5rem;
   color: $whitishColor;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   width: 12rem;
   min-height: 3rem;
   &::before {

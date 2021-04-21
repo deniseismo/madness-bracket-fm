@@ -107,6 +107,7 @@
   margin-top: 2rem;
 }
 .bracket_max_size_option {
+  @include bluishShadow();
   width: 3.5rem;
   height: 3.5rem;
   background: $greenishColor;
@@ -125,6 +126,7 @@
 }
 
 .generate-button {
+  @include bluishShadow();
   background-color: $greenishColor;
   padding: 1rem;
   margin: 1rem;
@@ -136,6 +138,7 @@
     transition: all 0.2s ease-out;
   }
   &:disabled {
+    box-shadow: none;
     background-color: $grayishColor;
     cursor: not-allowed;
   }
