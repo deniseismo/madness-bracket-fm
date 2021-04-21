@@ -1,39 +1,45 @@
-from flask import Blueprint, jsonify, request, make_response
+import json
+from flask import Blueprint, jsonify, request, make_response, render_template
 from madnessbracket.charts.prepare_tracks import prepare_tracks_for_charts
 from madnessbracket.charts.charts_handlers import get_songs_considered_best
+from madnessbracket.utilities.user_input_validation import validate_bracket_upper_limit
 charts = Blueprint('charts', __name__)
 
 
-@charts.route('/charts', methods=['POST'])
+@charts.route('/charts', methods=['POST', "GET"])
 def generate_charts_bracket():
     """generates madness bracket for the best/classics/charts type of tracks
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket
     """
-    # input's values/options
-    content = request.get_json()
-    if not content:
-        print('no input')
-        return make_response(jsonify(
-            {'message': f"something's gone wrong"}
-        ),
-            404)
-    try:
-        # get chosen bracket upper limit
-        bracket_limit = int(content['limit'])
-    except (KeyError, ValueError, TypeError):
-        print('bogus input')
-        return make_response(jsonify(
-            {'message': f"something's gone wrong"}
-        ),
-            404)
-    tracks = get_songs_considered_best()
-    print(tracks)
-    if not tracks:
-        print('nothing found')
-        return make_response(jsonify(
-            {'message': f"nothing found"}
-        ),
-            404)
-    tracks = prepare_tracks_for_charts(tracks, bracket_limit)
-    return jsonify(tracks)
+    if request.method == "GET":
+        upper_limit = request.args.get("limit")
+        valid_upper_limit = validate_bracket_upper_limit(upper_limit)
+        if not valid_upper_limit:
+            return render_template('404.html', title='Incorrect Input'), 404
+
+        user_request = json.dumps({
+            "bracket_type": "charts",
+            "name": None,
+            "limit": upper_limit
+        })
+        return render_template("bracket.html", user_request=user_request)
+    else:
+        upper_limit = request.args.get("limit")
+        valid_upper_limit = validate_bracket_upper_limit(upper_limit)
+        if not valid_upper_limit:
+            print('incorrect input')
+            return make_response(jsonify(
+                {'message': f"something's gone wrong"}
+            ),
+                404)
+        upper_limit = valid_upper_limit.upper_limit
+        tracks = get_songs_considered_best(upper_limit)
+        print(tracks)
+        if not tracks:
+            print('nothing found')
+            return make_response(jsonify(
+                {'message': f"nothing found"}
+            ),
+                404)
+        return jsonify(tracks)
