@@ -4,10 +4,10 @@
   <div class="container"></div>
 </div>
 <script>
-  let userRequest = JSON.parse({{ user_request|tojson }});
+  let sharedBracketData = JSON.parse({{ shared_bracket_data|tojson }});
 </script>
 <script
   type="module"
-  src="{{ url_for('static', filename='js/bracketOnDemand.bundle.js') }}"
+  src="{{ url_for('static', filename='js/sharedBracket.bundle.js') }}"
 ></script>
 {% endblock content %}
