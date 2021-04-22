@@ -2,8 +2,10 @@ import json
 from nanoid import generate
 from madnessbracket.models import BracketData
 from madnessbracket import db
+from madnessbracket import cache
 
 
+@cache.memoize(timeout=3600)
 def save_bracket_to_database(shared_bracket_data):
     """saves user's bracket & all its info/data to the database
 
