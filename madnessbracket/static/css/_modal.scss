@@ -46,6 +46,10 @@
   margin-bottom: 1.5rem;
 }
 
+.modal__close svg {
+  pointer-events: none;
+}
+
 .modal__content {
   margin-top: 2rem;
   margin-bottom: 2rem;
