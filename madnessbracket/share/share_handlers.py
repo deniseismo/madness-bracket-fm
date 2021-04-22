@@ -1,5 +1,5 @@
 import json
-import uuid
+from nanoid import generate
 from madnessbracket.models import BracketData
 from madnessbracket import db
 
@@ -14,7 +14,7 @@ def save_bracket_to_database(shared_bracket_data):
         (str) bracket unique id for further sharing
     """
     # generate unique id for saving & sharing
-    bracket_id = str(uuid.uuid4())
+    bracket_id = generate(size=13)
     # prepare bracket data
     bracket_type = shared_bracket_data["bracket_type"]
     title = shared_bracket_data["title"]

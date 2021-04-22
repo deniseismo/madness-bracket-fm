@@ -1,6 +1,6 @@
 import uuid
 from typing import List
-from pydantic import BaseModel, ValidationError, NoneStr, Field
+from pydantic import BaseModel, ValidationError, NoneStr, Field, constr
 
 
 def validate_bracket_data_for_sharing(bracket_data):
@@ -8,6 +8,7 @@ def validate_bracket_data_for_sharing(bracket_data):
     validate bracket data coming from front-end when sharing
     checks structure & data type using pydantic library
     """
+
     class Track(BaseModel):
         """
         Track data with all the info about the song
@@ -110,3 +111,25 @@ def is_valid_uuid(uuid_string_to_check):
     except ValueError:
         return False
     return str(uuid_obj) == uuid_string_to_check
+
+
+def is_valid_nanoid(bracket_id_to_check):
+    """checks if a given string is a valid nanoid string
+
+        Args:
+            bracket_id_to_check (str): bracket's ID
+
+        Returns:
+            (bool): true if valid, false otherwise
+    """
+
+    class BracketID(BaseModel):
+        bracket_id: constr(regex=r'[A-Za-z0-9_-]{13}')
+
+    try:
+        user_input = BracketID(bracket_id=bracket_id_to_check)
+        return True
+    except ValidationError as e:
+        print(e.json())
+        print('incorrect bracket id')
+        return False
