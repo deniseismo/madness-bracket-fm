@@ -160,18 +160,11 @@ export class Cell {
       if (this.getPreviousCells()) {
         this.deactivatePreviousCells();
       }
-
+      this.element.classList.remove("cell_head");
       this.win();
-      // make current cell unadvanceable
-      // this.makeUnadvanceable();
-      // // deactivate current cell
-      // this.deactivate();
       // check if this cell has an opponent
       if (this.getOpponent()) {
         // disable opponent
-        // this.getOpponent().makeUnadvanceable();
-        // // deactivate opponent
-        // this.getOpponent().deactivate();
         // add class 'cell_loser' and a status 'loser'
         this.getOpponent().lose();
       }
@@ -179,8 +172,6 @@ export class Cell {
       this.nextCell.activate();
       this.nextCell.removeClassEmpty();
 
-      // this.nextCell.setCurrentSong(this.getCurrentSong());
-      // this.nextCell.setElementText();
       this.nextCell.copyAllQualities(this);
 
       // check if the next cell has an opponent
