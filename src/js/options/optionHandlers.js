@@ -1,5 +1,6 @@
 import { animateLetters } from "../animation/choiceBoxAnimation.js";
 import { isInputValid, showElement } from "../misc/utilities.js";
+import { addMaxSizeTooltip } from "./maxSizeTooltip.js";
 
 // handles picking bracket type: ARTIST or CHARTS
 export function handleSquareButtons(options) {
@@ -37,6 +38,7 @@ export function handleMaxBracketSizeOption(options) {
       options.setBracketMaxSize(maxSize);
     });
   });
+  addMaxSizeTooltip();
 }
 
 // show or hide input field depending on bracket type
