@@ -238,51 +238,60 @@
   }
 }
 
-@media screen and (max-width: 740px) {
+@media screen and (max-width: 1220px) {
   .cell {
-    padding: 0.15rem 0.25rem;
-    width: 4.5rem;
-    min-height: 1.5rem;
-    &.cell-left::after,
-    &.cell-left::before {
-      right: calc(-0.75rem - 1px);
-    }
-    &.cell-right::after,
-    &.cell-right::before {
-      left: calc(-0.75rem - 1px);
-    }
-    &::before {
-      width: 0.75rem;
-    }
-    .song-title {
-      font-size: 0.75;
-    }
+    width: 7rem;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .cell {
+    width: 6rem;
+  }
+}
+
+@media screen and (max-width: 1006px) {
+  .cell {
+    width: 5rem;
+    padding: 0.125rem 0.25rem;
+  }
+  .play-icon {
+    width: 1rem;
+  }
+}
+
+// --slider--
+@media screen and (max-width: 910px) {
+  .cell {
+    width: calc(50vw - 2.5rem);
+  }
+  .play-icon {
+    width: 1.5rem;
+  }
+  .song-title {
+    font-size: 1.25rem;
   }
   .round.left-1,
   .round.right-1 {
     .cell {
       &::after {
-        height: calc(50% + 1.5rem);
+        height: calc(100% + 3rem);
       }
     }
   }
-  .cell-not-first .song-title {
-    &::before {
-      width: 0.75rem;
-    }
-  }
-  .cell-not-first.cell-right {
-    .song-title {
-      &::before {
-        right: -0.75rem;
+
+  .round.left-2,
+  .round.right-2 {
+    .cell {
+      &::after {
+        height: calc(100% + 6rem);
       }
     }
   }
-  .cell-not-first.cell-left {
-    .song-title {
-      &::before {
-        left: -0.75rem;
-      }
-    }
+}
+
+@media screen and (max-width: 500px) {
+  .song-title {
+    font-size: 1.125rem;
   }
 }

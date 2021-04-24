@@ -1,9 +1,16 @@
 .trophy-icon {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
 }
 
 .trophy-icon_active {
   filter: drop-shadow(0 4px 4px rgba(232, 24, 24, 0.15))
     drop-shadow(0 8px 8px rgba(203, 244, 53, 0.74));
+}
+
+@media screen and (max-width: 1100px) {
+  .trophy-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
