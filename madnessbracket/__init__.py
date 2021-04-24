@@ -2,7 +2,7 @@ from flask import Flask
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 
-from madnessbracket.config import Config
+from madnessbracket.config import Config, CACHE_CONFIG
 from sqlalchemy import MetaData
 
 my_naming_convention = {
@@ -15,18 +15,21 @@ my_naming_convention = {
 mtd = MetaData(naming_convention=my_naming_convention)
 db = SQLAlchemy(metadata=mtd)
 
-cache = Cache(config={'CACHE_TYPE': 'simple'})
+cache = Cache()
 
 
-def create_app(config_class=Config):
+def create_app(production=False):
     """
     creates an instance of an app
-    :param config_class: Config class file with all the configuration
+    :param production: whether the app's in testing or production mode. default: False
     :return: app
     """
     app = Flask(__name__)
     app.config.from_object(Config)
-
+    if production:
+        cache.init_app(app, config=CACHE_CONFIG["production"])
+    else:
+        cache.init_app(app, config=CACHE_CONFIG["testing"])
     db.init_app(app)
 
     # import all blueprints necessary

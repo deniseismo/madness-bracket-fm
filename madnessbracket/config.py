@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 file_path = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', 'etc'))
@@ -20,3 +20,13 @@ class Config:
     MUSIC_BRAINZ_USER_AGENT = config.get("MUSIC_BRAINZ_USER_AGENT")
     DISCOGS_USER_TOKEN = config.get("DISCOGS_USER_TOKEN")
     APP_NAME = config.get("APP_NAME")
+
+
+CACHE_CONFIG = {
+    "production": {'CACHE_TYPE': 'redis', 'CACHE_KEY_PREFIX': 'fcache',
+                   'CACHE_REDIS_HOST': 'localhost',
+                   'CACHE_REDIS_PORT': '6379',
+                   'CACHE_REDIS_URL': 'redis://localhost:6379'
+                   },
+    "testing": {'CACHE_TYPE': 'simple'}
+}
