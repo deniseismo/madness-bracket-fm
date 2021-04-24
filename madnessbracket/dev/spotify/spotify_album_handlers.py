@@ -60,10 +60,12 @@ def get_spotify_album_info(album_title, artist_name, tekore_client=None):
         spotify_tekore_client = get_spotify_tekore_client()
     else:
         spotify_tekore_client = tekore_client
-    albums_found = get_album_search_results(album_title, artist_name, spotify_tekore_client)
+    albums_found = get_album_search_results(
+        album_title, artist_name, spotify_tekore_client)
     if not albums_found:
         return None
-    perfect_match = find_album_best_match(album_title, artist_name, albums_found.items, spotify_tekore_client)
+    perfect_match = find_album_best_match(
+        album_title, artist_name, albums_found.items, spotify_tekore_client)
     if not perfect_match:
         return None
     return perfect_match
@@ -107,7 +109,8 @@ def find_album_best_match(album_title: str, artist_name: str, search_results: li
     :param search_results: a list of all the search results
     :return: perfect match if found
     """
-    print(f"searching for Album({album_title}) among {len(search_results)} results")
+    print(
+        f"searching for Album({album_title}) among {len(search_results)} results")
     album_title = album_title.lower()
     artist_spotify_info = get_spotify_artist_info(
         artist_name, spotify_tekore_client)
@@ -135,8 +138,9 @@ def find_album_best_match(album_title: str, artist_name: str, search_results: li
         if ratio > 90:
             print(f"pretty close: {album_found} vs. {album_title}")
             return album
-        # append a match to matches list
-        matches.append((album, ratio))
+        if ratio > 80:
+            # append a match to matches list
+            matches.append((album, ratio))
     # if there are matches
     if matches:
         try:

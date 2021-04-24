@@ -4,7 +4,7 @@ import sys
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from madnessbracket import create_app, db
-from madnessbracket.models import Album, Artist, Song, User
+from madnessbracket.models import Album, Artist, Song, User, BracketData
 
 app = create_app()
 app.app_context().push()

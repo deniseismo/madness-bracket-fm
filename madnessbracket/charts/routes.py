@@ -1,8 +1,10 @@
 import json
+
 from flask import Blueprint, jsonify, request, make_response, render_template
-from madnessbracket.charts.prepare_tracks import prepare_tracks_for_charts
+
 from madnessbracket.charts.charts_handlers import get_songs_considered_best
 from madnessbracket.utilities.user_input_validation import validate_bracket_upper_limit
+
 charts = Blueprint('charts', __name__)
 
 

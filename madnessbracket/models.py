@@ -1,5 +1,6 @@
-from madnessbracket import db
 from sqlalchemy import JSON
+
+from madnessbracket import db
 
 
 class Artist(db.Model):
