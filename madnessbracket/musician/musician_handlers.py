@@ -1,9 +1,10 @@
 from madnessbracket.models import Artist, Song
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_artist_correct_name
-from madnessbracket.dev.spotify.spotify_client_api import get_spotify_artist_top_tracks
+from madnessbracket.dev.spotify.spotify_artist_handlers import get_spotify_artist_top_tracks
 from madnessbracket.musician.prepare_tracks import prepare_tracks_for_musician, process_tracks_from_spotify, \
     process_tracks_from_db
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
+from madnessbracket import cache
 
 
 def get_artists_tracks(artist_name: str, bracket_limit: int):
@@ -38,6 +39,7 @@ def get_artists_tracks(artist_name: str, bracket_limit: int):
     return tracks
 
 
+@cache.memoize(timeout=3600)
 def get_tracks_via_database(artist_name: str):
     """get artist's top tracks/songs via database
 
@@ -69,6 +71,7 @@ def get_tracks_via_database(artist_name: str):
     return tracks
 
 
+@cache.memoize(timeout=3600)
 def get_tracks_via_spotify(artist_name: str):
     """a fallback function for getting top tracks if artist's missing from db
 

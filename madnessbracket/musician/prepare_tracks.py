@@ -1,3 +1,4 @@
+from madnessbracket import cache
 from madnessbracket.dev.db_mgmt.color_mgmt.dominant_colors import get_file_from_url, get_image_dominant_colors
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
 from madnessbracket.utilities.track_randomization import get_weighted_random_selection_of_tracks
@@ -69,6 +70,7 @@ def process_tracks_from_db(tracks: list):
     return processed_tracks
 
 
+@cache.memoize(timeout=3600)
 def process_tracks_from_spotify(tracks: list):
     processed_tracks = []
     track_titles = set()
