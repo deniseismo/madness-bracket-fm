@@ -1,0 +1,22 @@
+.swiper-container {
+  height: 100%;
+}
+.swiper-pagination-bullet {
+  background: $greenishColor;
+  opacity: 0.9;
+}
+.swiper-pagination-bullet-active {
+  background: $reddishColor;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: $whitishColor;
+}
+.swiper-slide {
+  width: auto !important;
+}
+
+.swiper-pagination {
+  position: static;
+}
