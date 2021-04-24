@@ -14,6 +14,7 @@ import {
   constructQueryString,
 } from "./fetchTracks.js";
 import { showSpinner, hideSpinner } from "./visuals/spinner.js";
+import { handleResponsiveness } from "./responsiveness/mediaQuery.js";
 export let bracket = new BracketData();
 
 export let options = new OptionStorage();
@@ -38,6 +39,7 @@ document.querySelector(".form__group").onsubmit = function () {
         options.setSecret(data["secret"]);
         createBracketStructure(bracket, options);
         addModal();
+        handleResponsiveness();
         pushHistory({
           state: {
             bracketType: bracketType,
