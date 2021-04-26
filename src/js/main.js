@@ -47,7 +47,7 @@ document.querySelector(".form__group").onsubmit = function () {
             limit: limit,
           },
           title: null,
-          url: `http://192.168.1.62:5000/${bracketType}?` + queryString,
+          url: `${bracketType}?` + queryString,
         });
       } else {
         console.log(data);

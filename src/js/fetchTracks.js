@@ -16,16 +16,13 @@ export const fetchTracks = async function (options) {
       name: name,
       limit: limit,
     });
-    const response = await fetch(
-      `http://192.168.1.62:5000/${bracketType}?` + queryString,
-      {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-        signal: signal,
-      }
-    );
+    const response = await fetch(`${bracketType}?` + queryString, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+      }),
+      signal: signal,
+    });
     // if response is not ok (status ain't no 200)
     if (!response.ok) {
       // do something
@@ -58,5 +55,12 @@ export function constructQueryString(params) {
 export function pushHistory(params) {
   console.log("pushing history");
   const { state, title, url } = params;
+  console.log(state, title, url);
   history.pushState(state, title, url);
+  window.addEventListener("popstate", (event) => {
+    if (event.state === null) {
+      // initial page
+      window.location.reload();
+    }
+  });
 }

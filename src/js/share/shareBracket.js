@@ -58,7 +58,7 @@ function prepareBracketDataForSharing(bracketInfo, options) {
 // send bracket data to backend → get share link
 const sendBracketData = async function (bracketDataForSharing) {
   try {
-    const response = await fetch("http://192.168.1.62:5000/share", {
+    const response = await fetch("/share", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
