@@ -105,6 +105,7 @@
 .bracket_max_size_container {
   @include flexContainer(row, center);
   margin-top: 2rem;
+  position: relative;
 }
 .bracket_max_size_option {
   @include bluishShadow();
@@ -148,6 +149,20 @@
 .input-container {
   width: 100%;
   display: none;
+}
+
+.max-size-tooltip {
+  &:hover {
+    cursor: help;
+  }
+  position: absolute;
+  right: -2rem;
+}
+
+.max-size-tooltip-icon {
+  width: 2rem;
+  height: 2rem;
+  color: $whitishColor;
 }
 
 @media screen and (max-width: 1366px) {
