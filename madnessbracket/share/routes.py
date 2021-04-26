@@ -47,8 +47,9 @@ def get_shared_bracket(bracket_id):
         return render_template("404.html")
     shared_bracket_data = get_bracket_from_database(
         bracket_id)
-    shared_bracket_data = json.dumps(shared_bracket_data)
     if not shared_bracket_data:
-        print("bracket not found")
-        return render_template("404.html")
+        error_message = "bracket not found"
+        return render_template("404.html", error_message=error_message)
+    shared_bracket_data = json.dumps(shared_bracket_data)
+
     return render_template("shared.html", shared_bracket_data=shared_bracket_data)
