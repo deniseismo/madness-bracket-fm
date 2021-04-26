@@ -32,7 +32,6 @@ function createModal() {
   closeButton.setAttribute("aria-label", "Close modal");
   closeButton.setAttribute("data-micromodal-close", "");
   const closeIcon = getSVGIcon(appIconsSVGData["close"]);
-  closeIcon.setAttribute("data-micromodal-close", "");
   closeIcon.classList.add("close-icon");
   closeButton.appendChild(closeIcon);
 

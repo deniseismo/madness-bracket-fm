@@ -89,7 +89,7 @@ export function shuffleTracks(tracks, options) {
 
 // get current screen size
 export function getScreenSize() {
-  const mediaQueryFull = window.matchMedia("(min-width: 900px)");
+  const mediaQueryFull = window.matchMedia("(min-width: 1200px)");
   const mediaQuery640 = window.matchMedia("(min-width: 641px)");
   const mediaQuery500 = window.matchMedia("(min-width: 500px)");
   const mediaQuery400 = window.matchMedia("(min-width: 400px)");
@@ -106,4 +106,10 @@ export function getScreenSize() {
     return "400";
   }
   return "small";
+}
+
+// check if screen height is too small
+export function checkScreenHeight() {
+  const mediaQueryFull = window.matchMedia("(min-height: 640px)");
+  return mediaQueryFull.matches;
 }

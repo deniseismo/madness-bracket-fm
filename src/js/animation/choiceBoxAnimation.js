@@ -82,7 +82,7 @@ export function animateLetters(squareChoiceBox) {
     .timeline({ loop: false })
     .add({
       targets: spanLetters,
-      translateY: ["1.1em", 0],
+      translateY: ["-100%", 0],
       translateZ: 0,
       rotateY: [360, 0],
       duration: 750,
