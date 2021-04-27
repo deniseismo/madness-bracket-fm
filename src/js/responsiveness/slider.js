@@ -1,4 +1,6 @@
-import Swiper from "swiper/bundle";
+import SwiperCore, { Pagination } from "swiper/core";
+SwiperCore.use([Pagination]);
+
 import { createElement } from "../misc/utilities";
 import { hideAll } from "tippy.js";
 // transforms tournament bracket into a mobile-friendly slider (swiper.js)
@@ -43,7 +45,7 @@ export function removeSlider() {
 }
 
 export function sliderInit(numberOfRounds) {
-  const slider = new Swiper(".swiper-container", {
+  const slider = new SwiperCore(".swiper-container", {
     // parameters
     direction: "horizontal",
     loop: false,
