@@ -28,7 +28,7 @@ def get_share_link():
     # get bracket unique id used for sharing
     share_link_id = save_bracket_to_database(parsed_bracket_data)
     return jsonify({
-        "share_bracket_id": urllib.parse.urljoin("http://192.168.1.62:5000/get/", share_link_id)
+        "bracketShareLink": urllib.parse.urljoin("get/", share_link_id)
     })
 
 

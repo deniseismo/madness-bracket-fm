@@ -3,8 +3,10 @@ import { appIconsSVGData } from "../misc/appIcons.js";
 import { shareButtonSVGData } from "./shareButtons.js";
 import { getSVGIcon } from "../misc/svgGenerator.js";
 import { takeScreenshot } from "./takeScreenshot.js";
+import { socialShareInit } from "./socials/socials.js";
 import Clipboard from "clipboard";
 import { activateShareTooltips } from "./shareTooltips.js";
+import MicroModal from "micromodal";
 // creates modal window
 function createModal() {
   const mainModalContainer = createElement("div", [
@@ -56,7 +58,6 @@ function createShareLinkContainer() {
   const copyButton = createElement("button", ["button-copy", "button-social"]);
   copyButton.dataset.clipboardTarget = ".share-link";
   const copyIcon = getSVGIcon(shareButtonSVGData["copy"]);
-  // data-clipboard-target="#foo"
   copyIcon.classList.add("copy-icon");
   copyButton.appendChild(copyIcon);
   shareLinkContainer.append(shareLinkField, copyButton);
@@ -131,4 +132,15 @@ export function addModal() {
 // instantiate Clipboard by passing a button-copy selector
 function clipboardInit() {
   new Clipboard(".button-copy");
+}
+
+export function shareModalInit(shareURL, description) {
+  shareLinkInit(shareURL);
+  socialShareInit(shareURL, description);
+  MicroModal.show("modal-1");
+}
+
+function shareLinkInit(shareURL) {
+  const shareLinkElement = document.querySelector(".share-link");
+  shareLinkElement.value = shareURL;
 }

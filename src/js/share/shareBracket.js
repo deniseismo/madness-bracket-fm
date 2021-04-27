@@ -1,5 +1,4 @@
-import MicroModal from "micromodal";
-import { socialShareInit } from "./socials/socials.js";
+import { shareModalInit } from "./shareModal.js";
 // Save current bracket structure with all the info about tracks,
 // cells, their position in the bracket and their status (i.e. active/advanceable/etc).
 // Used to send current bracket to backend for storing & sharing
@@ -12,8 +11,10 @@ export function shareBracket(bracketInfo, options) {
     try {
       if (data) {
         console.log(data);
-        triggerShareModal(data["share_bracket_id"]);
-        socialShareInit(data["share_bracket_id"], options.getDescription());
+        const { bracketShareLink } = data;
+        const correctShareURL = getCorrectShareURL(bracketShareLink);
+        const description = options.getDescription();
+        shareModalInit(correctShareURL, description);
       } else {
         console.log(data);
       }
@@ -74,7 +75,7 @@ const sendBracketData = async function (bracketDataForSharing) {
       });
     }
     const data = await response.json();
-    console.log("data is", data["share_bracket_id"]);
+    console.log("data is", data["bracketShareLink"]);
     return data;
   } catch (error) {
     // Handle the error
@@ -83,9 +84,7 @@ const sendBracketData = async function (bracketDataForSharing) {
   }
 };
 
-// show share modal with the share link ready
-function triggerShareModal(shareLink) {
-  const shareLinkElement = document.querySelector(".share-link");
-  shareLinkElement.value = shareLink;
-  MicroModal.show("modal-1");
+function getCorrectShareURL(shareLink) {
+  const correctURL = new URL(shareLink, window.location.origin).href;
+  return correctURL;
 }
