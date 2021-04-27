@@ -12,7 +12,8 @@ export function handleResponsiveness() {
       // Then log the following message to the console
       console.log("Media Query Matched!");
       transformBracketIntoSlider();
-      sliderInit();
+      const numberOfRounds = document.querySelectorAll(".round").length;
+      sliderInit(numberOfRounds);
     } else {
       removeSlider();
     }

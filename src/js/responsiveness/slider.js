@@ -1,5 +1,6 @@
 import Swiper from "swiper/bundle";
 import { createElement } from "../misc/utilities";
+import { hideAll } from "tippy.js";
 // transforms tournament bracket into a mobile-friendly slider (swiper.js)
 export function transformBracketIntoSlider() {
   const container = document.querySelector(".container");
@@ -41,7 +42,7 @@ export function removeSlider() {
   }
 }
 
-export function sliderInit() {
+export function sliderInit(numberOfRounds) {
   const slider = new Swiper(".swiper-container", {
     // parameters
     direction: "horizontal",
@@ -55,9 +56,8 @@ export function sliderInit() {
     },
   });
   slider.on("slideChange", function () {
-    const rounds = document.querySelectorAll(".round");
-    const numberOfRounds = rounds.length;
     console.log(slider.activeIndex);
+    hideAll();
     const activeIndex = slider.activeIndex;
     console.log(Math.floor(numberOfRounds / 2));
     if (activeIndex === Math.floor(numberOfRounds / 2)) {
@@ -67,4 +67,18 @@ export function sliderInit() {
       slider.params.slidesPerView = 2;
     }
   });
+}
+
+function getCurrentSwiper() {
+  const swiper = document.querySelector(".swiper-container")?.swiper;
+  console.log(swiper);
+  return swiper;
+}
+
+export function returnToSlideZero() {
+  const swiper = getCurrentSwiper();
+  if (swiper) {
+    console.log("getting you back to slide 0");
+    swiper.slideTo(0, 150, true);
+  }
 }

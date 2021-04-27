@@ -9,6 +9,7 @@ import {
 import { shareBracket } from "../share/shareBracket.js";
 import { fetchTracks } from "../fetchTracks.js";
 import { updateDescription } from "../visuals/description.js";
+import { returnToSlideZero } from "../responsiveness/slider.js";
 
 // create a dashboard (reset, shuffle, retry, share buttons)
 export function getDashboard(bracket, options) {
@@ -23,6 +24,7 @@ export function getDashboard(bracket, options) {
   resetButton.appendChild(resetIcon);
   resetButton.addEventListener("click", () => {
     resetBracket(bracket);
+    returnToSlideZero();
   });
 
   const shuffleButton = createElement("button", [
@@ -34,6 +36,7 @@ export function getDashboard(bracket, options) {
   shuffleButton.appendChild(shuffleIcon);
   shuffleButton.addEventListener("click", () => {
     shuffleBracket(bracket, options);
+    returnToSlideZero();
   });
 
   const retryButton = createElement("button", [
@@ -56,6 +59,7 @@ export function getDashboard(bracket, options) {
           options.setSecret(data["secret"]);
           updateDescription(options.getDescription());
           retryBracket(bracket, options);
+          returnToSlideZero();
         } else {
           console.log(data);
         }
