@@ -1,9 +1,11 @@
 import html2canvas from "html2canvas";
 import MicroModal from "micromodal";
+import { hideAll } from "tippy.js";
 
 // take screenshot & render it onto the page
 export function takeScreenshot() {
   MicroModal.close("modal-1");
+  hideAll();
   html2canvas(document.querySelector(".wrapper")).then((canvas) => {
     canvas.classList.add("screenshot");
     document.body.addEventListener("click", closeScreenshot);
