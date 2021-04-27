@@ -1,16 +1,16 @@
-import html2canvas from "html2canvas";
 import MicroModal from "micromodal";
 import { hideAll } from "tippy.js";
 
 // take screenshot & render it onto the page
-export function takeScreenshot() {
+export async function takeScreenshot() {
   MicroModal.close("modal-1");
-  hideAll();
-  html2canvas(document.querySelector(".wrapper")).then((canvas) => {
+  const html2canvas = await import("html2canvas");
+  html2canvas.default(document.querySelector(".wrapper")).then((canvas) => {
     canvas.classList.add("screenshot");
     document.body.addEventListener("click", closeScreenshot);
     document.body.appendChild(canvas);
   });
+  hideAll();
 }
 // close/remove screenshot
 function closeScreenshot() {
