@@ -4,7 +4,9 @@
   "description": "a tournament bracket generator for your favorite songs",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development"
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "dev": "cross-env NODE_ENV=development webpack --mode development",
+    "stats": "webpack --json > stats.json && webpack-bundle-analyzer stats.json"
   },
   "repository": {
     "type": "git",
@@ -24,11 +26,16 @@
     "html2canvas": "^1.0.0-rc.7",
     "micromodal": "^0.4.6",
     "postcss": "^8.2.6",
+    "swiper": "^6.5.7",
     "tippy.js": "^6.3.1"
   },
   "devDependencies": {
     "@types/animejs": "^3.1.2",
+    "cross-env": "^7.0.3",
+    "html-webpack-plugin": "^5.3.1",
+    "terser-webpack-plugin": "^5.1.1",
     "webpack": "^5.30.0",
+    "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^4.6.0"
   }
 }
