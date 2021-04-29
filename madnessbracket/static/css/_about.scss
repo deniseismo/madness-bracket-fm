@@ -1,0 +1,35 @@
+.about-madness {
+  font-size: 1.5rem;
+  max-width: 40%;
+  p {
+    display: block;
+  }
+  a {
+    text-decoration: underline;
+  }
+  abbr::hover {
+    cursor: pointer;
+  }
+}
+@media screen and (max-width: 1220px) {
+  .about-madness {
+    max-width: 60%;
+  }
+}
+@media screen and (max-width: 910px) {
+  .about-madness {
+    max-width: 65%;
+    font-size: 1.25rem;
+  }
+}
+@media screen and (max-width: 600px) {
+  .about-madness {
+    max-width: 75%;
+    font-size: 1.25rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .about-madness {
+    max-width: 80%;
+  }
+}
