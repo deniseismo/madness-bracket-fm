@@ -12,3 +12,13 @@ def home():
         home page template (home.html)
     """
     return render_template("home.html")
+
+
+@main.route("/about", methods=["GET"])
+def about():
+    """renders about page
+
+    Returns:
+        about page template (home.html)
+    """
+    return render_template("about.html")
