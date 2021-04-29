@@ -1,0 +1,10 @@
+{% extends "layout.html" %} {% block content %}
+<script>
+  let userRequest = JSON.parse({{ user_request|tojson }});
+</script>
+<% for (var chunk in htmlWebpackPlugin.files.js) { %>
+<script
+  type="module"
+  src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
+></script>
+<% } %> {% endblock content %}

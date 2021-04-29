@@ -1,0 +1,63 @@
+{% extends "layout.html" %} {% block content %}
+<div class="square-buttons-container">
+  <button data-bracket-type="artist" class="square-button square-button-artist">
+    <p>ARTIST</p>
+    <p>BOWIE</p>
+    <p>ARTIST</p>
+    <p class="optional">ARTIST</p>
+    <p class="optional">ADELE</p>
+    <p class="optional">ARTIST</p>
+  </button>
+  <button data-bracket-type="charts" class="square-button square-button-charts">
+    <p>CHARTS</p>
+    <p>TOP</p>
+    <p>CHARTS</p>
+    <p class="optional">BEST</p>
+    <p class="optional">PITCHFORK</p>
+    <p class="optional">RS500</p>
+  </button>
+  <button data-bracket-type="secret" class="square-button square-button-secret">
+    <p>SECRET</p>
+    <p>WILD CARD</p>
+    <p>???</p>
+    <p class="optional">SECRET</p>
+    <p class="optional">WAIT, WHAT?</p>
+    <p class="optional">SECRET</p>
+  </button>
+</div>
+<div class="options">
+  <div class="bracket_max_size_container" wfd-id="18">
+    <button class="bracket_max_size_option" data-max-size="8">8</button>
+    <button
+      class="bracket_max_size_option bracket_max_size_option_active"
+      data-max-size="16"
+    >
+      16
+    </button>
+  </div>
+  <form
+    class="form__group field"
+    action=""
+    onsubmit="return false;"
+    enctype="multipart/form-data"
+    autocomplete="off"
+  >
+    <div class="input-container">
+      <input
+        type="text"
+        class="form__field"
+        placeholder="artist name"
+        maxlength="99"
+        id="name"
+      />
+      <label for="name" class="form__label">ARTIST</label>
+    </div>
+    <button class="generate-button" type="submit" disabled>GENERATE</button>
+  </form>
+</div>
+<% for (var chunk in htmlWebpackPlugin.files.js) { %>
+<script
+  type="module"
+  src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
+></script>
+<% } %> {% endblock content %}

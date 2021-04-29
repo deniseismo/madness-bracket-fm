@@ -1,0 +1,11 @@
+{% extends "layout.html" %} {% block content %}
+<div class="description-container">
+  <h1 class="description-text">PAGE NOT FOUND</h1>
+  <hr class="description-line" />
+</div>
+<% for (var chunk in htmlWebpackPlugin.files.js) { %>
+<script
+  type="module"
+  src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
+></script>
+<% } %> {% endblock content %}

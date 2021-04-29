@@ -1,0 +1,10 @@
+{% extends "layout.html" %} {% block content %}
+<script>
+  let sharedBracketData = JSON.parse({{ shared_bracket_data|tojson }});
+</script>
+<% for (var chunk in htmlWebpackPlugin.files.js) { %>
+<script
+  type="module"
+  src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
+></script>
+<% } %> {% endblock content %}
