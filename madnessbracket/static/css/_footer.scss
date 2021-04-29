@@ -1,0 +1,40 @@
+.footer {
+  @include flexContainer(row, center);
+  opacity: 0.45;
+  padding: 1rem;
+  color: $whitishColor;
+}
+.about-link {
+  position: relative;
+  margin: 0 1rem;
+  padding: 0;
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -0.1rem;
+    left: 0;
+    right: 0;
+    height: 0.075rem;
+    transform-origin: right;
+    transform: scaleX(0);
+    background-color: $whitishColor;
+    transition: transform 0.5s cubic-bezier(0, 0.98, 0.96, 0.61);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    border-right: 2px solid $whitishColor;
+    height: 100%;
+    top: 0;
+    right: -0.5rem;
+  }
+  &:hover {
+    color: white;
+  }
+  &:hover::before {
+    transform: scale(1);
+    transform-origin: left;
+    background-color: $reddishColor;
+  }
+}
