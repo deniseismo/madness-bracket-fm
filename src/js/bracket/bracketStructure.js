@@ -12,10 +12,10 @@ import { bracketAnimation } from "../animation/bracketAnimation.js";
 
 // create madness bracket
 export function createBracketStructure(bracket, options) {
-  const container = document.querySelector(".container");
+  const mainContainer = document.querySelector(".main");
   const tracksData = options.getCurrentTracks();
   const description = options.getDescription();
-  removeAllChildNodes(container);
+  removeAllChildNodes(mainContainer);
   displayBracketDescription(description);
   const tracksLength = tracksData.length;
   bracket.setStructure(tracksLength);
@@ -27,7 +27,6 @@ export function createBracketStructure(bracket, options) {
   const numberOfRounds = Math.log2(tracksLength / 2) * 2;
   // set a variable for an amount of tracks per round
   let tracksPerRound = tracksLength / 2;
-  const mainContainer = document.querySelector(".container");
   // create and append the main bracket div to 'container' container
   const tournamentBracket = document.createElement("div");
   tournamentBracket.classList.add("tournament-bracket");

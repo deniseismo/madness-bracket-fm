@@ -6,9 +6,9 @@ import {
 
 // handle showing spinner when bracket's loading
 export function showSpinner() {
-  const container = document.querySelector(".container");
+  const mainContainer = document.querySelector(".main");
   const spinner = createSpinner();
-  container.appendChild(spinner);
+  mainContainer.appendChild(spinner);
   animateSpinner();
 }
 

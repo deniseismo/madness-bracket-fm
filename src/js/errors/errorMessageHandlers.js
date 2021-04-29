@@ -1,9 +1,9 @@
 import { createElement } from "../misc/utilities.js";
 
 export function showErrorMessage(message) {
-  const container = document.querySelector(".container");
+  const mainContainer = document.querySelector(".main");
   const error = createErrorMessage(message);
-  container.appendChild(error);
+  mainContainer.appendChild(error);
 }
 
 export function hideErrorMessage() {

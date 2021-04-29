@@ -10,6 +10,7 @@ import {
   constructQueryString,
 } from "./fetchTracks.js";
 import { showSpinner, hideSpinner } from "./visuals/spinner.js";
+import { handleResponsiveness } from "./responsiveness/mediaQuery.js";
 export let bracket = new BracketData();
 
 export let options = new OptionStorage();
@@ -47,6 +48,7 @@ function loadBracketOnDemand() {
         options.setDescription(data["description"]);
         options.setSecret(data["secret"]);
         createBracketStructure(bracket, options);
+        handleResponsiveness();
         addModal();
         pushHistory({
           state: {

@@ -5,7 +5,7 @@ import { createIntroElements } from "../visuals/intro.js";
 import { OptionStorage } from "../options/optionStorage.js";
 import { reconstructBracket } from "./reconstructBracket.js";
 import { addModal } from "./shareModal.js";
-
+import { handleResponsiveness } from "../responsiveness/mediaQuery.js";
 export let bracket = new BracketData();
 
 export let options = new OptionStorage();
@@ -35,7 +35,7 @@ getOptionsReady();
 
 // create bracket structure
 createBracketStructure(bracket, options);
-
+handleResponsiveness();
 // reconstruct bracket from the given data
 reconstructBracket(
   bracket,

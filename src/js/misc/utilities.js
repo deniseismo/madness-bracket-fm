@@ -113,3 +113,8 @@ export function checkScreenHeight() {
   const mediaQueryFull = window.matchMedia("(min-height: 640px)");
   return mediaQueryFull.matches;
 }
+
+export function getCorrectURL(shareLink) {
+  const correctURL = new URL(shareLink, window.location.origin).href;
+  return correctURL;
+}

@@ -5,7 +5,7 @@ import { createElement } from "../misc/utilities";
 import { hideAll } from "tippy.js";
 // transforms tournament bracket into a mobile-friendly slider (swiper.js)
 export function transformBracketIntoSlider() {
-  const container = document.querySelector(".container");
+  const mainContainer = document.querySelector(".main");
   const bracket = document.querySelector(".tournament-bracket");
   if (bracket) {
     const swiperContainer = createElement("div", ["swiper-container"]);
@@ -14,8 +14,7 @@ export function transformBracketIntoSlider() {
     swiperContainer.appendChild(swiperWrapper);
     const paginator = createElement("div", ["swiper-pagination"]);
     bracket.appendChild(swiperContainer);
-    console.log(container);
-    container.appendChild(paginator);
+    mainContainer.appendChild(paginator);
 
     const rounds = document.querySelectorAll(".round");
     rounds.forEach((round) => {

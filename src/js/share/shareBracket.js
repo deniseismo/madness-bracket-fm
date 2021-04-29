@@ -1,3 +1,4 @@
+import { getCorrectURL } from "../misc/utilities.js";
 import { shareModalInit } from "./shareModal.js";
 // Save current bracket structure with all the info about tracks,
 // cells, their position in the bracket and their status (i.e. active/advanceable/etc).
@@ -12,7 +13,7 @@ export function shareBracket(bracketInfo, options) {
       if (data) {
         console.log(data);
         const { bracketShareLink } = data;
-        const correctShareURL = getCorrectShareURL(bracketShareLink);
+        const correctShareURL = getCorrectURL(bracketShareLink);
         const description = options.getDescription();
         shareModalInit(correctShareURL, description);
       } else {
@@ -83,8 +84,3 @@ const sendBracketData = async function (bracketDataForSharing) {
     return Promise.reject();
   }
 };
-
-function getCorrectShareURL(shareLink) {
-  const correctURL = new URL(shareLink, window.location.origin).href;
-  return correctURL;
-}

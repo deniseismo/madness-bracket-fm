@@ -124,8 +124,8 @@ function createSocialMediaButtons() {
 export function addModal() {
   console.log("add modal triggered!");
   const modal = createModal();
-  const container = document.querySelector(".container");
-  container.append(modal);
+  const mainContainer = document.querySelector(".main");
+  mainContainer.append(modal);
   activateShareTooltips();
 }
 

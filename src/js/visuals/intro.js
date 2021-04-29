@@ -10,8 +10,8 @@ export function createIntroElements() {
   introTitle.appendChild(titleLink);
   introContainer.appendChild(introTitle);
 
-  const mainContainer = document.querySelector("header");
-  mainContainer.appendChild(introContainer);
+  const headerContainer = document.querySelector("header");
+  headerContainer.appendChild(introContainer);
 }
 
 // create intro/header bracket lines -=

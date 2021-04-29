@@ -1,4 +1,6 @@
 import { showErrorMessage } from "./errors/errorMessageHandlers.js";
+import { getCorrectURL } from "./misc/utilities.js";
+
 // fetch tracks from the server
 let controller = null;
 export const fetchTracks = async function (options) {
@@ -16,7 +18,8 @@ export const fetchTracks = async function (options) {
       name: name,
       limit: limit,
     });
-    const response = await fetch(`${bracketType}?` + queryString, {
+    const fetchURL = getCorrectURL(`${bracketType}?` + queryString);
+    const response = await fetch(fetchURL, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
