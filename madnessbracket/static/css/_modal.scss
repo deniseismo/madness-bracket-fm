@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99;
 }
 
 .modal__container {
@@ -95,10 +96,6 @@
   background-color: #00449e;
   color: #fff;
 }
-
-/**************************\
-    Demo Animation Style
-  \**************************/
 @keyframes mmfadeIn {
   from {
     opacity: 0;
