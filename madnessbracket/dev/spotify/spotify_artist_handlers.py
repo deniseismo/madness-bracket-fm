@@ -22,7 +22,8 @@ def get_spotify_artist_info(artist_name: str, tekore_client=None):
         spotify_tekore_client = get_spotify_tekore_client()
     else:
         spotify_tekore_client = tekore_client
-    artists_found = get_artist_id_search_results(artist_name, spotify_tekore_client)
+    artists_found = get_artist_id_search_results(
+        artist_name, spotify_tekore_client)
     if not artists_found:
         return None
     perfect_match = find_artist_best_match(artist_name, artists_found.items)
@@ -40,7 +41,7 @@ def get_artist_id_search_results(artist_name: str, spotify_tekore_client):
     """
     query = f"{artist_name}"
     artists_found, = spotify_tekore_client.search(
-        query=query, types=('artist',), limit=50, market="US")
+        query=query, types=('artist',), market="GE", limit=50)
     # in case of not getting any response
     if not artists_found:
         print("search for track failed")
@@ -58,8 +59,11 @@ def find_artist_best_match(artist_name: str, search_results: list):
     :param search_results: a list of all the search results
     :return: perfect match if found
     """
-    print(f"searching for Artist({artist_name}) among {len(search_results)} results")
+    print(
+        f"searching for Artist({artist_name}) among {len(search_results)} results")
+    print([result.name for result in search_results])
     first_result = search_results[0]
+    print(f"first result: {first_result}")
     artist_name = artist_name.lower()
     if not artist_name.isascii():
         print('non-latin artist name')
@@ -71,10 +75,12 @@ def find_artist_best_match(artist_name: str, search_results: list):
         if artist.name.lower() == artist_name:
             return artist
         ratio = fuzz.ratio(artist.name.lower(), artist_name)
-        if ratio > 90:
+        print(ratio)
+        if ratio > 95:
             print(f"pretty close: {artist.name} vs. {artist_name}")
             return artist
-        matches.append((artist, ratio))
+        if ratio > 90:
+            matches.append((artist, ratio))
     if matches:
         try:
             # pick with the highest ratio
@@ -85,7 +91,6 @@ def find_artist_best_match(artist_name: str, search_results: list):
     return first_result
 
 
-@cache.memoize(timeout=12000)
 def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
     """get artist's top tracks according to spotify
     Args:
@@ -107,7 +112,7 @@ def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
     if not artist_info:
         return None
     print("artist spotify id", artist_info.id)
-    top_tracks = spotify_tekore_client.artist_top_tracks(artist_info.id, 'US')
+    top_tracks = spotify_tekore_client.artist_top_tracks(artist_info.id, 'GE')
     # in case of not getting any response
     if not top_tracks:
         return None

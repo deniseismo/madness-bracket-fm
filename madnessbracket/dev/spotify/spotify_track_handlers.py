@@ -101,8 +101,9 @@ def find_track_best_match(track_title: str, artist_name: str, search_results: li
         if ratio > 90:
             print(f"pretty close: {track_found} vs. {track_title}")
             return track
-        # append a match to matches list
-        matches.append((track, ratio))
+        if ratio > 80:
+            # append a match to matches list
+            matches.append((track, ratio))
     # if there are matches
     if matches:
         try:

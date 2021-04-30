@@ -88,6 +88,11 @@ def get_tracks_via_spotify(artist_name: str):
         return None
     print(track_entries)
     processed_tracks = process_tracks_from_spotify(track_entries)
+    try:
+        spotify_artist_name = processed_tracks[0]["artist_name"]
+        artist_name = spotify_artist_name
+    except (IndexError, ValueError) as e:
+        print(e)
     tracks = {
         "tracks": processed_tracks,
         "description": artist_name,

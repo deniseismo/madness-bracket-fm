@@ -3,6 +3,7 @@ import random
 
 import tekore as tk
 from flask import Blueprint, current_app, session
+
 from madnessbracket.models import User
 
 spotify = Blueprint('spotify', __name__)

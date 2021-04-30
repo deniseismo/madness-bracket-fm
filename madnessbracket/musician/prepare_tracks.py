@@ -70,7 +70,6 @@ def process_tracks_from_db(tracks: list):
     return processed_tracks
 
 
-@cache.memoize(timeout=3600)
 def process_tracks_from_spotify(tracks: list):
     processed_tracks = []
     track_titles = set()
