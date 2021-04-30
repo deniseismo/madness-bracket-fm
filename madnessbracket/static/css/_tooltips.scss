@@ -1,0 +1,8 @@
+.tippy-box[data-theme~="madness"] {
+  background-color: $reddishColor;
+  color: $whitishColor;
+}
+.tippy-box[data-theme~="madness"][data-placement^="top"]
+  > .tippy-arrow::before {
+  border-top-color: $reddishColor;
+}
