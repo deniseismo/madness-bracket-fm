@@ -40,6 +40,7 @@ def create_app(production=False):
     from madnessbracket.musician.routes import musician
     from madnessbracket.secret.routes import secret
     from madnessbracket.errors.handlers import errors
+    from madnessbracket.trivia.routes import trivia
 
     # register all blueprints
     app.register_blueprint(main)
@@ -49,5 +50,6 @@ def create_app(production=False):
     app.register_blueprint(spotify)
     app.register_blueprint(share)
     app.register_blueprint(errors)
+    app.register_blueprint(trivia)
 
     return app
