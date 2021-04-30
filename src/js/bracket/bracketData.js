@@ -103,8 +103,9 @@ export function traverseAllCells(bracket) {
   }
 }
 // resets current bracket to the initial state (basically resets all cells except for the first round)
-export function resetBracket(bracket) {
+export function resetBracket(bracket, options) {
   // reset the final round
+  options.setComplete(false);
   ["left", "right", "winner"].forEach((side) =>
     bracket.final[side].resetCell()
   );
@@ -136,7 +137,7 @@ export function shuffleBracket(bracket, options) {
   // stop music if there's any playing
   stopMusic();
   // reset bracket first
-  resetBracket(bracket);
+  resetBracket(bracket, options);
   // take current bracket tracks data
   let tracks = options.getCurrentTracks();
   // shuffle tracks
@@ -190,7 +191,7 @@ export function retryBracket(bracket, options) {
   // stop music if there's any playing
   stopMusic();
   // reset bracket first
-  resetBracket(bracket);
+  resetBracket(bracket, options);
   updateBracket(bracket, options);
   shuffleTracks(options.getCurrentTracks(), options);
 }

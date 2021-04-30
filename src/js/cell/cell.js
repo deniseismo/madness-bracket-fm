@@ -1,10 +1,11 @@
 import { getSVGIcon } from "../misc/svgGenerator.js";
 import { playButtonSVGData, PlayButton } from "../music/playButton.js";
 import { createElement } from "../misc/utilities.js";
+import { triggerCommentary } from "../trivia/commentary.js";
 
 // Cell is responsible for holding all the data about the song and the corresponding DOM element (the cell in the bracket)
 export class Cell {
-  constructor(roundIndex, cellIndex, element) {
+  constructor(roundIndex, cellIndex, element, options) {
     this.roundIndex = roundIndex;
     this.cellIndex = cellIndex;
     this.element = element; // this cell's DOM element
@@ -24,6 +25,7 @@ export class Cell {
     this.loser = false;
     this.tooltip = null;
     this.defaultCellColor = "#26624c";
+    this.options = options;
   }
   setTrackID(trackID) {
     this.trackID = trackID;
@@ -182,6 +184,13 @@ export class Cell {
           this.nextCell.getOpponent().makeAdvanceable();
         }
       } else {
+        if (!this.options.getComplete()) {
+          console.log("BRACKET IS COMPLETE NOW");
+          const artistName = this.nextCell.getArtistName();
+          const songTitle = this.nextCell.getCurrentSong();
+          triggerCommentary(artistName, songTitle);
+          this.options.setComplete(true);
+        }
         // if next cell has no opponent — it's the winner's cell
         const trophyIcon = document.querySelector(".trophy-icon");
         trophyIcon.classList.add("trophy-icon_active");

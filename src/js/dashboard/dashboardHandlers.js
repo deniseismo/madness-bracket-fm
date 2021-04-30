@@ -23,7 +23,7 @@ export function getDashboard(bracket, options) {
   resetIcon.classList.add("dashboard-icon");
   resetButton.appendChild(resetIcon);
   resetButton.addEventListener("click", () => {
-    resetBracket(bracket);
+    resetBracket(bracket, options);
     returnToSlideZero();
   });
 
@@ -54,6 +54,7 @@ export function getDashboard(bracket, options) {
       retryButton.disabled = false;
       try {
         if (data) {
+          options.setComplete(false);
           options.setCurrentTracks(data["tracks"]);
           options.setDescription(data["description"]);
           options.setSecret(data["secret"]);

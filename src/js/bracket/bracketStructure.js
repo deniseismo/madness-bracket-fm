@@ -59,7 +59,7 @@ export function createBracketStructure(bracket, options) {
       ]);
       const songTitleElement = createElement("p", ["song-title"]);
       cell.appendChild(songTitleElement);
-      const cellObject = new Cell(roundIndex, j, cell);
+      const cellObject = new Cell(roundIndex, j, cell, options);
       cell.addEventListener("click", cellObject.advance.bind(cellObject));
 
       // distributes all the songs across the first round cells on both sides of the bracket
@@ -132,7 +132,7 @@ function createFinalRound(bracket, options) {
   ]);
   const songWinnerTitleElement = createElement("p", ["song-title"]);
   winnerCell.appendChild(songWinnerTitleElement);
-  const winnerCellObject = new Cell(-2, 0, winnerCell);
+  const winnerCellObject = new Cell(-2, 0, winnerCell, options);
   winnerCell.addEventListener(
     "click",
     winnerCellObject.advance.bind(winnerCellObject)
@@ -157,7 +157,7 @@ function createFinalRound(bracket, options) {
   ]);
   const songLeftTitleElement = createElement("p", ["song-title"]);
   leftCell.appendChild(songLeftTitleElement);
-  const leftCellObject = new Cell(-1, 0, leftCell);
+  const leftCellObject = new Cell(-1, 0, leftCell, options);
   leftCell.addEventListener(
     "click",
     leftCellObject.advance.bind(leftCellObject)
@@ -173,7 +173,7 @@ function createFinalRound(bracket, options) {
   ]);
   const songRightTitleElement = createElement("p", ["song-title"]);
   rightCell.appendChild(songRightTitleElement);
-  const rightCellObject = new Cell(-1, 1, rightCell);
+  const rightCellObject = new Cell(-1, 1, rightCell, options);
   rightCell.addEventListener(
     "click",
     rightCellObject.advance.bind(rightCellObject)
