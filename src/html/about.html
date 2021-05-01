@@ -32,6 +32,7 @@
     🎤Kendrick? 👩‍🎤Adele? 👨‍🎤Bowie? Well, there you have it —
     <a href="/home">madnessbracket.fm.</a>
   </p>
+  <p>P.S. ❤️ The MetaBrainz Foundation, Last.fm, Discogs, and Spotify.</p>
   <hr />
   <p>
     If you like what you see, consider supporting it!
@@ -40,9 +41,10 @@
     >
   </p>
 </article>
-<% for (var chunk in htmlWebpackPlugin.files.js) { %>
+{% endblock content %} {% block scripts %} <% for (var chunk in
+htmlWebpackPlugin.files.js) { %>
 <script
   type="module"
   src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
 ></script>
-<% } %> {% endblock content %}
+<% } %> {% endblock scripts %}
