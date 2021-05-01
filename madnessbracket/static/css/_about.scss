@@ -1,6 +1,6 @@
 .about-madness {
   font-size: 1.5rem;
-  max-width: 40%;
+  max-width: calc(min(40%, 700px));
   p {
     display: block;
   }
@@ -11,25 +11,52 @@
     cursor: pointer;
   }
 }
-@media screen and (max-width: 1220px) {
+
+@media screen and (max-width: 2560px) {
   .about-madness {
-    max-width: 60%;
+    font-size: 1.75rem;
   }
 }
+
+@media screen and (max-width: 1366px) {
+  .about-madness {
+    max-width: calc(min(55%, 700px));
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .about-madness {
+    max-width: calc(min(60%, 700px));
+    font-size: 1.25rem;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .about-madness {
+    font-size: 1.25rem;
+  }
+}
+
 @media screen and (max-width: 910px) {
   .about-madness {
-    max-width: 65%;
+    max-width: calc(min(65%, 700px));
     font-size: 1.25rem;
   }
 }
 @media screen and (max-width: 600px) {
   .about-madness {
-    max-width: 75%;
+    max-width: calc(min(75%, 700px));
     font-size: 1.25rem;
   }
 }
 @media screen and (max-width: 500px) {
   .about-madness {
-    max-width: 80%;
+    max-width: calc(min(80%, 700px));
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about-madness {
+    font-size: 1rem;
+    max-width: calc(min(85%, 700px));
   }
 }

@@ -160,3 +160,9 @@
 .micromodal-slide .modal__overlay {
   will-change: transform;
 }
+
+@media screen and (max-width: 375px) {
+  .modal__title {
+    font-size: 1.5rem;
+  }
+}

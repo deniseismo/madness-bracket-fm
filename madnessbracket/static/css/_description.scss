@@ -5,7 +5,16 @@ hr.description-line {
   border-color: $reddishColor;
 }
 
-@media screen and (max-width: 1006px) {
+@media screen and (max-width: 2560px) {
+  .description-container {
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .description-container {
+    margin-bottom: 2%;
+  }
   .description-text {
     font-size: 1.5rem;
   }

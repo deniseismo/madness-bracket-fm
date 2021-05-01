@@ -1,6 +1,6 @@
 .square-buttons-container {
   @include flexContainer(row, space-evenly);
-  width: 60%;
+  width: calc(min(60%, 1000px));
   margin-bottom: 2.5rem;
 }
 
