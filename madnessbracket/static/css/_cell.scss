@@ -127,7 +127,7 @@
 }
 
 .cell_head {
-  box-shadow: #99215f 0px 20px 30px -10px;
+  box-shadow: $reddishColor 0px 20px 30px -10px;
 }
 
 .final-cell {
@@ -292,6 +292,22 @@
 
 @media screen and (max-width: 500px) {
   .song-title {
-    font-size: 1.125rem;
+    font-size: 1.075rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .song-title {
+    font-size: 1.075rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .cell {
+    min-height: 2rem;
+    padding: 0.05rem 0.25rem;
+  }
+  .song-title {
+    font-size: 1rem;
   }
 }

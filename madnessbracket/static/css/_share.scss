@@ -44,4 +44,5 @@
 
 .social-media-container {
   @include flexContainer(row, flex-start);
+  padding-left: 1rem;
 }

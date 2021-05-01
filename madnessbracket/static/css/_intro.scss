@@ -22,6 +22,7 @@
     background-color: $reddishColor;
     transition: all 0.2s ease-out;
   }
+  transition: all 0.3s ease-out;
 }
 
 .intro-line {
@@ -91,6 +92,15 @@
   }
   .intro-header {
     height: 2rem;
+  }
+  .horizontal-line {
+    height: 0.2rem;
+  }
+  .vertical-line {
+    width: 0.2rem;
+  }
+  .intro-line {
+    height: 0.2rem;
   }
 }
 

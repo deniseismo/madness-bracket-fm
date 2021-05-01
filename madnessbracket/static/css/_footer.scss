@@ -38,3 +38,8 @@
     background-color: $reddishColor;
   }
 }
+@media screen and (max-width: 910px) {
+  .footer {
+    padding: 0.5rem;
+  }
+}
