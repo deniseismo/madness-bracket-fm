@@ -55,9 +55,10 @@
     <button class="generate-button" type="submit" disabled>GENERATE</button>
   </form>
 </div>
-<% for (var chunk in htmlWebpackPlugin.files.js) { %>
+{% endblock content %} {% block scripts %} <% for (var chunk in
+htmlWebpackPlugin.files.js) { %>
 <script
   type="module"
   src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
 ></script>
-<% } %> {% endblock content %}
+<% } %> {% endblock scripts %}

@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %} {% block scripts %}
 <script>
   let userRequest = JSON.parse({{ user_request|tojson }});
 </script>
@@ -7,4 +7,4 @@
   type="module"
   src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.js[chunk]%>') }}"
 ></script>
-<% } %> {% endblock content %}
+<% } %> {% endblock scripts %}
