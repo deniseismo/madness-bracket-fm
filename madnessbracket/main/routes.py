@@ -21,4 +21,4 @@ def about():
     Returns:
         about page template (home.html)
     """
-    return render_template("about.html")
+    return render_template("about.html", title="About")

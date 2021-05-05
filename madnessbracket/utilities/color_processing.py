@@ -1,5 +1,7 @@
-from colormath.color_objects import sRGBColor
 import wcag_contrast_ratio as contrast
+from colormath.color_objects import sRGBColor
+
+from madnessbracket import cache
 
 
 def convert_from_hex_to_rgb(hex_color):
@@ -66,6 +68,7 @@ def get_contrast_color_for_hex_color(hex_color):
     return contrast_color
 
 
+@cache.memoize(timeout=3600)
 def get_contrast_color_for_two_color_gradient(color_1, color_2):
     """
     calculate the most appropriate contrast color for a two-colored gradient background
@@ -83,7 +86,6 @@ def get_contrast_color_for_two_color_gradient(color_1, color_2):
         color_1_rgb, color_2_rgb = color_1, color_2
     # calculate a color in between the two for better results
     color_in_between = get_a_color_in_between(color_1_rgb, color_2_rgb)
-
     # downscale values
     color_1_rgb = sRGBColor(*color_1_rgb, is_upscaled=True).get_value_tuple()
     color_in_between = sRGBColor(

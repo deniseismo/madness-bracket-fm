@@ -38,7 +38,7 @@ def validate_artist_name(artist_name: str):
     """validate user's input: artist's name
 
     Args:
-        upper_limit (str): artist's name
+        artist_name (str): artist's name
 
     Raises:
         ValueError: Invalid Length
