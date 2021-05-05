@@ -188,7 +188,7 @@ export class Cell {
           console.log("BRACKET IS COMPLETE NOW");
           const artistName = this.nextCell.getArtistName();
           const songTitle = this.nextCell.getCurrentSong();
-          triggerCommentary(artistName, songTitle);
+          triggerCommentary(artistName, songTitle, this.options);
           this.options.setComplete(true);
         }
         // if next cell has no opponent — it's the winner's cell

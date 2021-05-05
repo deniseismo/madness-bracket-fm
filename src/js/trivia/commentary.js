@@ -1,17 +1,26 @@
 import { getCorrectURL } from "../misc/utilities";
 import tippy from "tippy.js";
 
-export function triggerCommentary(artistName, songTitle) {
+export function triggerCommentary(artistName, songTitle, options) {
+  const bracketType = options.getCurrentBracketType();
+  const description = options.getDescription();
   console.log("commentary triggered");
-  fetchCommentary(artistName, songTitle).then((commentaryData) => {
-    const { commentary } = commentaryData;
-    if (commentary) {
-      activateCommentaryTooltip(commentary);
+  fetchCommentary(artistName, songTitle, bracketType, description).then(
+    (commentaryData) => {
+      const { commentary } = commentaryData;
+      if (commentary) {
+        activateCommentaryTooltip(commentary);
+      }
     }
-  });
+  );
 }
 
-async function fetchCommentary(artistName, songTitle) {
+async function fetchCommentary(
+  artistName,
+  songTitle,
+  bracketType,
+  description
+) {
   // fetches madness commentary
   const fetchURL = getCorrectURL("get_commentary");
 
@@ -23,6 +32,8 @@ async function fetchCommentary(artistName, songTitle) {
     body: JSON.stringify({
       artist_name: artistName,
       song_title: songTitle,
+      bracket_type: bracketType,
+      description: description,
     }),
   });
   if (!response.ok) {
