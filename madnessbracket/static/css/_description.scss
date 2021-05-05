@@ -20,6 +20,18 @@ hr.description-line {
   }
 }
 
+@media screen and (max-height: 1000px) {
+  .description-container {
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .description-text {
+    font-size: 1.5rem;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .description-text {
     font-size: 1.25rem;

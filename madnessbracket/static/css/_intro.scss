@@ -66,6 +66,17 @@
     font-size: 2.5rem;
   }
 }
+
+@media screen and (max-height: 800px) {
+  .intro-header {
+    margin: 1rem auto;
+    height: 3rem;
+  }
+  .intro-title {
+    font-size: 2rem;
+  }
+}
+
 @media only screen and (max-width: 640px) {
   .intro-header {
     height: 3rem;

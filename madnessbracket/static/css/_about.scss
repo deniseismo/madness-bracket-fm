@@ -18,6 +18,12 @@
   }
 }
 
+@media screen and (max-height: 1000px) {
+  .about-madness {
+    font-size: 1.5rem;
+  }
+}
+
 @media screen and (max-width: 1366px) {
   .about-madness {
     max-width: calc(min(55%, 700px));

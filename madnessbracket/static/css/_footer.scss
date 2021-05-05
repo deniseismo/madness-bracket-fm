@@ -45,6 +45,18 @@
   }
 }
 
+@media screen and (max-width: 1920px) {
+  .footer {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .footer {
+    font-size: 1rem;
+  }
+}
+
 @media screen and (max-width: 910px) {
   .footer {
     padding: 0.5rem;
