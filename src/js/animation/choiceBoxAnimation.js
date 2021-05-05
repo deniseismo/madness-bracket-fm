@@ -15,8 +15,10 @@ const FLASHING_WORDS = {
     "MUSE",
     "ARTIST",
     "ARTIST",
+    "KANYE",
     "ARTIST",
-    "ARTIST",
+    "M83",
+    "PARAMORE",
   ],
   // words for CHARTS 'square choice box'
   charts: [
@@ -26,6 +28,7 @@ const FLASHING_WORDS = {
     "PITCHFORK",
     "NME",
     "RS500",
+    "CLASSICS",
     "CHARTS",
     "CHARTS",
     "CHARTS",
@@ -61,9 +64,12 @@ function getRandomElement(squareChoiceBox) {
   // split text into letters
   const letters = randomParagraphElement.textContent.split("");
   // wrap each letter in a span with the class='letter'
-  const letterSpanElements = letters.map(
-    (char) => `<span class="letter">${char}</span>`
-  );
+  const letterSpanElements = letters.map((char) => {
+    if (char === " ") {
+      return `<span class="letter">&nbsp;</span>`;
+    }
+    return `<span class="letter">${char}</span>`;
+  });
   // put span elements inside paragraph element
   randomParagraphElement.innerHTML = letterSpanElements.join("");
   // return random paragraph
@@ -72,8 +78,6 @@ function getRandomElement(squareChoiceBox) {
 
 // animates letters inside square boxes (artist or charts)
 export function animateLetters(squareChoiceBox) {
-  // stop/remove animation from paragraphs and span-letters
-  anime.remove(["span", "p"]);
   // pick random paragraph element
   const randomElement = getRandomElement(squareChoiceBox);
   // select all letter-span elements inside paragraph
@@ -82,12 +86,11 @@ export function animateLetters(squareChoiceBox) {
     .timeline({ loop: false })
     .add({
       targets: spanLetters,
-      translateY: ["-100%", 0],
-      translateZ: 0,
-      rotateY: [360, 0],
-      duration: 750,
-      delay: (el, i) => 50 * i,
-      easing: "easeInQuint",
+      rotateX: [360, 0],
+      opacity: [0.5, 1],
+      duration: 300,
+      delay: (el, i) => 10 * i,
+      easing: "cubicBezier(.06,.74,.7,.08)",
     })
     .add({
       targets: randomElement,
@@ -95,7 +98,36 @@ export function animateLetters(squareChoiceBox) {
     });
   animation.complete = function () {
     // restart animation with a newly random
-    //randomElement.textContent = randomArtistName;
     animateLetters(squareChoiceBox);
   };
+}
+
+export function deanimateLetters(squareChoiceBox) {
+  const squareButtons = document.querySelectorAll(".square-button");
+  squareButtons.forEach((button) => {
+    if (button !== squareChoiceBox) {
+      const paragraphs = button.querySelectorAll(":scope > p");
+      //console.log("paragraphs:", paragraphs);
+      paragraphs.forEach((paragraph) => {
+        const spanLetters = paragraph.querySelectorAll(":scope > span");
+        if (spanLetters) {
+          const spanLettersAnimation = anime({
+            targets: spanLetters,
+            rotateX: [0],
+            opacity: [1],
+            duration: 50,
+            delay: (el, i) => 10 * i,
+            easing: "cubicBezier(.07,1.2,.31,1.16)",
+          });
+        }
+        const paragraphAnimation = anime({
+          targets: paragraph,
+          scale: [1],
+        });
+      });
+    }
+  });
+  setTimeout(() => {
+    anime.remove(["span", "p"]);
+  }, 100);
 }
