@@ -4,7 +4,9 @@ from madnessbracket.dev.spotify.spotify_artist_handlers import get_spotify_artis
 from madnessbracket.musician.prepare_tracks import prepare_tracks_for_musician, process_tracks_from_spotify, \
     process_tracks_from_db
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
-from madnessbracket import cache
+from madnessbracket.utilities.db_extensions import load_unicode_extension
+from madnessbracket import cache, db
+from sqlalchemy.event import listen
 
 
 def get_artists_tracks(artist_name: str, bracket_limit: int):
@@ -24,13 +26,13 @@ def get_artists_tracks(artist_name: str, bracket_limit: int):
         return None
     # correct user's input via lastfm's api
     correct_name = lastfm_get_artist_correct_name(artist_name)
-    artist_name = correct_name if correct_name else artist_name
     # artist_name = artist_name.lower()
     print('corrected name:', artist_name, len(artist_name))
     # go through database first
-    tracks = get_tracks_via_database(artist_name)
+    tracks = get_tracks_via_database(artist_name, correct_name)
     # if nothing found, go through a fallback function — via spotify
     if not tracks:
+        artist_name = correct_name if correct_name else artist_name
         tracks = get_tracks_via_spotify(artist_name)
     if not tracks:
         print(f"nothing found at all for {artist_name}")
@@ -40,7 +42,7 @@ def get_artists_tracks(artist_name: str, bracket_limit: int):
 
 
 @cache.memoize(timeout=3600)
-def get_tracks_via_database(artist_name: str):
+def get_tracks_via_database(artist_name: str, correct_name: str):
     """get artist's top tracks/songs via database
 
     Args:
@@ -51,11 +53,18 @@ def get_tracks_via_database(artist_name: str):
     """
     # set max song limit
     SONG_LIMIT = 100
-    artist = Artist.query.filter_by(name=artist_name).first()
+    listen(db.engine, 'connect', load_unicode_extension)
+    artist = Artist.query.filter(Artist.name.like(artist_name)).first()
     if not artist:
         # no such artist found
-        print("no artist found on db")
-        return None
+        if not correct_name:
+            return None
+        if correct_name.lower() == artist_name.lower():
+            return None
+        artist = Artist.query.filter(Artist.name.like(correct_name)).first()
+        if not artist:
+            print("no artist found on db")
+            return None
     # find top tracks in descending order (most listened first)
     track_entries = Song.query.filter_by(artist=artist).order_by(
         Song.rating.desc()).limit(SONG_LIMIT).all()
@@ -66,7 +75,7 @@ def get_tracks_via_database(artist_name: str):
     processed_tracks = process_tracks_from_db(track_entries)
     tracks = {
         "tracks": processed_tracks,
-        "description": artist_name
+        "description": artist.name
     }
     return tracks
 
