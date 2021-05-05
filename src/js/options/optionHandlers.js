@@ -1,4 +1,7 @@
-import { animateLetters } from "../animation/choiceBoxAnimation.js";
+import {
+  animateLetters,
+  deanimateLetters,
+} from "../animation/choiceBoxAnimation.js";
 import { isInputValid, showElement } from "../misc/utilities.js";
 import { addMaxSizeTooltip } from "./maxSizeTooltip.js";
 
@@ -6,15 +9,22 @@ import { addMaxSizeTooltip } from "./maxSizeTooltip.js";
 export function handleSquareButtons(options) {
   const squareButtons = document.querySelectorAll(".square-button");
   squareButtons.forEach((button) => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function (e) {
       // button 'activation'
+      if (this.classList.contains("active")) {
+        return;
+      }
       squareButtons.forEach((button) => button.classList.remove("active"));
       button.classList.add("active");
       // put bracket type into a 'state storage'
       const bracketType = button.dataset.bracketType;
       options.setCurrentBracketType(bracketType);
       // trigger animation
-      animateLetters(button);
+      deanimateLetters(button);
+      setTimeout(() => {
+        animateLetters(button);
+      }, 400);
+
       const optionsContainer = document.querySelector(".options");
       showElement(optionsContainer);
       // show or hide input field depending on bracket type
