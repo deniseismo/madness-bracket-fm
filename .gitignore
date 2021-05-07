@@ -9,7 +9,8 @@ fonts/
 third-party/
 db_mgmt/
 *.bundle.js
-
+logs
+*.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
