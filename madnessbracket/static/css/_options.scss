@@ -40,7 +40,7 @@
   position: relative;
   padding: 1rem 0 0;
   margin-top: 0.8rem;
-  width: 30%;
+  width: calc(min(30%, 700px));
 }
 
 .form__field {
@@ -149,6 +149,8 @@
 .input-container {
   width: 100%;
   display: none;
+  flex-flow: column;
+  position: relative;
 }
 
 .max-size-tooltip {
@@ -195,6 +197,27 @@
   }
 }
 
+@media screen and (orientation: landscape) and (max-height: 640px) {
+  .bracket_max_size_container {
+    margin-top: 0.25rem;
+  }
+  .bracket_max_size_option {
+    margin: 0.25rem 1rem;
+  }
+  .form__group {
+    margin-top: 0.25rem;
+  }
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 1.25rem;
+  }
+  .form__field {
+    font-size: 1.5rem;
+  }
+  .optional {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 960px) {
   .square-buttons-container {
     width: 75%;
@@ -215,6 +238,32 @@
   }
 }
 
+@media screen and (max-height: 760px) {
+  .square-buttons-container {
+    margin-bottom: 1rem;
+  }
+  .bracket_max_size_container {
+    margin-top: 0.5rem;
+  }
+  .bracket_max_size_option {
+    width: 3rem;
+    height: 3rem;
+  }
+  .generate-button {
+    padding: 0.75rem;
+    font-size: 1.25rem;
+  }
+  .form__field {
+    font-size: 1.5rem;
+  }
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 1.25rem;
+  }
+  .optional {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 640px) {
   .square-button {
     font-size: 1.5rem;
@@ -226,7 +275,7 @@
     margin-top: 1rem;
   }
   .form__group {
-    width: 50%;
+    width: 65%;
     margin-top: 0.5rem;
     padding: 0.5rem 0 0;
   }
@@ -234,8 +283,14 @@
     font-size: 1.25rem;
     padding: 0.75rem;
   }
+  .form__label {
+    font-size: 0.8rem;
+  }
   .form__field:placeholder-shown ~ .form__label {
-    font-size: 1rem;
+    font-size: 0.8rem;
+  }
+  .form__field:focus ~ .form__label {
+    font-size: 0.8rem;
   }
   .form__field {
     font-size: 1.25rem;
@@ -257,41 +312,6 @@
   }
   .square-button {
     margin: 0 0.15rem;
-  }
-}
-
-@media screen and (max-height: 760px) {
-  .square-buttons-container {
-    margin-bottom: 1rem;
-  }
-  .bracket_max_size_option {
-    width: 3rem;
-    height: 3rem;
-  }
-  .generate-button {
-    padding: 0.75rem;
-    font-size: 1.25rem;
-  }
-}
-
-@media screen and (orientation: landscape) and (max-height: 640px) {
-  .bracket_max_size_container {
-    margin-top: 0.25rem;
-  }
-  .bracket_max_size_option {
-    margin: 0.25rem 1rem;
-  }
-  .form__group {
-    margin-top: 0.25rem;
-  }
-  .form__field:placeholder-shown ~ .form__label {
-    font-size: 1.25rem;
-  }
-  .form__field {
-    font-size: 1.5rem;
-  }
-  .optional {
-    display: none;
   }
 }
 
