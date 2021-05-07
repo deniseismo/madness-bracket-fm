@@ -1,9 +1,9 @@
 //import anime from "../third-party/anime.es.js";
 import anime from "animejs/lib/anime.es.js";
 import { pickRandomElement } from "../misc/utilities.js";
-// random words used for text animation
+// random words that pop up on home page animation
 const FLASHING_WORDS = {
-  // words for ARTIST 'square choice box'
+  // words for ARTIST BOX on home page
   artist: [
     "ADELE",
     "PRINCE",
@@ -20,7 +20,7 @@ const FLASHING_WORDS = {
     "M83",
     "PARAMORE",
   ],
-  // words for CHARTS 'square choice box'
+  // words for CHARTS BOX on home page
   charts: [
     "CHARTS",
     "TOP",
@@ -34,7 +34,7 @@ const FLASHING_WORDS = {
     "CHARTS",
     "CHARTS",
   ],
-  // words for SECRET 'square choice box'
+  // words for SECRET BOX on home page
   secret: [
     "SECRET",
     "WILD CARD",
@@ -49,7 +49,7 @@ const FLASHING_WORDS = {
   ],
 };
 
-// pick random paragraph (the word/words to animate afterwards) from the 'square box of choice'
+// pick random paragraph (the word/words to animate afterwards) from the BOX on the home page
 function getRandomElement(squareChoiceBox) {
   // get all paragraphs from the box
   const allParagraphs = squareChoiceBox.querySelectorAll(":scope > p");
@@ -76,7 +76,7 @@ function getRandomElement(squareChoiceBox) {
   return randomParagraphElement;
 }
 
-// animates letters inside square boxes (artist or charts)
+// animate letters inside home page BOXES (ARTIST, CHARTS, SECRET)
 export function animateLetters(squareChoiceBox) {
   // pick random paragraph element
   const randomElement = getRandomElement(squareChoiceBox);
@@ -102,6 +102,7 @@ export function animateLetters(squareChoiceBox) {
   };
 }
 
+// reset words & letters back to normality
 export function deanimateLetters(squareChoiceBox) {
   const squareButtons = document.querySelectorAll(".square-button");
   squareButtons.forEach((button) => {

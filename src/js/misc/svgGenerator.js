@@ -1,4 +1,4 @@
-// generates svg given data
+// generate svg
 export function getSVGIcon(svgData) {
   const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svgIcon.setAttribute("viewBox", "0 0 512 512");

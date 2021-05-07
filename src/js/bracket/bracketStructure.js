@@ -8,7 +8,7 @@ import { addTooltipToCell } from "../cell/cellToolTips.js";
 import { trophySVGData } from "../visuals/winnerFX.js";
 import { activateDashboardTooltips } from "../dashboard/dashboardTooltips.js";
 import { fixSVGDimensions } from "../misc/svgGenerator.js";
-import { bracketAnimation } from "../animation/bracketAnimation.js";
+import { animateBracket } from "../animation/bracketAnimation.js";
 
 // create madness bracket
 export function createBracketStructure(bracket, options) {
@@ -117,7 +117,7 @@ export function createBracketStructure(bracket, options) {
   }
   activateDashboardTooltips();
   traverseAllCells(bracket);
-  bracketAnimation(numberOfRounds);
+  animateBracket(numberOfRounds);
 }
 
 // create final round (two finalist and the winner)

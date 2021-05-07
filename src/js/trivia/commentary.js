@@ -15,13 +15,13 @@ export function triggerCommentary(artistName, songTitle, options) {
   );
 }
 
+// get a secret commentary/taunt/easter egg
 async function fetchCommentary(
   artistName,
   songTitle,
   bracketType,
   description
 ) {
-  // fetches madness commentary
   const fetchURL = getCorrectURL("get_commentary");
 
   const response = await fetch(fetchURL, {

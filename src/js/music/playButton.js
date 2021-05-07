@@ -30,7 +30,7 @@ export const playButtonSVGData = {
   },
 };
 
-// handles PlayButton logic
+// handle PlayButton logic
 export class PlayButton {
   constructor(playButtonElement, previewURL) {
     this.playButtonElement = playButtonElement;
@@ -53,7 +53,7 @@ export class PlayButton {
       stopMusic();
     }
   }
-  // resets (reverts all buttons to standby mode)
+  // reset (reverts all buttons to standby mode)
   resetAllButtons() {
     const allButtons = document.querySelectorAll(".play-button");
     allButtons.forEach((button) => {

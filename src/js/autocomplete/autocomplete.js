@@ -2,7 +2,9 @@ import autoComplete from "@tarekraafat/autocomplete.js";
 import { checkScreenHeight } from "../misc/utilities.js";
 import { fetchArtists } from "./fetchArtists.js";
 
+// initialize autocomplete
 export function autocompleteInit() {
+  // turn off autocomplete for smaller screens
   if (checkScreenHeight(700)) {
     return;
   }
@@ -31,6 +33,7 @@ export function autocompleteInit() {
         return sortedList;
       },
     },
+    // 3 or 1 result item in a result list for different screen sizes
     resultsList: {
       maxResults: checkScreenHeight(800) ? 1 : 3,
     },
@@ -59,7 +62,9 @@ export function autocompleteInit() {
   });
 }
 
+// additional autocomplete handlers
 export function handleAutocomplete() {
+  // submit on enter
   document
     .querySelector("#autoComplete")
     .addEventListener("keydown", (event) => {
@@ -67,6 +72,7 @@ export function handleAutocomplete() {
         document.querySelector(".form__group").requestSubmit();
       }
     });
+  // fill input's value with the selected value
   document
     .querySelector("#autoComplete")
     .addEventListener("navigate", function (event) {

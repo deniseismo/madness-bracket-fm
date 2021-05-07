@@ -1,4 +1,4 @@
-// a storage for bracket options
+// a storage for bracket options: all of the current bracket data
 export class OptionStorage {
   constructor() {
     // bracket type: artist/charts

@@ -2,12 +2,11 @@ import { createElement } from "../misc/utilities.js";
 import { appIconsSVGData } from "../misc/appIcons.js";
 import { shareButtonSVGData } from "./shareButtons.js";
 import { getSVGIcon } from "../misc/svgGenerator.js";
-import { takeScreenshot } from "./takeScreenshot.js";
 import { socialShareInit } from "./socials/socials.js";
 import Clipboard from "clipboard";
 import { activateShareTooltips } from "./shareTooltips.js";
 import MicroModal from "micromodal";
-// creates modal window
+// create modal window
 function createModal() {
   const mainModalContainer = createElement("div", [
     "modal",

@@ -2,7 +2,7 @@ import anime from "animejs/lib/anime.es.js";
 import { doesArrayContainSomethingTruthy } from "../misc/utilities.js";
 
 // animate bracket: the way rounds & cells appear on the screen
-export function bracketAnimation(numberOfRounds) {
+export function animateBracket(numberOfRounds) {
   const tl = anime.timeline({
     easing: "easeOutBounce",
     duration: 250,

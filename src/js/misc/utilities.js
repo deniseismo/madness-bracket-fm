@@ -9,7 +9,7 @@ export function shuffleArray(array) {
   return shuffledArray;
 }
 
-// creates element of a given type, adds given classes
+// create element of a given type, adds given classes
 export function createElement(type, classes = null) {
   const element = document.createElement(type);
   if (classes) {

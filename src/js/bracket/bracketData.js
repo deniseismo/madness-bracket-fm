@@ -3,7 +3,7 @@ import { stopMusic } from "../music/music.js";
 import { addTooltipToCell } from "../cell/cellToolTips.js";
 /*
 Creates a special data structure to hold all the info about cells.
-BracketData consists of left side of the bracket, right one, and the finale. 
+BracketData consists of the left side of the bracket, right one, and the finale. 
 */
 export class BracketData {
   constructor() {
@@ -102,7 +102,7 @@ export function traverseAllCells(bracket) {
     bracket.final["right"].setOpponent(bracket.final["left"]);
   }
 }
-// resets current bracket to the initial state (basically resets all cells except for the first round)
+// reset current bracket to the initial state (basically reset all cells except for the first round)
 export function resetBracket(bracket, options) {
   // reset the final round
   options.setComplete(false);
@@ -132,7 +132,7 @@ export function resetBracket(bracket, options) {
   trophyIcon.classList.remove("trophy-icon_active");
 }
 
-// resets & then shuffles songs in the bracket
+// reset & then shuffle songs in the bracket
 export function shuffleBracket(bracket, options) {
   // stop music if there's any playing
   stopMusic();
@@ -147,7 +147,7 @@ export function shuffleBracket(bracket, options) {
   updateBracket(bracket, options);
 }
 
-// update current bracket with newly loaded tracks
+// update current bracket with the newly loaded tracks
 export function updateBracket(bracket, options) {
   // take current bracket tracks data
   let tracks = options.getCurrentTracks();

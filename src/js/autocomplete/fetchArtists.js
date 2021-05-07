@@ -1,3 +1,4 @@
+// fetch all artists that match the query (user's input)
 export async function fetchArtists(query) {
   const response = await fetch("get_artists", {
     method: "POST",

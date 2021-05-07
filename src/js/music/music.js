@@ -14,7 +14,7 @@ export function playMusic(url, button) {
   };
 }
 
-// stops music
+// stop music
 export function stopMusic() {
   music.pause();
 }
