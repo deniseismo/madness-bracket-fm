@@ -2,6 +2,7 @@ import json
 
 from flask import Blueprint, jsonify, request, make_response, render_template
 
+from madnessbracket.musician.fetch_artists_handlers import get_filtered_artists_suggestions
 from madnessbracket.musician.musician_handlers import get_artists_tracks
 from madnessbracket.utilities.user_input_validation import validate_artist_name, validate_bracket_upper_limit
 
@@ -49,3 +50,23 @@ def generate_musician_bracket():
             ),
                 404)
         return jsonify(tracks)
+
+
+@musician.route('/get_artists', methods=['POST'])
+def get_artists():
+    """
+    gets a list of artists
+    filtered based on the search query
+    :return:
+    """
+    suggestions = {"suggestions": []}
+    try:
+        search_query = request.get_json()['query']
+    except (KeyError, TypeError, IndexError):
+        return jsonify(suggestions)
+    if not search_query:
+        return jsonify(suggestions)
+    search_query = search_query.lower()
+    # check if the input's not empty
+    suggestions["suggestions"] = get_filtered_artists_suggestions(search_query)
+    return jsonify(suggestions)
