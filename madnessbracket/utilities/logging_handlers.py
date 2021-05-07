@@ -1,5 +1,6 @@
-import os
 import csv
+import os
+
 from flask import current_app
 
 
@@ -35,7 +36,9 @@ def log_new_songs(new_song_info):
 
 def log_arbitrary_data(data_to_log: str, filename: str):
     """
-    log anything! log anywhere
+    :param data_to_log: any data you want to log in
+    :param filename: filename to save data into
+    :return:
     """
     filepath = os.path.join(current_app.root_path, 'dev/logs', filename)
     try:
@@ -64,3 +67,22 @@ def log_artist_missing_from_db(artist_name: str):
         # no need to add the artist
         return False
     log_arbitrary_data(artist_name, filename)
+
+
+def log_winner_track(artist_name: str, track_title: str, bracket_type: str, description: str):
+    filename = 'winner_tracks.csv'
+    filepath = os.path.join(current_app.root_path, 'dev/logs', filename)
+    fieldnames = ["artist_name", "track_title", "bracket_type", "description"]
+    try:
+        with open(filepath, "a+", encoding="utf-8") as file:
+            csvfile = csv.DictWriter(file, fieldnames=fieldnames)
+            winner_track_data = {
+                "artist_name": artist_name,
+                "track_title": track_title,
+                "bracket_type": bracket_type,
+                "description": description
+            }
+            csvfile.writerow(winner_track_data)
+    except (IOError, OSError):
+        print(f"couldn't open file: {filename}")
+        return False
