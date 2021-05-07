@@ -109,8 +109,8 @@ export function getScreenSize() {
 }
 
 // check if screen height is too small
-export function checkScreenHeight() {
-  const mediaQueryFull = window.matchMedia("(max-height: 1000px)");
+export function checkScreenHeight(height) {
+  const mediaQueryFull = window.matchMedia(`(max-height: ${height}px)`);
   return mediaQueryFull.matches;
 }
 

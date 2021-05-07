@@ -1,7 +1,11 @@
 import autoComplete from "@tarekraafat/autocomplete.js";
+import { checkScreenHeight } from "../misc/utilities.js";
 import { fetchArtists } from "./fetchArtists.js";
 
 export function autocompleteInit() {
+  if (checkScreenHeight(700)) {
+    return;
+  }
   const autoCompleteJS = new autoComplete({
     placeHolder: "Search for Food...",
     data: {
@@ -28,7 +32,7 @@ export function autocompleteInit() {
       },
     },
     resultsList: {
-      maxResults: 3,
+      maxResults: checkScreenHeight(800) ? 1 : 3,
     },
     resultItem: {
       highlight: {
