@@ -100,22 +100,12 @@ function createSocialMediaButtons() {
   facebookIcon.classList.add("social-media-icon");
   facebookButton.appendChild(facebookIcon);
 
-  const cameraButton = createElement("button", [
-    "button-screenshot",
-    "button-social",
-  ]);
-  cameraButton.addEventListener("click", takeScreenshot);
-  const cameraIcon = getSVGIcon(shareButtonSVGData["camera"]);
-  cameraIcon.classList.add("social-media-icon");
-  cameraButton.appendChild(cameraIcon);
-
   socialMediaButtonsContainer.append(
     twitterButton,
     vkButton,
     telegramButton,
     redditButton,
-    facebookButton,
-    cameraButton
+    facebookButton
   );
   return socialMediaButtonsContainer;
 }

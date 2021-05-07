@@ -7,7 +7,6 @@ export function activateShareTooltips() {
   const vkButton = document.querySelector(".button-vk");
   const facebookButton = document.querySelector(".button-facebook");
   const telegramButton = document.querySelector(".button-telegram");
-  const screenshotButton = document.querySelector(".button-screenshot");
   const copyButton = document.querySelector(".button-copy");
   const buttons = [
     twitterButton,
@@ -15,7 +14,6 @@ export function activateShareTooltips() {
     vkButton,
     facebookButton,
     telegramButton,
-    screenshotButton,
     copyButton,
   ];
   const titles = [

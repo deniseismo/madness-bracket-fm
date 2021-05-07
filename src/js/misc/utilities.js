@@ -110,11 +110,11 @@ export function getScreenSize() {
 
 // check if screen height is too small
 export function checkScreenHeight() {
-  const mediaQueryFull = window.matchMedia("(min-height: 640px)");
+  const mediaQueryFull = window.matchMedia("(max-height: 1000px)");
   return mediaQueryFull.matches;
 }
 
-export function getCorrectURL(shareLink) {
-  const correctURL = new URL(shareLink, window.location.origin).href;
+export function getCorrectURL(someEndpoint) {
+  const correctURL = new URL(someEndpoint, window.location.origin).href;
   return correctURL;
 }
