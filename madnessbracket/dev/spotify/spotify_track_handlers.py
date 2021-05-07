@@ -46,7 +46,7 @@ def get_track_search_results(track_title: str, artist_name: str, spotify_tekore_
     """
     query = f"{track_title} artist:{artist_name}"
     tracks_found, = spotify_tekore_client.search(
-        query=query, types=('track',), limit=15)
+        query=query, types=('track',), limit=15, market="GE")
     # in case of not getting any response
     if not tracks_found:
         print("search for track failed")

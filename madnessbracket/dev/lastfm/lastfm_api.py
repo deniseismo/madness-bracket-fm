@@ -1,15 +1,9 @@
 import requests_cache
 import requests
-import random
 import json
-import os
-import sys
 
 
 from flask import current_app
-# from madnessbracket import create_app
-# app = create_app()
-# app.app_context().push()
 
 
 requests_cache.install_cache()

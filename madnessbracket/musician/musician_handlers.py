@@ -47,7 +47,7 @@ def get_tracks_via_database(artist_name: str, correct_name: str):
 
     Args:
         artist_name (str): artist's name
-
+        correct_name (str): lastfm-corrected artist's name
     Returns:
         (dict): a dict with a list of 'track info' dicts
     """
