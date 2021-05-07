@@ -1,6 +1,6 @@
 {
   "name": "madnessbracket",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "a tournament bracket generator for your favorite songs",
   "author": "Denis seismo Kostarev",
   "main": "index.js",
