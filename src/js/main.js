@@ -15,11 +15,18 @@ import {
 } from "./fetchTracks.js";
 import { showSpinner, hideSpinner } from "./visuals/spinner.js";
 import { handleResponsiveness } from "./responsiveness/mediaQuery.js";
+import {
+  autocompleteInit,
+  handleAutocomplete,
+} from "./autocomplete/autocomplete.js";
+
 export let bracket = new BracketData();
 
 export let options = new OptionStorage();
 
-document.querySelector(".form__group").onsubmit = function () {
+document.querySelector(".form__group").addEventListener("submit", handleSubmit);
+
+function handleSubmit(e) {
   const inputValue = document.querySelector(".form__field").value.trim();
   options.setInputValue(inputValue);
   showSpinner();
@@ -57,7 +64,10 @@ document.querySelector(".form__group").onsubmit = function () {
     }
   });
   return false;
-};
+}
+
+autocompleteInit();
+handleAutocomplete();
 
 createIntroElements();
 introAnimation();
