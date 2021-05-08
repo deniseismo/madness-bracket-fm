@@ -4,7 +4,7 @@ import json
 
 
 from flask import current_app
-
+from madnessbracket import cache
 
 requests_cache.install_cache()
 
@@ -51,6 +51,7 @@ def lastfm_get_track_rating(track_title, artist_name: str):
     return int(track_playcount)
 
 
+@cache.memoize(timeout=3600)
 def lastfm_get_artist_correct_name(artist: str):
     """
     Use the last.fm corrections data to check whether the supplied artist has a correction to a canonical artist

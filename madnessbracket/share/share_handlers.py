@@ -1,11 +1,13 @@
 import json
+
 from nanoid import generate
-from madnessbracket.models import BracketData
-from madnessbracket import db
+
 from madnessbracket import cache
+from madnessbracket import db
+from madnessbracket.models import BracketData
 
 
-@cache.memoize(timeout=3600)
+@cache.memoize(timeout=36000)
 def save_bracket_to_database(shared_bracket_data):
     """saves user's bracket & all its info/data to the database
 

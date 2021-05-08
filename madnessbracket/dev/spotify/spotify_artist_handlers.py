@@ -4,7 +4,7 @@ from madnessbracket import cache
 from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
 
 
-@cache.memoize(timeout=3600)
+@cache.memoize(timeout=36000)
 def get_spotify_artist_info(artist_name: str, tekore_client=None):
     """get spotify ID for an artist (via tekore library)
 

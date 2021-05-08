@@ -1,12 +1,13 @@
-from madnessbracket.models import Artist, Song
+from sqlalchemy.event import listen
+
+from madnessbracket import cache, db
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_artist_correct_name
 from madnessbracket.dev.spotify.spotify_artist_handlers import get_spotify_artist_top_tracks
+from madnessbracket.models import Artist, Song
 from madnessbracket.musician.prepare_tracks import prepare_tracks_for_musician, process_tracks_from_spotify, \
     process_tracks_from_db
-from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 from madnessbracket.utilities.db_extensions import load_unicode_extension
-from madnessbracket import cache, db
-from sqlalchemy.event import listen
+from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 
 
 def get_artists_tracks(artist_name: str, bracket_limit: int):

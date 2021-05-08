@@ -7,7 +7,7 @@ from madnessbracket.utilities.fuzzymatch import fuzzy_match_artist
 from madnessbracket.utilities.track_filtering import get_filtered_name
 
 
-@cache.memoize(timeout=3600)
+@cache.memoize(timeout=36000)
 def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=None):
     """search for a track → get track info
     Args:
