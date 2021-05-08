@@ -16,19 +16,17 @@ def get_songs_considered_best(upper_limit: int):
     songs = load_best_songs_from_the_file()
     if not songs:
         return None
-    # shuffle the songs
-    random.shuffle(songs)
     processed_tracks = process_charts_songs(songs)
+    prepared_tracks = prepare_tracks_for_charts(processed_tracks, upper_limit)
     tracks = {
-        "tracks": processed_tracks,
+        "tracks": prepared_tracks,
         "description": "charts",
         "secret": None,
     }
-    tracks = prepare_tracks_for_charts(tracks, upper_limit)
     return tracks
 
 
-@cache.memoize(timeout=3600)
+@cache.memoize(timeout=36000)
 def load_best_songs_from_the_file():
     """load all the best (according to some papers) songs of all time
 
