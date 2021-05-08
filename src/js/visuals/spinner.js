@@ -6,6 +6,10 @@ import {
 
 // handle showing spinner when bracket's loading
 export function showSpinner() {
+  const alreadyExists = document.querySelector(".spinner-wrapper");
+  if (alreadyExists) {
+    return;
+  }
   const mainContainer = document.querySelector(".main");
   const spinner = createSpinner();
   mainContainer.appendChild(spinner);
@@ -16,6 +20,7 @@ export function showSpinner() {
 export function hideSpinner() {
   const spinner = document.querySelector(".spinner-wrapper");
   if (spinner) {
+    console.log("killing spinner");
     killSpinnerAnimation();
     spinner.remove();
   }

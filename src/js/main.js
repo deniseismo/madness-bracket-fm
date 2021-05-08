@@ -30,39 +30,43 @@ function handleSubmit(e) {
   const inputValue = document.querySelector(".form__field").value.trim();
   options.setInputValue(inputValue);
   showSpinner();
-  fetchTracks(options).then((data) => {
-    hideSpinner();
-    try {
-      if (data) {
-        const bracketType = options.getCurrentBracketType();
-        const name = options.getInputValue();
-        const limit = options.getBracketMaxSize();
-        const queryString = constructQueryString({
-          name: name,
-          limit: limit,
-        });
-        options.setCurrentTracks(data["tracks"]);
-        options.setDescription(data["description"]);
-        options.setSecret(data["secret"]);
-        createBracketStructure(bracket, options);
-        addModal();
-        handleResponsiveness();
-        pushHistory({
-          state: {
-            bracketType: bracketType,
+  fetchTracks(options)
+    .then((data) => {
+      hideSpinner();
+      try {
+        if (data) {
+          const bracketType = options.getCurrentBracketType();
+          const name = options.getInputValue();
+          const limit = options.getBracketMaxSize();
+          const queryString = constructQueryString({
             name: name,
             limit: limit,
-          },
-          title: null,
-          url: `${bracketType}?` + queryString,
-        });
-      } else {
-        console.log(data);
+          });
+          options.setCurrentTracks(data["tracks"]);
+          options.setDescription(data["description"]);
+          options.setSecret(data["secret"]);
+          createBracketStructure(bracket, options);
+          addModal();
+          handleResponsiveness();
+          pushHistory({
+            state: {
+              bracketType: bracketType,
+              name: name,
+              limit: limit,
+            },
+            title: null,
+            url: `${bracketType}?` + queryString,
+          });
+        } else {
+          console.log(data);
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
+    })
+    .catch((e) => {
       console.log(e);
-    }
-  });
+    });
   return false;
 }
 
