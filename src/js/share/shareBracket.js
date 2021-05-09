@@ -46,7 +46,10 @@ function prepareBracketDataForSharing(bracketInfo, options) {
       key === "albumColors" ||
       key === "textColor" ||
       key === "song" ||
-      key === "tooltip"
+      key === "tooltip" ||
+      key === "options" ||
+      key === "defaultCellColor" ||
+      key === "previousCells"
     ) {
       return undefined;
     } else {
@@ -54,6 +57,7 @@ function prepareBracketDataForSharing(bracketInfo, options) {
     }
   }
   const bracketDataForSharing = JSON.stringify(bracket, replacer);
+  console.log(bracketDataForSharing);
   return bracketDataForSharing;
 }
 
