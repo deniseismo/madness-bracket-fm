@@ -22,7 +22,6 @@ export function activateShareTooltips() {
     "vk",
     "facebook",
     "telegram",
-    "take screenshot",
     "copy link",
   ];
   const titledButtons = buttons.map(function (element, index) {
