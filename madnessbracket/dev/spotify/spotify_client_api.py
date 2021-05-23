@@ -17,7 +17,7 @@ def get_spotify_spotipy_client():
     return spotify
 
 
-def get_spotify_tekore_client():
+def get_spotify_tekore_client(asynchronous=False):
     """get a spotify client via tekore library
 
     Returns:
@@ -28,5 +28,5 @@ def get_spotify_tekore_client():
 
     app_token = tk.request_client_token(
         client_id=client_id, client_secret=client_secret)
-    spotify_tekore_client = tk.Spotify(app_token)
+    spotify_tekore_client = tk.Spotify(app_token, asynchronous=asynchronous)
     return spotify_tekore_client
