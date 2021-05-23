@@ -29,8 +29,11 @@ def get_spotify_track_info(track_title: str, artist_name: str, tekore_client=Non
         track_title, artist_name, spotify_tekore_client)
     if not tracks_found:
         return None
+    artist_spotify_info = get_spotify_artist_info(
+        artist_name, spotify_tekore_client)
+    spotify_artist_name = artist_spotify_info.name if artist_spotify_info else None
     perfect_match = find_track_best_match(
-        track_title, artist_name, tracks_found.items, spotify_tekore_client)
+        track_title, artist_name, spotify_artist_name, tracks_found.items)
     if not perfect_match:
         return None
     return perfect_match
@@ -65,26 +68,24 @@ def get_track_search_results(track_title: str, artist_name: str, spotify_tekore_
     return tracks_found
 
 
-def find_track_best_match(track_title: str, artist_name: str, search_results: list, spotify_tekore_client):
+def find_track_best_match(track_title: str, artist_name: str, spotify_artist_name: str, search_results: list):
     """find the most appropriate (best) match amongst all the search results for a track to find
 
-    :param spotify_tekore_client: an instance of a Spotify tekore client
     :param track_title: track's title to find
     :param artist_name: artist's name
     :param search_results: a list of all the search results
+    :param spotify_artist_name: artist's name on Spotify
     :return: perfect match if found
     """
+    print("tracks found:", len(search_results))
     track_title = track_title.lower()
-    artist_spotify_info = get_spotify_artist_info(
-        artist_name, spotify_tekore_client)
-    spotify_artist_name = artist_spotify_info.name if artist_spotify_info else None
     matches = []
     for track in search_results:
         track_found = get_filtered_name(track.name).lower()
         if spotify_artist_name and spotify_artist_name != artist_name:
             correct_artist_found = fuzzy_match_artist(
-                artist_name, track.artists[0].name) or fuzzy_match_artist(
-                spotify_artist_name, track.artists[0].name)
+                artist_name, track.artists[0].name, strict=True) or fuzzy_match_artist(
+                spotify_artist_name, track.artists[0].name, strict=True)
         else:
             correct_artist_found = fuzzy_match_artist(
                 artist_name, track.artists[0].name)

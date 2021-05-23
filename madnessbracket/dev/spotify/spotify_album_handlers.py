@@ -64,8 +64,11 @@ def get_spotify_album_info(album_title, artist_name, tekore_client=None):
         album_title, artist_name, spotify_tekore_client)
     if not albums_found:
         return None
+    artist_spotify_info = get_spotify_artist_info(
+        artist_name, spotify_tekore_client)
+    spotify_artist_name = artist_spotify_info.name if artist_spotify_info else None
     perfect_match = find_album_best_match(
-        album_title, artist_name, albums_found.items, spotify_tekore_client)
+        album_title, artist_name, spotify_artist_name, albums_found.items)
     if not perfect_match:
         return None
     return perfect_match
@@ -100,21 +103,17 @@ def get_album_search_results(album_title: str, artist_name: str, spotify_tekore_
     return albums_found
 
 
-def find_album_best_match(album_title: str, artist_name: str, search_results: list, spotify_tekore_client):
+def find_album_best_match(album_title: str, artist_name: str, spotify_artist_name: str, search_results: list):
     """find the most appropriate (best) match amongst all the search results for an album to find
 
-    :param spotify_tekore_client: an instance of a Spotify tekore client
     :param album_title: track's title to find
     :param artist_name: artist's name
+    :param spotify_artist_name: artist's name on Spotify
     :param search_results: a list of all the search results
     :return: perfect match if found
     """
     print(
         f"searching for Album({album_title}) among {len(search_results)} results")
-    album_title = album_title.lower()
-    artist_spotify_info = get_spotify_artist_info(
-        artist_name, spotify_tekore_client)
-    spotify_artist_name = artist_spotify_info.name if artist_spotify_info else None
     matches = []
     for album in search_results:
         album_found = get_filtered_name(album.name).lower()
