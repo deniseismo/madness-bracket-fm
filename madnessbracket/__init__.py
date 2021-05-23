@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
-
 from madnessbracket.config import Config, CACHE_CONFIG
 from sqlalchemy import MetaData
 
@@ -41,6 +40,7 @@ def create_app(production=False):
     from madnessbracket.secret.routes import secret
     from madnessbracket.errors.handlers import errors
     from madnessbracket.trivia.routes import trivia
+    from madnessbracket.profile.lastfm.routes import lastfm_profile
 
     # register all blueprints
     app.register_blueprint(main)
@@ -51,5 +51,6 @@ def create_app(production=False):
     app.register_blueprint(share)
     app.register_blueprint(errors)
     app.register_blueprint(trivia)
+    app.register_blueprint(lastfm_profile)
 
     return app
