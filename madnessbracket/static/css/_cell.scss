@@ -24,7 +24,7 @@
     content: "";
     position: absolute;
     background-color: #fff;
-    height: calc(50% + 1.5rem);
+    height: calc(65% + 1.5rem);
     width: 2px;
     top: 50%;
   }
@@ -207,6 +207,9 @@
     }
     &::before {
       width: 1rem;
+    }
+    &::after {
+      height: calc(50% + 1.5rem);
     }
   }
   .cell-not-first .song-title {
