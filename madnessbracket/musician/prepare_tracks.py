@@ -1,4 +1,4 @@
-from madnessbracket.dev.db_mgmt.color_mgmt.dominant_colors import get_file_from_url, get_image_dominant_colors
+from madnessbracket.dev.db_mgmt.color_mgmt.dominant_colors import get_image_dominant_colors_via_image_url
 from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
 from madnessbracket.utilities.track_filtering import get_filtered_name
@@ -53,20 +53,30 @@ def add_text_color_to_tracks(tracks: list):
 def process_tracks_from_db(tracks: list):
     processed_tracks = []
     for track_entry in tracks:
-        try:
-            album_colors = track_entry.album.album_cover_color.split(",")
-        except (AttributeError, NameError, TypeError, IndexError) as e:
-            print(e)
-            album_colors = None
-        track = {
-            "track_title": track_entry.title,
-            "artist_name": track_entry.artist.name,
-            "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None,
-            "album_colors": album_colors,
-            "text_color": "white"
-        }
+        track = process_a_track_from_db(track_entry)
         processed_tracks.append(track)
     return processed_tracks
+
+
+def process_a_track_from_db(track_entry):
+    """
+    gets all the needed info about the track from track entry (Song object)
+    :param track_entry: a Song instance
+    :return: dict with track info
+    """
+    try:
+        album_colors = track_entry.album.album_cover_color.split(",")
+    except (AttributeError, NameError, TypeError, IndexError) as e:
+        print(e)
+        album_colors = None
+    track = {
+        "track_title": track_entry.title,
+        "artist_name": track_entry.artist.name,
+        "spotify_preview_url": track_entry.spotify_preview_url if track_entry.spotify_preview_url else None,
+        "album_colors": album_colors,
+        "text_color": "white"
+    }
+    return track
 
 
 def process_tracks_from_spotify(tracks: list):
@@ -77,19 +87,28 @@ def process_tracks_from_spotify(tracks: list):
         if track_title in track_titles:
             continue
         track_titles.add(track_title)
-        try:
-            album_image_url = track_entry.album.images[-1].url
-            image_file = get_file_from_url(album_image_url)
-            album_colors = get_image_dominant_colors(
-                image_file)
-        except (IndexError, ValueError) as e:
-            print(e)
-            album_colors = None
-        track = {
-            "track_title": get_filtered_name(track_entry.name),
-            "artist_name": track_entry.artists[0].name,
-            "spotify_preview_url": track_entry.preview_url if track_entry.preview_url else None,
-            "album_colors": album_colors
-        }
+        track = process_a_track_from_spotify(track_entry)
         processed_tracks.append(track)
     return processed_tracks
+
+
+def process_a_track_from_spotify(track_entry):
+    """
+    gets all the needed info about the track from track entry (FullTrack tekore object)
+    :param track_entry: a FullTrack tekore instance
+    :return: dict with track info
+    """
+    try:
+        album_image_url = track_entry.album.images[-1].url
+        album_colors = get_image_dominant_colors_via_image_url(
+            album_image_url)
+    except (IndexError, ValueError) as e:
+        print(e)
+        album_colors = None
+    track = {
+        "track_title": get_filtered_name(track_entry.name),
+        "artist_name": track_entry.artists[0].name,
+        "spotify_preview_url": track_entry.preview_url if track_entry.preview_url else None,
+        "album_colors": album_colors
+    }
+    return track
