@@ -21,6 +21,8 @@ def get_filtered_name(name_to_fix: str):
         r"(\s(\d+)?\s?(remix)\s?).*",
         r"((-\s.+)?\s(\d+)?\s?(original)?\s?(album|mono|stereo)?\s?(mix|version)).*",
         r"(- Live)",
+        r"\(live\s?(version)?\)",
+        r"(- Studio)",
         r"(- .*edit)",
         r"(b-side)",
         r"((BBC)\s(.*)\s(session).*)",
