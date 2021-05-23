@@ -14,12 +14,11 @@ def generate_secret_bracket():
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket
     """
+    upper_limit = request.args.get("limit")
+    valid_upper_limit = validate_bracket_upper_limit(upper_limit)
     if request.method == "GET":
-        upper_limit = request.args.get("limit")
-        valid_upper_limit = validate_bracket_upper_limit(upper_limit)
         if not valid_upper_limit:
-            return render_template('404.html', title='Incorrect Input'), 404
-
+            return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
         user_request = json.dumps({
             "bracket_type": "secret",
             "name": None,
@@ -28,12 +27,10 @@ def generate_secret_bracket():
         return render_template("bracket.html", user_request=user_request)
 
     else:
-        upper_limit = request.args.get("limit")
-        valid_upper_limit = validate_bracket_upper_limit(upper_limit)
         if not valid_upper_limit:
             print('incorrect input')
             return make_response(jsonify(
-                {'message': f"something's gone wrong"}
+                {'message': f'👿 INCORRECT INPUT 👿'}
             ),
                 404)
         upper_limit = valid_upper_limit.upper_limit
@@ -42,7 +39,7 @@ def generate_secret_bracket():
         if not tracks:
             print('nothing found')
             return make_response(jsonify(
-                {'message': f"nothing found"}
+                {'message': f"😟 NOTHING FOUND 😟"}
             ),
                 404)
         return jsonify(tracks)

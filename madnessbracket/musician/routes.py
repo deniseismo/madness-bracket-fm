@@ -15,13 +15,14 @@ def generate_musician_bracket():
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket
     """
+    artist_name = request.args.get("name")
+    upper_limit = request.args.get("limit")
+    valid_artist_name = validate_artist_name(artist_name)
+    valid_upper_limit = validate_bracket_upper_limit(upper_limit)
+    is_valid_input = valid_artist_name and valid_upper_limit
     if request.method == "GET":
-        artist_name = request.args.get("name")
-        upper_limit = request.args.get("limit")
-        valid_artist_name = validate_artist_name(artist_name)
-        valid_upper_limit = validate_bracket_upper_limit(upper_limit)
-        if not valid_artist_name or not valid_upper_limit:
-            return render_template('404.html', title='Incorrect Input'), 404
+        if not is_valid_input:
+            return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
 
         user_request = json.dumps({
             "bracket_type": "artist",
@@ -30,14 +31,10 @@ def generate_musician_bracket():
         })
         return render_template("bracket.html", user_request=user_request)
     else:
-        artist_name = request.args.get("name")
-        upper_limit = request.args.get("limit")
-        valid_artist_name = validate_artist_name(artist_name)
-        valid_upper_limit = validate_bracket_upper_limit(upper_limit)
-        if not valid_artist_name or not valid_upper_limit:
+        if not is_valid_input:
             print('no input')
             return make_response(jsonify(
-                {'message': f"something's gone wrong"}
+                {'message': f'👿 INCORRECT INPUT 👿'}
             ),
                 404)
         upper_limit = valid_upper_limit.upper_limit
@@ -46,7 +43,7 @@ def generate_musician_bracket():
         if not tracks:
             print('nothing found')
             return make_response(jsonify(
-                {'message': f"no tracks found for {artist_name}"}
+                {'message': f"😟 no tracks found for {artist_name} 😟"}
             ),
                 404)
         return jsonify(tracks)
