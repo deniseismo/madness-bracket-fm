@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ValidationError, NoneStr, Field, validator, constr
+from pydantic import BaseModel, ValidationError, validator, constr
 
 
 def validate_bracket_upper_limit(upper_limit: str):
@@ -53,6 +53,32 @@ def validate_artist_name(artist_name: str):
 
     try:
         user_input = ArtistName(artist_name=artist_name)
+        print('user input correct')
+        return user_input
+    except ValidationError as e:
+        print(e.json())
+        return False
+
+
+def validate_lastfm_username(username: str):
+    """validate user's input: username on LAST.FM
+
+    Args:
+        username (str): artist's name
+
+    Raises:
+        ValueError: Invalid Length
+
+    Returns:
+        validated artist's name or False if invalid
+    """
+    class UserName(BaseModel):
+        """lastfm username
+        """
+        username: constr(min_length=2, max_length=15)
+
+    try:
+        user_input = UserName(username=username)
         print('user input correct')
         return user_input
     except ValidationError as e:
