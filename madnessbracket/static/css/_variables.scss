@@ -20,6 +20,16 @@ $backgroundColor: #1f1f1f;
 $whitishColor: #f5f5f5;
 $grayishColor: #616262;
 
+$lastfmColor: #d51007;
+$spotifyColor: #1db954;
+$battleColor: #221f1f;
+$secretColor: #db298e;
+$chartsColor: #2732db;
+$artistColor: #938b1e;
+
+$personalColorAlt: #4cbf3b;
+$personalColor: #b62c14;
+
 @mixin flexContainer($direction, $just) {
   display: flex;
   justify-content: $just;
