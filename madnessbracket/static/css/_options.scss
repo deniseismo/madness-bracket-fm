@@ -1,15 +1,21 @@
+.optional {
+  display: none;
+}
+
 .square-buttons-container {
-  @include flexContainer(row, space-evenly);
+  @include flexContainer(row, center);
+  height: auto;
+  flex-wrap: wrap;
   width: calc(min(60%, 1000px));
   margin-bottom: 2.5rem;
 }
 
 .square-button {
   @include flexContainer(column, center);
-  height: 100%;
+  height: auto;
   max-width: 20rem;
-  flex: 1;
-  margin: 0 0.5rem;
+  flex: 1 0 40%;
+  margin: 0;
   white-space: normal;
   font-size: 2.5rem;
   box-shadow: rgba(72, 242, 57, 0.25) 0px 13px 27px -5px,
@@ -26,13 +32,22 @@
   transform: translateY(10%);
 }
 .square-button-artist {
-  background-color: #938b1e;
+  background-color: $artistColor;
 }
 .square-button-charts {
-  background-color: #2732db;
+  background-color: $chartsColor;
 }
 .square-button-secret {
-  background-color: #db298e;
+  background-color: $secretColor;
+}
+.square-button-lastfm {
+  background-color: $lastfmColor;
+}
+.square-button-spotify {
+  background-color: $spotifyColor;
+}
+.square-button-battle {
+  background-color: $battleColor;
 }
 
 .form__group {
