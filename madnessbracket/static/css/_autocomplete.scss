@@ -1,4 +1,4 @@
-#autoComplete_list {
+.autoComplete_wrapper > ul {
   position: absolute;
   left: 0;
   top: 100%;
@@ -11,6 +11,28 @@
   border: 3px solid $reddishColor;
   margin: 0;
   border-top: none;
+  li {
+    margin: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    list-style: none;
+    text-align: left;
+    font-size: 1rem;
+    color: #212121;
+    transition: all 0.1s ease-in-out;
+    background-color: rgba(255, 255, 255, 1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(38, 98, 76, 0.15);
+    }
+    mark {
+      color: $greenishColor;
+      font-weight: bold;
+    }
+  }
 }
 
 #autoComplete:focus::selection {
@@ -19,31 +41,6 @@
 
 #autoComplete::selection {
   background-color: rgba(128, 219, 42, 0.15);
-}
-
-.autoComplete_result {
-  margin: 0.3rem;
-  padding: 0.3rem 0.5rem;
-  list-style: none;
-  text-align: left;
-  font-size: 1rem;
-  color: #212121;
-  transition: all 0.1s ease-in-out;
-  background-color: rgba(255, 255, 255, 1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.2s ease;
-}
-
-.autoComplete_result:hover {
-  cursor: pointer;
-  background-color: rgba(38, 98, 76, 0.15);
-}
-
-.autoComplete_highlighted {
-  color: $greenishColor;
-  font-weight: bold;
 }
 
 .autoComplete_selected {
