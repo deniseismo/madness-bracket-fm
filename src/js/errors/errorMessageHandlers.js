@@ -1,6 +1,11 @@
 import { createElement } from "../misc/utilities.js";
 
 export function showErrorMessage(message) {
+  // check if some error message is already being displayed
+  const errorWrapper = document.querySelector(".error-wrapper");
+  if (errorWrapper) {
+    return;
+  }
   const mainContainer = document.querySelector(".main");
   const error = createErrorMessage(message);
   mainContainer.appendChild(error);
