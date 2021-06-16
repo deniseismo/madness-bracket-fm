@@ -3,7 +3,7 @@ import json
 from flask import Blueprint, jsonify, request, make_response, render_template
 
 from madnessbracket.musician.fetch_artists_handlers import get_filtered_artists_suggestions
-from madnessbracket.musician.musician_handlers import get_artists_tracks
+from madnessbracket.musician.musician_handlers import get_musician_bracket_data
 from madnessbracket.utilities.user_input_validation import validate_artist_name, validate_bracket_upper_limit
 
 musician = Blueprint('musician', __name__)
@@ -38,7 +38,7 @@ def generate_musician_bracket():
             ),
                 404)
         upper_limit = valid_upper_limit.upper_limit
-        tracks = get_artists_tracks(artist_name, upper_limit)
+        tracks = get_musician_bracket_data(artist_name, upper_limit)
         print(tracks)
         if not tracks:
             print('nothing found')

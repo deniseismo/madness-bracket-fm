@@ -1,13 +1,36 @@
 from sqlalchemy.event import listen
 
 from madnessbracket import cache, db
-from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_artist_correct_name
+from madnessbracket.dev.lastfm.lastfm_artist_handlers import lastfm_get_artist_correct_name
 from madnessbracket.dev.spotify.spotify_artist_handlers import get_spotify_artist_top_tracks
 from madnessbracket.models import Artist, Song
 from madnessbracket.musician.prepare_tracks import prepare_tracks_for_musician, process_tracks_from_spotify, \
     process_tracks_from_db
 from madnessbracket.utilities.db_extensions import load_unicode_extension
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
+
+
+def get_musician_bracket_data(artist_name: str, bracket_limit: int):
+    """
+    a shortcut function that combines all the other musician handlers
+    :param artist_name: artist's name
+    :param bracket_limit: chosen bracket upper limit
+    :return: a dict with all the musician bracket data
+    """
+    if not artist_name or not bracket_limit:
+        # no artist provided or bracket limit provided
+        return None
+    artist_tracks = get_artists_tracks(artist_name, bracket_limit)
+    if not artist_tracks:
+        return None
+    artist_tracks = prepare_tracks_for_musician(artist_tracks, bracket_limit)
+
+    tracks = {
+        "tracks": artist_tracks,
+        "description": artist_tracks[0]["artist_name"],
+        "secret": None
+    }
+    return tracks
 
 
 def get_artists_tracks(artist_name: str, bracket_limit: int):
@@ -38,7 +61,6 @@ def get_artists_tracks(artist_name: str, bracket_limit: int):
     if not tracks:
         print(f"nothing found at all for {artist_name}")
         return None
-    tracks = prepare_tracks_for_musician(tracks, bracket_limit)
     return tracks
 
 
@@ -50,7 +72,7 @@ def get_tracks_via_database(artist_name: str, correct_name: str):
         artist_name (str): artist's name
         correct_name (str): lastfm-corrected artist's name
     Returns:
-        (dict): a dict with a list of 'track info' dicts
+        (list): a list of tracks from by a particular artist found in database
     """
     # set max song limit
     SONG_LIMIT = 100
@@ -74,11 +96,7 @@ def get_tracks_via_database(artist_name: str, correct_name: str):
     print(track_entries, len(track_entries))
     print(list(set(track_entries)), len(set(track_entries)))
     processed_tracks = process_tracks_from_db(track_entries)
-    tracks = {
-        "tracks": processed_tracks,
-        "description": artist.name
-    }
-    return tracks
+    return processed_tracks
 
 
 @cache.memoize(timeout=3600)
@@ -89,7 +107,7 @@ def get_tracks_via_spotify(artist_name: str):
         artist_name (str): artist's name
 
     Returns:
-        (dict): a dict with a list of 'track info' dicts
+        (list): a list of tracks by a particular artist found on spotify
     """
     print(f"trying to get {artist_name} via Spotify")
     track_entries = get_spotify_artist_top_tracks(artist_name)
@@ -103,12 +121,7 @@ def get_tracks_via_spotify(artist_name: str):
         artist_name = spotify_artist_name
     except (IndexError, ValueError) as e:
         print(e)
-    tracks = {
-        "tracks": processed_tracks,
-        "description": artist_name,
-        "secret": None
-    }
     # log newly found artist
     if processed_tracks:
         log_artist_missing_from_db(artist_name)
-    return tracks
+    return processed_tracks
