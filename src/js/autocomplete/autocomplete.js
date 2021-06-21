@@ -8,20 +8,34 @@ export function setupAutocomplete(options) {
   if (checkScreenHeight(700)) {
     return;
   }
+  const autoCompleteJS = createAutocomplete("#autoComplete");
+  const autoCompleteJS2 = createAutocomplete("#autoComplete2");
+  options.setAutocomplete(autoCompleteJS);
+  options.setSecondaryAutocomplete(autoCompleteJS2);
+}
+
+function createAutocomplete(inputFieldSelector) {
   const autoCompleteJS = new autoComplete({
+    wrapper: false,
+    selector: inputFieldSelector,
     placeHolder: "Search for Artist",
     data: {
       src: async () => {
         // Fetch Data from external Source
-        const userInput = document.querySelector("#autoComplete").value;
+        const userInput = document.querySelector(inputFieldSelector).value;
         const source = await fetchArtists(userInput);
         const artistsFound = source["suggestions"];
         // Returns Fetched data
         return artistsFound;
       },
+      trigger: (query) => {
+        return query.replace(/ /g, "").length > 2;
+      },
       cache: false,
       filter: (list) => {
-        const value = document.querySelector("#autoComplete").value.slice(0, 3);
+        const value = document
+          .querySelector(inputFieldSelector)
+          .value.slice(0, 3);
         // Sort results by starting character
         const sortedList = list.sort((a, b) => {
           if (!a.match.startsWith(value)) return -1;
@@ -43,42 +57,45 @@ export function setupAutocomplete(options) {
     diacritics: "loose",
     threshold: 3,
   });
-  options.setAutocomplete(autoCompleteJS);
+  return autoCompleteJS;
 }
 
 export function initAutocomplete(options) {
-  options.getAutocomplete().init();
+  options.getAutocomplete()?.init();
 }
 
 export function unInitAutocomplete(options) {
-  options.getAutocomplete().unInit();
+  options.getAutocomplete()?.unInit();
 }
 
 // additional autocomplete handlers
-export function handleAutocomplete() {
+export function handleAutocomplete(autoCompleteSelector) {
   // submit on enter
-  const autocompleteElement = document.querySelector("#autoComplete");
+  const autocompleteElement = document.querySelector(autoCompleteSelector);
   autocompleteElement.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-      document.querySelector(".form__group").requestSubmit();
+      submitForm();
     }
   });
   // fill input's value with the selected value
   autocompleteElement.addEventListener("navigate", function (event) {
     const selectedArtist = event.detail.selection.value;
-    document.querySelector("#autoComplete").value = selectedArtist;
+    autocompleteElement.value = selectedArtist;
   });
   autocompleteElement.addEventListener("selection", function (event) {
-    const inputField = document.querySelector("#autoComplete");
-    inputField.blur();
+    autocompleteElement.blur();
     // Prepare User's Selected Value
     const selection = event.detail.selection.value;
     // Render selected choice to selection div
     // Replace Input value with the selected value
-    inputField.value = selection;
+    autocompleteElement.value = selection;
     // Console log autoComplete data feedback
-    inputField.focus();
+    autocompleteElement.focus();
     event.detail.event.preventDefault();
-    document.querySelector(".form__group").requestSubmit();
+    submitForm();
   });
+}
+
+function submitForm() {
+  document.querySelector(".form__group").requestSubmit();
 }
