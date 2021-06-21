@@ -7,6 +7,7 @@
   bottom: 0;
   background: $backgroundColor;
   opacity: 0.9;
+  z-index: 9;
 }
 .spinner {
   @include flexContainer(row, center);
