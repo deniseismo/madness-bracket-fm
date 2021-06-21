@@ -5,7 +5,7 @@ export function displayBracketDescription(description) {
   const mainContainer = document.querySelector(".main");
   const descriptionContainer = createElement("div", ["description-container"]);
   const descriptionText = createElement("h1", ["description-text"]);
-  descriptionText.textContent = description.toUpperCase();
+  descriptionText.textContent = description;
   const hr = createElement("hr", ["description-line"]);
   descriptionContainer.append(descriptionText, hr);
   mainContainer.appendChild(descriptionContainer);
@@ -16,5 +16,5 @@ export function displayBracketDescription(description) {
 */
 export function updateDescription(description) {
   const descriptionText = document.querySelector(".description-text");
-  descriptionText.textContent = description.toUpperCase();
+  descriptionText.textContent = description;
 }
