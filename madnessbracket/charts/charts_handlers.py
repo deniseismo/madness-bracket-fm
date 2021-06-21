@@ -1,6 +1,5 @@
 import json
 import os
-import random
 
 from flask import current_app
 
@@ -20,7 +19,7 @@ def get_songs_considered_best(upper_limit: int):
     prepared_tracks = prepare_tracks_for_charts(processed_tracks, upper_limit)
     tracks = {
         "tracks": prepared_tracks,
-        "description": "charts",
+        "description": "CHARTS",
         "secret": None,
     }
     return tracks
