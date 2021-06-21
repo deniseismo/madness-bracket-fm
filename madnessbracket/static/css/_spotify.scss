@@ -1,0 +1,40 @@
+.spotify-login-container {
+  display: none;
+}
+.spotify-user-info {
+  @include flexContainer(row, center, center);
+}
+.spotify-login-link {
+  text-decoration: underline;
+}
+.spotify-logged-in-text {
+  display: inline-block;
+}
+.spotify-avatar-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0.5rem;
+}
+.spotify-username {
+  font-size: 1.25rem;
+  color: $reddishColor;
+}
+
+.spotify-logout-form {
+  display: inline;
+}
+
+.spotify-logout-button {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    color: $reddishColor;
+  }
+}
