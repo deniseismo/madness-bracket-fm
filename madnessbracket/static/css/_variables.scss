@@ -30,10 +30,10 @@ $artistColor: #938b1e;
 $personalColorAlt: #4cbf3b;
 $personalColor: #b62c14;
 
-@mixin flexContainer($direction, $just) {
+@mixin flexContainer($direction, $just, $align: center) {
   display: flex;
   justify-content: $just;
-  align-items: center;
+  align-items: $align;
   flex-direction: $direction;
 }
 
