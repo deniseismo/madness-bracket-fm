@@ -8,17 +8,17 @@ import {
   handleSquareButtons,
   handleMaxBracketSizeOption,
 } from "./options/optionHandlers.js";
-import {
-  fetchTracks,
-  pushHistory,
-  constructQueryString,
-} from "./fetchTracks.js";
+import { fetchTracks, pushHistory } from "./fetchTracks.js";
 import { showSpinner, hideSpinner } from "./visuals/spinner.js";
 import { handleResponsiveness } from "./responsiveness/mediaQuery.js";
 import {
-  autocompleteInit,
+  setupAutocomplete,
   handleAutocomplete,
 } from "./autocomplete/autocomplete.js";
+import {
+  getQueryStringFromUserInput,
+  setUserInputForSubmission,
+} from "./options/inputHandlers.js";
 
 export let bracket = new BracketData();
 
@@ -27,8 +27,7 @@ export let options = new OptionStorage();
 document.querySelector(".form__group").addEventListener("submit", handleSubmit);
 
 function handleSubmit(e) {
-  const inputValue = document.querySelector(".form__field").value.trim();
-  options.setInputValue(inputValue);
+  setUserInputForSubmission(options);
   showSpinner();
   fetchTracks(options)
     .then((data) => {
@@ -38,10 +37,7 @@ function handleSubmit(e) {
           const bracketType = options.getCurrentBracketType();
           const name = options.getInputValue();
           const limit = options.getBracketMaxSize();
-          const queryString = constructQueryString({
-            name: name,
-            limit: limit,
-          });
+          const queryString = getQueryStringFromUserInput(options);
           options.setCurrentTracks(data["tracks"]);
           options.setDescription(data["description"]);
           options.setSecret(data["secret"]);
@@ -70,8 +66,9 @@ function handleSubmit(e) {
   return false;
 }
 
-autocompleteInit();
-handleAutocomplete();
+setupAutocomplete(options);
+handleAutocomplete("#autoComplete");
+handleAutocomplete("#autoComplete2");
 
 createIntroElements();
 introAnimation();
