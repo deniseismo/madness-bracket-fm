@@ -22,9 +22,14 @@ def get_artists_battle(artist_name: str, artist_name_2: str, bracket_limit: int)
         return None
     battle_tracks = prepare_tracks_for_artist_battle(
         artist_1_tracks, artist_2_tracks, bracket_limit)
+    artist_1_corrected_name = artist_1_tracks[0]["artist_name"]
+    artist_2_corrected_name = artist_2_tracks[0]["artist_name"]
+    description = f"{artist_1_corrected_name.upper()} vs {artist_2_corrected_name.upper()}"
+    if artist_1_corrected_name == artist_2_corrected_name:
+        description += ": An Internal Conflict"
     tracks = {
         "tracks": battle_tracks,
-        "description": f"{artist_name} vs {artist_name_2}",
+        "description": description,
         "secret": "artists_battle"
     }
     return tracks
