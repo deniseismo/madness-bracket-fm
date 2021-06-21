@@ -1,5 +1,6 @@
 import { showErrorMessage } from "./errors/errorMessageHandlers.js";
 import { getCorrectURL } from "./misc/utilities.js";
+import { getQueryStringFromUserInput } from "./options/inputHandlers.js";
 
 // fetch tracks from the server
 let controller = null;
@@ -12,12 +13,7 @@ export const fetchTracks = async function (options) {
   const signal = controller.signal;
   try {
     const bracketType = options.getCurrentBracketType();
-    const name = options.getInputValue();
-    const limit = options.getBracketMaxSize();
-    const queryString = constructQueryString({
-      name: name,
-      limit: limit,
-    });
+    const queryString = getQueryStringFromUserInput(options);
     const fetchURL = getCorrectURL(`${bracketType}?` + queryString);
     const response = await fetch(fetchURL, {
       method: "POST",
@@ -44,16 +40,6 @@ export const fetchTracks = async function (options) {
     return Promise.reject();
   }
 };
-
-export function constructQueryString(params) {
-  const searchParams = new URLSearchParams();
-  for (const prop in params) {
-    if (params[prop]) {
-      searchParams.append(prop, params[prop]);
-    }
-  }
-  return searchParams;
-}
 
 export function pushHistory(params) {
   console.log("pushing history");
