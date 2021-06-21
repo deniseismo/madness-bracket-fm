@@ -62,6 +62,35 @@
       16
     </button>
   </div>
+  <div class="spotify-login-container">
+    {% if spotify_info.logged_in %}
+    <div class="spotify-user-info">
+      <p class="spotify-logged-in-text">
+        You're logged in as
+        <span class="spotify-username"
+          >{{ spotify_info.user_info.username }}</span
+        >
+      </p>
+      {% if spotify_info.user_info.user_image %}
+      <img
+        class="spotify-avatar-image"
+        src="{{ spotify_info.user_info.user_image }}"
+      />
+      {% endif %}
+      <form
+        method="post"
+        action="{{ url_for('spotify.spotify_logout') }}"
+        class="spotify-logout-form"
+      >
+        <button type="submit" class="spotify-logout-button">Log out.</button>
+      </form>
+    </div>
+    {% else %}
+    <a class="spotify-login-link" href="{{ url_for('spotify.spotify_login') }}">
+      Log in with Spotify.
+    </a>
+    {% endif %}
+  </div>
   <form
     class="form__group field"
     action=""
@@ -70,15 +99,27 @@
     autocomplete="off"
   >
     <div class="input-container">
-      <input
-        id="autoComplete"
-        type="text"
-        class="form__field"
-        placeholder="artist name"
-        maxlength="99"
-        id="name"
-      />
-      <label for="name" class="form__label">ARTIST</label>
+      <div class="primary-input input-wrapper">
+        <input
+          id="autoComplete"
+          type="text"
+          class="form__field"
+          placeholder="artist name"
+          maxlength="99"
+        />
+        <label for="autoComplete" class="form__label">ARTIST</label>
+      </div>
+      <p class="versus">vs.</p>
+      <div class="secondary-input input-wrapper">
+        <input
+          id="autoComplete2"
+          type="text"
+          class="form__field"
+          placeholder="artist name"
+          maxlength="99"
+        />
+        <label for="autoComplete2" class="form__label">ARTIST №2</label>
+      </div>
     </div>
     <button class="generate-button" type="submit" disabled>GENERATE</button>
   </form>
