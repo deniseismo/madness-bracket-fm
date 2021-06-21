@@ -25,6 +25,9 @@ def generate_battle_bracket():
         if not is_valid_input:
             return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
 
+        if artist_name == artist_name_2:
+            return render_template('404.html', description='👿 IT TAKES TWO TO BATTLE 👿'), 404
+
         user_request = json.dumps({
             "bracket_type": "battle",
             "name": artist_name,
@@ -36,6 +39,11 @@ def generate_battle_bracket():
         if not is_valid_input:
             return make_response(jsonify(
                 {'message': f'👿 INCORRECT INPUT 👿'}
+            ),
+                404)
+        if artist_name == artist_name_2:
+            return make_response(jsonify(
+                {'message': f'👿 IT TAKES TWO TO BATTLE 👿'}
             ),
                 404)
         upper_limit = valid_upper_limit.upper_limit
