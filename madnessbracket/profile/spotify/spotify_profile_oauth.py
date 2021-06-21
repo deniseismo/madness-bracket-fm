@@ -1,5 +1,4 @@
 import pickle
-import random
 
 import tekore as tk
 from flask import Blueprint, current_app, session
@@ -28,7 +27,7 @@ def get_spotify_auth():
     return auth
 
 
-def check_spotify():
+def check_spotify_login():
     """checks if the person's logged in the token's not expired
     refreshes token if present
 
@@ -57,6 +56,7 @@ def check_spotify():
         print(user)
         cred = tk.Credentials(*conf)
         user_entry = User.query.filter_by(spotify_id=user).first()
+        print(f"user entry: {user_entry}")
         if user_entry:
             print(f'user found: {user}')
             # get user's refresh token from db
@@ -89,6 +89,7 @@ def get_spotify_user_info(token):
             username = current_user.display_name
             current_user_image_list = current_user.images
             country = current_user.country
+            print(f"current user: {current_user}")
             if current_user_image_list:
                 try:
                     user_image = current_user.images[0].url
@@ -97,45 +98,13 @@ def get_spotify_user_info(token):
             else:
                 user_image = None
 
-    except tk.HTTPError:
+    except tk.HTTPError as e:
+        print(e)
         return None
     user_info = {
         "username": username,
         "user_image": user_image,
         "country": country
     }
+    print(f"user info: {user_info}")
     return user_info
-
-
-def spotify_get_users_top_tracks(token):
-    """get current user top tracks (items)
-    :return: current user's top track items
-
-    Args:
-        token: access token
-
-    Returns:
-        current user's top track items
-    """
-    # spotify's internal 'time spans': gives different selections of your fav. tracks based on time period
-    time_periods = ['short_term', 'medium_term', 'long_term']
-    if not token:
-        return None
-    try:
-        with spotify_tekore_client.token_as(token):
-            # get user's top 50 tracks (pick time span at random)
-            top_tracks = spotify_tekore_client.current_user_top_tracks(
-                limit=50, time_range=random.choice(time_periods))
-    except tk.HTTPError:
-        return None
-
-    if not top_tracks:
-        return None
-
-    if not top_tracks.items:
-        return None
-    print(top_tracks.total)
-    if len(top_tracks.items) < 4:
-        print('not enought tracks')
-        return None
-    return top_tracks.items
