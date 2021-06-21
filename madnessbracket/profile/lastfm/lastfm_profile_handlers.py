@@ -4,6 +4,7 @@ from madnessbracket import cache
 from madnessbracket.dev.lastfm.lastfm_track_handlers import get_track_info_shortcut
 from madnessbracket.dev.lastfm.lastfm_user_handlers import lastfm_get_user_top_tracks
 from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
+from madnessbracket.musician.prepare_tracks import add_text_color_to_tracks
 from madnessbracket.profile.lastfm.prepare_tracks import prepare_tracks_for_lastfm_profile
 
 
@@ -14,16 +15,17 @@ def ultimate_lastfm_user_tracks_handler(username, upper_limit):
     :param upper_limit: upper bracket limit
     :return:
     """
-    lastfm_user_top_tracks = lastfm_get_user_top_tracks(username)
+    correct_username, lastfm_user_top_tracks = lastfm_get_user_top_tracks(username)
     if not lastfm_user_top_tracks:
         print(f"COULD NOT find tracks for User({username})")
         return None
     capped_tracks = prepare_tracks_for_lastfm_profile(lastfm_user_top_tracks, upper_limit)
     tracks_with_info = get_lastfm_user_tracks_info(capped_tracks)
     print("TRACKS: ", tracks_with_info)
+    add_text_color_to_tracks(tracks_with_info)
     tracks = {
         "tracks": tracks_with_info,
-        "description": f"{username}",
+        "description": correct_username,
         "secret": None,
     }
     return tracks
