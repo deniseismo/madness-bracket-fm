@@ -7,11 +7,13 @@ export class OptionStorage {
     this.trackLimit = 16;
     // artist's name as per user's input
     this.inputValue = null;
+    this.secondaryInputValue = null;
     this.tracks = null;
     this.description = null;
     this.secret = null;
     this.complete = false;
     this.autocomplete = null;
+    this.secondaryAutocomplete = null;
   }
   // sets the current bracket type: artist or charts
   setCurrentBracketType(bracketType) {
@@ -36,6 +38,12 @@ export class OptionStorage {
   // gets user's input
   getInputValue() {
     return this.inputValue;
+  }
+  setSecondaryInputValue(inputValue) {
+    this.secondaryInputValue = inputValue;
+  }
+  getSecondaryInputValue() {
+    return this.secondaryInputValue;
   }
   setCurrentTracks(tracks) {
     this.tracks = tracks;
@@ -66,5 +74,11 @@ export class OptionStorage {
   }
   getAutocomplete() {
     return this.autocomplete;
+  }
+  setSecondaryAutocomplete(autocomplete) {
+    this.secondaryAutocomplete = autocomplete;
+  }
+  getSecondaryAutocomplete() {
+    return this.secondaryAutocomplete;
   }
 }
