@@ -29,7 +29,8 @@
   }
 }
 .square-button.active {
-  transform: translateY(10%);
+  transform: scale(1.25);
+  z-index: 1;
 }
 .square-button-artist {
   background-color: $artistColor;
@@ -162,10 +163,15 @@
 }
 
 .input-container {
+  @include flexContainer(row, center, flex-end);
   width: 100%;
   display: none;
-  flex-flow: column;
+  flex-flow: row;
   position: relative;
+}
+
+.input-wrapper {
+  margin: 0 0.5rem;
 }
 
 .max-size-tooltip {
