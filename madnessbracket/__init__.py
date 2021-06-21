@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_session import Session
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 from madnessbracket.config import Config, CACHE_CONFIG
@@ -14,17 +15,20 @@ my_naming_convention = {
 mtd = MetaData(naming_convention=my_naming_convention)
 db = SQLAlchemy(metadata=mtd)
 
+sess = Session()
 cache = Cache()
 
 
-def create_app(production=False):
+def create_app(production=False, config_class=Config):
     """
     creates an instance of an app
+    :param config_class: a config (Config class/object)
     :param production: whether the app's in testing or production mode. default: False
     :return: app
     """
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
+    sess.init_app(app)
     if production:
         cache.init_app(app, config=CACHE_CONFIG["production"])
     else:
@@ -33,11 +37,12 @@ def create_app(production=False):
 
     # import all blueprints necessary
     from madnessbracket.main.routes import main
-    from madnessbracket.spotify_api.routes import spotify
+    from madnessbracket.profile.spotify.routes import spotify
     from madnessbracket.share.routes import share
     from madnessbracket.charts.routes import charts
     from madnessbracket.musician.routes import musician
     from madnessbracket.secret.routes import secret
+    from madnessbracket.battle.routes import battle
     from madnessbracket.errors.handlers import errors
     from madnessbracket.trivia.routes import trivia
     from madnessbracket.profile.lastfm.routes import lastfm_profile
@@ -52,5 +57,6 @@ def create_app(production=False):
     app.register_blueprint(errors)
     app.register_blueprint(trivia)
     app.register_blueprint(lastfm_profile)
+    app.register_blueprint(battle)
 
     return app
