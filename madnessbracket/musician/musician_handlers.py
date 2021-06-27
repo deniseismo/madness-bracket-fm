@@ -28,7 +28,8 @@ def get_musician_bracket_data(artist_name: str, bracket_limit: int):
     tracks = {
         "tracks": artist_tracks,
         "description": artist_tracks[0]["artist_name"].upper(),
-        "secret": None
+        "value1": artist_tracks[0]["artist_name"],
+        "extra": None
     }
     return tracks
 

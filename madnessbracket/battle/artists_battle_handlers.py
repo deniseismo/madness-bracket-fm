@@ -30,6 +30,8 @@ def get_artists_battle(artist_name: str, artist_name_2: str, bracket_limit: int)
     tracks = {
         "tracks": battle_tracks,
         "description": description,
-        "secret": "artists_battle"
+        "value1": artist_1_corrected_name,
+        "value2": artist_2_corrected_name,
+        "extra": "artists_battle"
     }
     return tracks

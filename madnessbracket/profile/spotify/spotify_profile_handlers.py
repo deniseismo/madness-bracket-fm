@@ -14,15 +14,15 @@ def get_spotify_bracket_data(token, bracket_limit):
     :param bracket_limit: chosen bracket upper limit
     :return: a dict with all the musician bracket data
     """
-    user_tracks = spotify_get_users_top_tracks(token)
+    username, user_tracks = spotify_get_users_top_tracks(token)
     if not user_tracks:
         return None
     user_tracks = prepare_spotify_tracks(user_tracks, bracket_limit)
     add_text_color_to_tracks(user_tracks)
     tracks = {
         "tracks": user_tracks,
-        "description": "My Spotify tracks",
-        "secret": None
+        "description": f"{username}: My Spotify",
+        "extra": None
     }
     return tracks
 
@@ -43,6 +43,8 @@ def spotify_get_users_top_tracks(token):
         return None
     try:
         with spotify_tekore_client.token_as(token):
+            current_user = spotify_tekore_client.current_user()
+            username = current_user.display_name
             # get user's top 50 tracks (pick time span at random)
             top_tracks = spotify_tekore_client.current_user_top_tracks(
                 limit=50, time_range=random.choice(time_periods))
@@ -58,4 +60,4 @@ def spotify_get_users_top_tracks(token):
     if len(top_tracks.items) < 4:
         print('not enought tracks')
         return None
-    return top_tracks.items
+    return username, top_tracks.items

@@ -20,7 +20,7 @@ def get_songs_considered_best(upper_limit: int):
     tracks = {
         "tracks": prepared_tracks,
         "description": "CHARTS",
-        "secret": None,
+        "extra": None,
     }
     return tracks
 
