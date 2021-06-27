@@ -52,6 +52,14 @@
     <p class="optional">SECRET</p>
   </button>
 </div>
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
+%}
+<ul class="flashes">
+  {% for category, message in messages %}
+  <li class="flash-message flash-message-{{ category }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% endwith %}
 <div class="options">
   <div class="bracket_max_size_container" wfd-id="18">
     <button class="bracket_max_size_option" data-max-size="8">8</button>
