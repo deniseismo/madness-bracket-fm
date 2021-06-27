@@ -45,8 +45,10 @@ def validate_bracket_data_for_sharing(bracket_data):
 
     class Bracket(BaseModel):
         bracket_type: str = Field(alias="bracketType")
+        value1: NoneStr = None
+        value2: NoneStr = None
         description: str
-        secret: NoneStr = None
+        extra: NoneStr = None
         tracks: List[Track]
         structure: Structure
 
@@ -74,6 +76,8 @@ def parse_bracket_data_for_sharing(bracket_data):
     parsed_bracket_data = {
         "bracket_type": bracket_data.bracket_type,
         "title": bracket_data.description,
+        "value1": bracket_data.value1,
+        "value2": bracket_data.value2,
         "bracket_info": {
             "tracks": [track.dict() for track in bracket_data.tracks],
             "structure": {
@@ -86,7 +90,8 @@ def parse_bracket_data_for_sharing(bracket_data):
                 }
             }
         },
-        "winner": None
+        "winner": None,
+        "extra": bracket_data.extra
     }
     if bracket_data.structure.final.winner.track_id:
         track_id = bracket_data.structure.final.winner.track_id
