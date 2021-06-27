@@ -29,8 +29,10 @@ export function shareBracket(bracketInfo, options) {
 function prepareBracketDataForSharing(bracketInfo, options) {
   const bracket = {
     bracketType: options.getCurrentBracketType(),
+    value1: options.getInputValue(),
+    value2: options.getSecondaryInputValue(),
     description: options.getDescription(),
-    secret: options.getSecret(),
+    extra: options.getExtra(),
     tracks: options.getCurrentTracks(),
     structure: bracketInfo,
   };

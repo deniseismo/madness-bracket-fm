@@ -51,12 +51,13 @@ export function doesArrayContainSomethingTruthy(array) {
 
 // check if input's not empty
 export function isInputValid(value) {
+  console.log(value);
   return value.length > 0;
 }
 
 // shuffle tracks
 export function shuffleTracks(tracks, options) {
-  const isArtistBattle = options.getSecret() === "artists_battle";
+  const isArtistBattle = options.getExtra() === "artists_battle";
   /* shuffle tracks differently if it's "artist battle".
   we need to keep 'artist vs artist' logic in all of the match-ups after shuffling
   */

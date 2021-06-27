@@ -10,7 +10,7 @@ export class OptionStorage {
     this.secondaryInputValue = null;
     this.tracks = null;
     this.description = null;
-    this.secret = null;
+    this.extra = null;
     this.complete = false;
     this.autocomplete = null;
     this.secondaryAutocomplete = null;
@@ -57,11 +57,11 @@ export class OptionStorage {
   getDescription() {
     return this.description;
   }
-  setSecret(secret) {
-    this.secret = secret;
+  setExtra(extra) {
+    this.extra = extra;
   }
-  getSecret() {
-    return this.secret;
+  getExtra() {
+    return this.extra;
   }
   getComplete() {
     return this.complete;

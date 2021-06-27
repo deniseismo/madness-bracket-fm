@@ -57,7 +57,7 @@ export function getDashboard(bracket, options) {
           options.setComplete(false);
           options.setCurrentTracks(data["tracks"]);
           options.setDescription(data["description"]);
-          options.setSecret(data["secret"]);
+          options.setExtra(data["extra"]);
           updateDescription(options.getDescription());
           retryBracket(bracket, options);
           returnToSlideZero();

@@ -25,10 +25,11 @@ getIntroHeaderReady();
 
 // ready up all the options
 function getOptionsReady() {
-  options.setInputValue(sharedBracketData["description"]);
+  options.setInputValue(sharedBracketData["value1"]);
+  options.setSecondaryInputValue(sharedBracketData["value2"]);
   options.setCurrentTracks(sharedBracketData["tracks"]);
   options.setDescription(sharedBracketData["description"]);
-  options.setSecret(sharedBracketData["secret"]);
+  options.setExtra(sharedBracketData["extra"]);
   options.setCurrentBracketType(sharedBracketData["bracket_type"]);
 }
 getOptionsReady();
