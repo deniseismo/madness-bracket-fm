@@ -15,6 +15,8 @@ def lastfm_get_user_top_tracks(username: str):
     Returns:
         (list): of user's top tracks
     """
+    print("GETTING LASTFM USER TOP TRACKS")
+    MAX_PAGES = 3
     LIMIT = 50
     TIME_PERIODS = [
         "overall",
@@ -24,26 +26,43 @@ def lastfm_get_user_top_tracks(username: str):
         "6month",
         "12month"
     ]
-    response = lastfm_get_response({
-        'method': 'user.getTopTracks',
-        'user': username,
-        'period': random.choice(TIME_PERIODS),
-        'limit': LIMIT
-    })
-    # in case of an error, return None
-    if response.status_code != 200:
-        print('lastfm response NOT OK')
-        return None
-    try:
-        top_tracks = response.json()["toptracks"]["track"]
-    except (KeyError, TypeError, json.decoder.JSONDecodeError) as e:
-        print(e)
-        return None
-    try:
-        correct_username = response.json()['toptracks']['@attr']['user']
-        username = correct_username
-    except (KeyError, ValueError) as e:
-        print(e)
-        return None
-    print(len(top_tracks))
+    time_period = random.choice(TIME_PERIODS)
+    page = 1
+    top_tracks = []
+    for _ in range(MAX_PAGES):
+        response = lastfm_get_response({
+            'method': 'user.getTopTracks',
+            'user': username,
+            'period': time_period,
+            'limit': LIMIT,
+            'page': page
+        })
+        # in case of an error, return None
+        if response.status_code != 200:
+            print('lastfm response NOT OK')
+            if page > 1:
+                print("returning tracks, even though response's not OK (but page > 1)")
+                return top_tracks
+            return None, None
+        page = int(response.json()['toptracks']['@attr']['page'])
+        total_pages = min(
+            int(response.json()['toptracks']['@attr']['totalPages']), MAX_PAGES)
+        try:
+            tracks = response.json()["toptracks"]["track"]
+            top_tracks.extend(tracks)
+        except (KeyError, TypeError, json.decoder.JSONDecodeError) as e:
+            print(e)
+            return None, None
+        page += 1
+        if page > total_pages:
+            break
+        if page > 1:
+            continue
+        try:
+            correct_username = response.json()['toptracks']['@attr']['user']
+            username = correct_username
+        except (KeyError, ValueError) as e:
+            print(e)
+            pass
+    print(f"LASTFM USER TOP TRACKS TOTAL: {len(top_tracks)}")
     return username, top_tracks
