@@ -42,7 +42,7 @@ class Song(db.Model):
     rating = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"Song('{self.title}')"
+        return f"Song('{self.title}') by {self.artist.name}"
 
 
 class User(db.Model):
@@ -61,6 +61,9 @@ class BracketData(db.Model):
                            index=True, nullable=False)
     bracket_type = db.Column(db.String(), nullable=False)
     title = db.Column(db.String(), nullable=False)
+    value1 = db.Column(db.String(), nullable=True)
+    value2 = db.Column(db.String(), nullable=True)
+    extra = db.Column(db.String(), nullable=True)
     bracket_info = db.Column(JSON, nullable=False)
     winner = db.Column(db.String(), nullable=True)
 
