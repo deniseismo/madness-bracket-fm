@@ -2,7 +2,7 @@ import json
 import pickle
 
 import tekore as tk
-from flask import request, url_for, Blueprint, redirect, session, make_response, jsonify, render_template
+from flask import request, url_for, Blueprint, redirect, session, make_response, jsonify, render_template, flash
 
 from madnessbracket import db
 from madnessbracket.models import User
@@ -36,6 +36,7 @@ def spotify_logout():
         redirects to the home page
     """
     user = session.pop('user', None)
+    flash(f"😈 you've logged out 😈", "info")
     return redirect(url_for('main.home'), 307)
 
 
@@ -51,12 +52,14 @@ def spotify_callback():
     code = request.args.get('code', None)
     state = request.args.get('state', None)
     if error:
+        flash(f"😟 you haven't logged in 😟", "warning")
         return redirect(url_for('main.home'), 307)
 
     # get current user's state
     user_state = session.get('state', None)
     # check if it's there and equals to the state from the callback (against cross-site forgery)
     if user_state is None or user_state != state:
+        flash(f"😟 you haven't logged in 😟", "warning")
         return redirect(url_for('main.home'), 307)
 
     auth = get_spotify_auth()
@@ -83,9 +86,9 @@ def spotify_callback():
                 db.session.commit()
 
     except tk.HTTPError:
-        print('http error')
-        return None
-    return redirect(url_for('main.home'), 307)
+        flash(f"😟 we're sorry, but you've failed to log in 😟", "error")
+        return redirect(url_for('main.home'), 307)
+    return redirect(url_for('spotify.generate_spotify_bracket'), 307)
 
 
 @spotify.route('/spotify', methods=["GET", "POST"])
@@ -104,7 +107,7 @@ def generate_spotify_bracket():
             ),
                 404)
         if not valid_upper_limit:
-            return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
+            upper_limit = 16
 
         user_request = json.dumps({
             "bracket_type": "spotify",
