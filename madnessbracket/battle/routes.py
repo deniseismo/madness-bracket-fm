@@ -16,6 +16,7 @@ def generate_battle_bracket():
     """
     artist_name = request.args.get("name")
     artist_name_2 = request.args.get("name2")
+    print(f"get BATTLE: {artist_name} vs. {artist_name_2}")
     upper_limit = request.args.get("limit")
     valid_artist_name = validate_artist_name(artist_name)
     valid_artist_name_2 = validate_artist_name(artist_name_2)
@@ -25,13 +26,13 @@ def generate_battle_bracket():
         if not is_valid_input:
             return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
 
-        if artist_name == artist_name_2:
+        if artist_name.lower() == artist_name_2.lower():
             return render_template('404.html', description='👿 IT TAKES TWO TO BATTLE 👿'), 404
 
         user_request = json.dumps({
             "bracket_type": "battle",
-            "name": artist_name,
-            "name2": artist_name_2,
+            "value1": artist_name,
+            "value2": artist_name_2,
             "limit": upper_limit
         })
         return render_template("bracket.html", user_request=user_request)
@@ -41,7 +42,7 @@ def generate_battle_bracket():
                 {'message': f'👿 INCORRECT INPUT 👿'}
             ),
                 404)
-        if artist_name == artist_name_2:
+        if artist_name.lower() == artist_name_2.lower():
             return make_response(jsonify(
                 {'message': f'👿 IT TAKES TWO TO BATTLE 👿'}
             ),
@@ -51,7 +52,7 @@ def generate_battle_bracket():
         if not tracks:
             print('nothing found')
             return make_response(jsonify(
-                {'message': f"😟 no tracks found for {artist_name} 😟"}
+                {'message': f"😟 NO TRACKS FOUND FOR THIS BATTLE 😟"}
             ),
                 404)
         return jsonify(tracks)
