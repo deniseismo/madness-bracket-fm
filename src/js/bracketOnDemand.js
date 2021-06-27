@@ -7,6 +7,8 @@ import { addModal } from "./share/shareModal.js";
 import { fetchTracks, pushHistory } from "./fetchTracks.js";
 import { showSpinner, hideSpinner } from "./visuals/spinner.js";
 import { handleResponsiveness } from "./responsiveness/mediaQuery.js";
+import { getQueryStringFromUserInput } from "./options/inputHandlers.js";
+import { removeFlashMessages } from "./messages/messages.js";
 export let bracket = new BracketData();
 
 export let options = new OptionStorage();
@@ -16,17 +18,12 @@ function getIntroHeaderReady() {
   createIntroElements();
   introAnimation();
 }
-
-getIntroHeaderReady();
-addModal();
 function getOptionsReady() {
-  options.setInputValue(userRequest["name"]);
+  options.setInputValue(userRequest["value1"]);
+  options.setSecondaryInputValue(userRequest["value2"]);
   options.setBracketMaxSize(userRequest["limit"]);
   options.setCurrentBracketType(userRequest["bracket_type"]);
 }
-getOptionsReady();
-loadBracketOnDemand();
-
 function loadBracketOnDemand() {
   showSpinner();
   fetchTracks(options).then((data) => {
@@ -39,7 +36,9 @@ function loadBracketOnDemand() {
         const queryString = getQueryStringFromUserInput(options);
         options.setCurrentTracks(data["tracks"]);
         options.setDescription(data["description"]);
-        options.setSecret(data["secret"]);
+        options.setInputValue(data["value1"]);
+        options.setSecondaryInputValue(data["value2"]);
+        options.setExtra(data["extra"]);
         createBracketStructure(bracket, options);
         handleResponsiveness();
         addModal();
@@ -60,3 +59,9 @@ function loadBracketOnDemand() {
     }
   });
 }
+
+getIntroHeaderReady();
+addModal();
+getOptionsReady();
+loadBracketOnDemand();
+removeFlashMessages();
