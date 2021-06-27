@@ -19,6 +19,7 @@ import {
   getQueryStringFromUserInput,
   setUserInputForSubmission,
 } from "./options/inputHandlers.js";
+import { removeFlashMessages } from "./messages/messages.js";
 
 export let bracket = new BracketData();
 
@@ -40,7 +41,7 @@ function handleSubmit(e) {
           const queryString = getQueryStringFromUserInput(options);
           options.setCurrentTracks(data["tracks"]);
           options.setDescription(data["description"]);
-          options.setSecret(data["secret"]);
+          options.setExtra(data["extra"]);
           createBracketStructure(bracket, options);
           addModal();
           handleResponsiveness();
@@ -74,3 +75,4 @@ createIntroElements();
 introAnimation();
 handleSquareButtons(options);
 handleMaxBracketSizeOption(options);
+removeFlashMessages();
