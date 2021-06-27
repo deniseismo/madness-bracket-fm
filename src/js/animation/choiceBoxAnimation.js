@@ -47,6 +47,43 @@ const FLASHING_WORDS = {
     "SECRET",
     "SECRET",
   ],
+  // words for LAST.FM on home page
+  lastfm: [
+    "LAST.FM",
+    "LAST.FM",
+    "LAST.FM",
+    "LAST.FM",
+    "PERSONAL",
+    "PERSONAL",
+    "PROFILE",
+    "LAST.FM",
+    "PERSONAL",
+    "LAST.FM",
+  ],
+  // words for SPOTIFY on home page
+  spotify: [
+    "SPOTIFY",
+    "SPOTIFY",
+    "SPOTIFY",
+    "SPOTIFY",
+    "PERSONAL",
+    "PERSONAL",
+    "PROFILE",
+    "SPOTIFY",
+    "PERSONAL",
+    "SPOTIFY",
+  ],
+  // words for BATTLE on home page
+  battle: [
+    "BATTLE",
+    "BATTLE",
+    "BATTLE",
+    "CLASH",
+    "BTS vs RTJ",
+    "X vs Y",
+    "BATTLE",
+    "CLASH",
+  ],
 };
 
 // pick random paragraph (the word/words to animate afterwards) from the BOX on the home page
