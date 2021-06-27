@@ -22,12 +22,18 @@ def save_bracket_to_database(shared_bracket_data):
     # prepare bracket data
     bracket_type = shared_bracket_data["bracket_type"]
     title = shared_bracket_data["title"]
+    value1 = shared_bracket_data["value1"]
+    value2 = shared_bracket_data["value2"]
+    extra = shared_bracket_data["extra"]
     bracket_info = shared_bracket_data["bracket_info"]
     bracket_info = json.dumps(bracket_info)
     bracket_entry = BracketData(bracket_id=bracket_id,
                                 bracket_type=bracket_type,
                                 title=title,
-                                bracket_info=bracket_info)
+                                bracket_info=bracket_info,
+                                value1=value1,
+                                value2=value2,
+                                extra=extra)
     # check if bracket has a winner, save if true
     if shared_bracket_data["winner"]:
         winner = shared_bracket_data["winner"]
@@ -52,7 +58,10 @@ def get_bracket_from_database(bracket_id):
     bracket_structure = json.loads(bracket.bracket_info)
     bracket_description = {
         "bracket_type": bracket.bracket_type,
-        "description": bracket.title
+        "description": bracket.title,
+        "value1": bracket.value1,
+        "value2": bracket.value2,
+        "extra": bracket.extra
     }
     bracket_data = bracket_description | bracket_structure
 
