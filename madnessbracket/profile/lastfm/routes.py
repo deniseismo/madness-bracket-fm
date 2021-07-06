@@ -8,7 +8,7 @@ from madnessbracket.utilities.user_input_validation import validate_bracket_uppe
 lastfm_profile = Blueprint('lastfm_profile', __name__)
 
 
-@lastfm_profile.route('/lastfm', methods=['POST', "GET"])
+@lastfm_profile.route('/lastfm', methods=["GET", "POST"])
 def generate_lastfm_user_bracket():
     """generates USER's personal bracket based on their LAST.FM stats
     Returns:
@@ -16,16 +16,16 @@ def generate_lastfm_user_bracket():
     """
     username = request.args.get("name")
     upper_limit = request.args.get("limit")
-    valid_artist_name = validate_lastfm_username(username)
+    valid_username = validate_lastfm_username(username)
     valid_upper_limit = validate_bracket_upper_limit(upper_limit)
-    is_valid_input = valid_artist_name and valid_upper_limit
+    is_valid_input = valid_username and valid_upper_limit
     if request.method == "GET":
         if not is_valid_input:
             return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
 
         user_request = json.dumps({
             "bracket_type": "lastfm",
-            "name": username,
+            "value1": username,
             "limit": upper_limit
         })
         return render_template("bracket.html", user_request=user_request)

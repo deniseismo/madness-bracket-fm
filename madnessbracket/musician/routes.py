@@ -26,7 +26,7 @@ def generate_musician_bracket():
 
         user_request = json.dumps({
             "bracket_type": "artist",
-            "name": artist_name,
+            "value1": artist_name,
             "limit": upper_limit
         })
         return render_template("bracket.html", user_request=user_request)
