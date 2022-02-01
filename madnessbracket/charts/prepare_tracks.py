@@ -2,7 +2,7 @@ import random
 from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 
 
-def prepare_tracks_for_charts(tracks: list, limit=16):
+def prepare_tracks_for_charts(tracks: list, limit=16) -> list:
     """
     randomizes & caps (at a given limit, default=32) tracks/songs
     :param limit: maximum number of tracks in a bracket

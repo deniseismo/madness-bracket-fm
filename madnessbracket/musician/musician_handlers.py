@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy.event import listen
 
 from madnessbracket import cache, db
@@ -10,7 +12,7 @@ from madnessbracket.utilities.db_extensions import load_unicode_extension
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 
 
-def get_musician_bracket_data(artist_name: str, bracket_limit: int):
+def get_musician_bracket_data(artist_name: str, bracket_limit: int) -> Optional[dict]:
     """
     a shortcut function that combines all the other musician handlers
     :param artist_name: artist's name

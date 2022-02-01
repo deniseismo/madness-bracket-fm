@@ -1,8 +1,9 @@
 import math
 import random
+from typing import Optional
 
 
-def get_weighted_random_selection_of_tracks(tracks: list, bracket_size: int):
+def get_weighted_random_selection_of_tracks(tracks: list, bracket_size: int) -> Optional[list]:
     """[summary]
 
     Args:
@@ -22,7 +23,7 @@ def get_weighted_random_selection_of_tracks(tracks: list, bracket_size: int):
     portions.append(length - sum(portions))
     # give those portions weight: e.g. the first portion (top 1-30%) would be selected 6 out of 11 times,
     # the second one — 4/11, etc.
-    weight_ratios = [6, 4, 2]
+    weight_ratios = [10, 4, 2]
     portions_and_ratios = list(zip(portions, weight_ratios))
     # populate weights list
     weights = []

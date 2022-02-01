@@ -7,7 +7,7 @@ main = Blueprint('main', __name__)
 
 @main.route("/", methods=["GET", "POST"])
 @main.route("/home", methods=["GET", "POST"])
-def home():
+def home() -> str:
     """renders home page
 
     Returns:
@@ -22,7 +22,7 @@ def home():
 
 
 @main.route("/about", methods=["GET"])
-def about():
+def about() -> str:
     """renders about page
 
     Returns:

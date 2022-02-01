@@ -1,4 +1,5 @@
 import random
+from typing import Optional
 
 import tekore as tk
 
@@ -7,7 +8,7 @@ from madnessbracket.profile.spotify.spotify_profile_oauth import spotify_tekore_
 from madnessbracket.profile.spotify.prepare_tracks import prepare_spotify_tracks
 
 
-def get_spotify_bracket_data(token, bracket_limit):
+def get_spotify_bracket_data(token, bracket_limit) -> Optional[dict]:
     """
     a shortcut function that combines all the other spotify handlers
     :param token: user's Spotify (tekore lib) token
@@ -27,7 +28,7 @@ def get_spotify_bracket_data(token, bracket_limit):
     return tracks
 
 
-def spotify_get_users_top_tracks(token):
+def spotify_get_users_top_tracks(token) -> Optional[tuple]:
     """get current user top tracks (items)
     :return: current user's top track items
 

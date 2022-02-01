@@ -1,7 +1,7 @@
 import json
 import urllib.parse
 
-from flask import render_template, Blueprint, jsonify, request, make_response
+from flask import render_template, Blueprint, jsonify, request, make_response, Response
 
 from madnessbracket.share.bracket_data_validation import (validate_bracket_data_for_sharing,
                                                           parse_bracket_data_for_sharing, is_valid_nanoid)
@@ -11,7 +11,7 @@ share = Blueprint('share', __name__)
 
 
 @share.route('/share', methods=['POST'])
-def get_share_link():
+def get_share_link() -> Response:
     """save bracket to the database → get share link to the bracket
     """
     content = request.get_json()
@@ -32,7 +32,7 @@ def get_share_link():
 
 
 @share.route("/get/<bracket_id>", methods=["GET"])
-def get_shared_bracket(bracket_id):
+def get_shared_bracket(bracket_id) -> str:
     """get/generate a bracket from a given bracket id that is presumably stored in a database
 
     Args:

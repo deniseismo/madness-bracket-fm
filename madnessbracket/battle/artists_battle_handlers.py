@@ -1,14 +1,16 @@
+from typing import Optional
+
 from madnessbracket.battle.prepare_tracks import prepare_tracks_for_artist_battle
 from madnessbracket.musician.musician_handlers import get_artists_tracks
 
 
-def get_artists_battle(artist_name: str, artist_name_2: str, bracket_limit: int):
+def get_artists_battle(artist_name: str, artist_name_2: str, bracket_limit: int) -> Optional[dict]:
     """
     get tracks for ARTIST BATTLE: ARTIST 1 vs ARTIST 2 (e.g. Radiohead vs Muse)
     :param artist_name: first artist's name
     :param artist_name_2: second artist's name
     :param bracket_limit: chosen bracket upper limit
-    :return:
+    :return: a dict with all the information needed for artists battle
     """
     if not artist_name or not artist_name_2 or not bracket_limit:
         return None

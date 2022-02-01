@@ -7,7 +7,7 @@ from madnessbracket import cache
 
 
 @cache.memoize(timeout=36000)
-def get_filtered_artists_suggestions(query):
+def get_filtered_artists_suggestions(query) -> list:
     """get appropriate artists suggestions according to the given search input (query)
 
     Args:

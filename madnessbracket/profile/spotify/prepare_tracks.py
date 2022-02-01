@@ -1,10 +1,11 @@
 import random
+from typing import Optional
 
 from madnessbracket.musician.prepare_tracks import process_tracks_from_spotify
 from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 
 
-def prepare_spotify_tracks(track_items, bracket_limit):
+def prepare_spotify_tracks(track_items, bracket_limit) -> list:
     """
     prepare (cap & randomize) Spotify tracks
     :param track_items: Spotify (tekore lib) track items with full track info
@@ -19,7 +20,7 @@ def prepare_spotify_tracks(track_items, bracket_limit):
     return processed_tracks
 
 
-def process_spotify_tracks(track_items):
+def process_spotify_tracks(track_items) -> Optional[dict]:
     """process spotify's track items
     :return: a fully prepared dict with all the tracks
 

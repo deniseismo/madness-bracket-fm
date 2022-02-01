@@ -1,7 +1,8 @@
 import re
+from typing import Optional
 
 
-def get_filtered_name(name_to_fix: str):
+def get_filtered_name(name_to_fix: str) -> str:
     """
     :param name_to_fix: a song name to fix
     :return: a filtered name
@@ -40,7 +41,7 @@ def get_filtered_name(name_to_fix: str):
     return ultimate_filtered_name
 
 
-def fix_quot_marks(song_name: str):
+def fix_quot_marks(song_name: str) -> str:
     """
     fixes (’,“, ”)
     """
@@ -49,7 +50,7 @@ def fix_quot_marks(song_name: str):
     return song_name
 
 
-def fix_hyphen(string_to_fix: str):
+def fix_hyphen(string_to_fix: str) -> str:
     """replaces weird hyphen sign (often found on MusicBrainz) with the normal one (hyphen-minus)
 
     Args:
@@ -58,7 +59,7 @@ def fix_hyphen(string_to_fix: str):
     return string_to_fix.replace("‐", "-")
 
 
-def remove_quot_marks_on_both_sides(string_to_fix):
+def remove_quot_marks_on_both_sides(string_to_fix) -> Optional[str]:
     """removes quotation marks if they are present on both sides of the string only
     e.g. Die Frau ohne Schatten: III. Aufzug. "Wenn das Herz aus Kristall zerbricht in einem Schrei" → nope
     e.g. "Heroes" → yep

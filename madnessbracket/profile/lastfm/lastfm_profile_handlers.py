@@ -1,19 +1,21 @@
 import asyncio
+from typing import Optional
 
 from madnessbracket import cache
 from madnessbracket.dev.lastfm.lastfm_track_handlers import get_track_info_shortcut
 from madnessbracket.dev.lastfm.lastfm_user_handlers import lastfm_get_user_top_tracks
 from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
 from madnessbracket.musician.prepare_tracks import add_text_color_to_tracks
+from madnessbracket.utilities.track_filtering import get_filtered_name
 from madnessbracket.utilities.track_preparation import prepare_tracks
 
 
-def ultimate_lastfm_user_tracks_handler(username, upper_limit):
+def ultimate_lastfm_user_tracks_handler(username, upper_limit) -> Optional[dict]:
     """
     a shortcut function that ultimately returns randomized & processed lastfm user tracks with all the needed info
     :param username: user's name
     :param upper_limit: upper bracket limit
-    :return:
+    :return: a dict with all the info about user's Last.fm tracks
     """
     correct_username, lastfm_user_top_tracks = lastfm_get_user_top_tracks(username)
     if not lastfm_user_top_tracks:
@@ -33,7 +35,7 @@ def ultimate_lastfm_user_tracks_handler(username, upper_limit):
 
 
 @cache.memoize(timeout=36000)
-def get_lastfm_user_tracks_info(tracks):
+def get_lastfm_user_tracks_info(tracks) -> list:
     """
     get all the info for the user's top tracks asynchronously
     :param tracks: a list of lastfm user's tracks
@@ -57,7 +59,7 @@ async def get_info_for_lastfm_user_tracks(tracks):
     for track in tracks:
         try:
             artist_name = track['artist']['name']
-            track_title = track['name']
+            track_title = get_filtered_name(track['name'])
         except (KeyError, ValueError) as e:
             print("error when parsing lastfm tracks", e)
             continue

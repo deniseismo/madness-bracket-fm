@@ -2,7 +2,8 @@ import json
 import pickle
 
 import tekore as tk
-from flask import request, url_for, Blueprint, redirect, session, make_response, jsonify, render_template, flash
+from flask import request, url_for, Blueprint, redirect, session, make_response, jsonify, render_template, flash, \
+    Response
 
 from madnessbracket import db
 from madnessbracket.models import User
@@ -92,7 +93,7 @@ def spotify_callback():
 
 
 @spotify.route('/spotify', methods=["GET", "POST"])
-def generate_spotify_bracket():
+def generate_spotify_bracket() -> Response:
     """generates madness bracket based on user's Spotify profile stats
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket

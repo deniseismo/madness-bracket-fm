@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Optional
 
 from flask import current_app
 
@@ -7,7 +8,7 @@ from madnessbracket import cache
 from madnessbracket.charts.prepare_tracks import prepare_tracks_for_charts
 
 
-def get_songs_considered_best(upper_limit: int):
+def get_songs_considered_best(upper_limit: int) -> Optional[dict]:
     """
     picks random selection of songs considered best*
     * by Pitchfork, (Rolling Stones, …) # TODO: add RS500/NME
@@ -26,7 +27,7 @@ def get_songs_considered_best(upper_limit: int):
 
 
 @cache.memoize(timeout=36000)
-def load_best_songs_from_the_file():
+def load_best_songs_from_the_file() -> Optional[list]:
     """load all the best (according to some papers) songs of all time
 
     Returns:
@@ -43,10 +44,10 @@ def load_best_songs_from_the_file():
     return songs
 
 
-def process_charts_songs(tracks: list):
+def process_charts_songs(tracks: list) -> list[dict]:
     """
     processes songs from charts creating a list of dicts with all the needed info about tracks
-    :param tracks:
+    :param tracks: a list of tracks from charts
     :return: a list of dict with all the info about particular songs
     """
     # iterate through tracks

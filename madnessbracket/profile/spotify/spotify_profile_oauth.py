@@ -1,7 +1,9 @@
 import pickle
+from typing import Optional
 
 import tekore as tk
 from flask import Blueprint, current_app, session
+from tekore import UserAuth
 
 from madnessbracket.models import User
 
@@ -10,7 +12,7 @@ spotify = Blueprint('spotify', __name__)
 spotify_tekore_client = tk.Spotify()
 
 
-def get_spotify_auth():
+def get_spotify_auth() -> UserAuth:
     """get a User auth object
     Returns:
         auth
@@ -27,7 +29,7 @@ def get_spotify_auth():
     return auth
 
 
-def check_spotify_login():
+def check_spotify_login() -> Optional[tuple]:
     """checks if the person's logged in the token's not expired
     refreshes token if present
 
@@ -70,7 +72,7 @@ def check_spotify_login():
     return user, token
 
 
-def get_spotify_user_info(token):
+def get_spotify_user_info(token) -> Optional[dict]:
     """a Spotify access token
     :return: user info {username, user_image}
 

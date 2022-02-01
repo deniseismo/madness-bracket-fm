@@ -1,4 +1,7 @@
-def get_capped_bracket_size(number_of_tracks: int, chosen_upper_limit: int):
+from typing import Optional
+
+
+def get_capped_bracket_size(number_of_tracks: int, chosen_upper_limit: int) -> Optional[int]:
     """
     cap the bracket size at a maximum appropriate bracket size possible,
         that is within [4, 8, 16, 32] but <= upper limit

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from madnessbracket.dev.db_mgmt.color_mgmt.dominant_colors import get_image_dominant_colors_via_image_url
 from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
@@ -5,7 +7,7 @@ from madnessbracket.utilities.track_filtering import get_filtered_name
 from madnessbracket.utilities.track_randomization import get_weighted_random_selection_of_tracks
 
 
-def prepare_tracks_for_musician(tracks: list, limit=16):
+def prepare_tracks_for_musician(tracks: list, limit=16) -> Optional[list]:
     """
     randomizes & caps (at a given limit, default=32) tracks/songs;
     uses weighted random selection for better sorting/randomization
@@ -49,7 +51,12 @@ def add_text_color_to_tracks(tracks: list):
             print(e)
 
 
-def process_tracks_from_db(tracks: list):
+def process_tracks_from_db(tracks: list) -> list:
+    """
+    process tracks from database
+    :param tracks: a list of tracks from db
+    :return: a list of processed tracks
+    """
     processed_tracks = []
     for track_entry in tracks:
         track = process_a_track_from_db(track_entry)
@@ -57,7 +64,7 @@ def process_tracks_from_db(tracks: list):
     return processed_tracks
 
 
-def process_a_track_from_db(track_entry):
+def process_a_track_from_db(track_entry) -> dict:
     """
     gets all the needed info about the track from track entry (Song object)
     :param track_entry: a Song instance
@@ -78,7 +85,12 @@ def process_a_track_from_db(track_entry):
     return track
 
 
-def process_tracks_from_spotify(tracks: list):
+def process_tracks_from_spotify(tracks: list) -> list:
+    """
+    process tracks from Spotify
+    :param tracks: a list of tracks from Spotify
+    :return: a list of processed tracks from Spotify
+    """
     processed_tracks = []
     track_titles = set()
     for track_entry in tracks:
@@ -91,7 +103,7 @@ def process_tracks_from_spotify(tracks: list):
     return processed_tracks
 
 
-def process_a_track_from_spotify(track_entry):
+def process_a_track_from_spotify(track_entry) -> dict:
     """
     gets all the needed info about the track from track entry (FullTrack tekore object)
     :param track_entry: a FullTrack tekore instance

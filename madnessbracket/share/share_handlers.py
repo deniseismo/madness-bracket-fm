@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 from nanoid import generate
 
@@ -8,7 +9,7 @@ from madnessbracket.models import BracketData
 
 
 @cache.memoize(timeout=36000)
-def save_bracket_to_database(shared_bracket_data):
+def save_bracket_to_database(shared_bracket_data) -> str:
     """saves user's bracket & all its info/data to the database
 
     Args:
@@ -43,7 +44,7 @@ def save_bracket_to_database(shared_bracket_data):
     return bracket_id
 
 
-def get_bracket_from_database(bracket_id):
+def get_bracket_from_database(bracket_id) -> Optional[dict]:
     """gets shared bracket info from db
 
     Args:

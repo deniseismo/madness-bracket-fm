@@ -4,13 +4,13 @@ from madnessbracket.musician.prepare_tracks import add_text_color_to_tracks
 from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 
 
-def prepare_tracks_for_artist_battle(artist_1_tracks, artist_2_tracks, bracket_size):
+def prepare_tracks_for_artist_battle(artist_1_tracks: list, artist_2_tracks: list, bracket_size: int) -> list:
     """
     prepare (cap & randomize) tracks for the battle of artists
     :param artist_1_tracks: tracks by artist 1
     :param artist_2_tracks: tracks by artist 2
-    :param bracket_size:
-    :return:
+    :param bracket_size: chosen bracket size
+    :return: a list of zipped tracks () by two artists chosen to battle each other
     """
     min_number_of_tracks = min([len(artist_1_tracks), len(artist_2_tracks)])
     tracks_cap = get_capped_bracket_size(min_number_of_tracks, bracket_size)
