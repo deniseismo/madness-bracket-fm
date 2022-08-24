@@ -28,7 +28,10 @@ class Album(db.Model):
     songs = db.relationship('Song', backref='album', lazy=True)
 
     def __repr__(self):
-        return f"Album('{self.title}')"
+        album_description = f"Album({self.title})"
+        if self.artist:
+            album_description += f" by Artist({self.artist.name})"
+        return album_description
 
 
 class Song(db.Model):
@@ -42,7 +45,10 @@ class Song(db.Model):
     rating = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"Song('{self.title}') by {self.artist.name}"
+        song_description = f"Song({self.title})"
+        if self.artist:
+            song_description += f" by Artist({self.artist.name})"
+        return song_description
 
 
 class User(db.Model):
