@@ -59,6 +59,6 @@ def spotify_get_users_top_tracks(token) -> Optional[tuple]:
         return None
     print(top_tracks.total)
     if len(top_tracks.items) < 4:
-        print('not enought tracks')
+        print('not enough tracks')
         return None
     return username, top_tracks.items

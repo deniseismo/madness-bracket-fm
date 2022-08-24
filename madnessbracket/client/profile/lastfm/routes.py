@@ -3,7 +3,8 @@ import json
 from flask import Blueprint, jsonify, request, make_response, render_template
 
 from madnessbracket.profile.lastfm.lastfm_profile_handlers import ultimate_lastfm_user_tracks_handler
-from madnessbracket.utilities.user_input_validation import validate_bracket_upper_limit, validate_lastfm_username
+from madnessbracket.utilities.validation.exceptions.validation_exceptions import LastFMUserInputError
+from madnessbracket.utilities.validation.user_input_validation import validate_lastfm_user_input
 
 lastfm_profile = Blueprint('lastfm_profile', __name__)
 
@@ -14,35 +15,32 @@ def generate_lastfm_user_bracket():
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket
     """
-    username = request.args.get("name")
-    upper_limit = request.args.get("limit")
-    valid_username = validate_lastfm_username(username)
-    valid_upper_limit = validate_bracket_upper_limit(upper_limit)
-    is_valid_input = valid_username and valid_upper_limit
-    if request.method == "GET":
-        if not is_valid_input:
+    try:
+        valid_user_input = validate_lastfm_user_input(request.args)
+        lastfm_username = valid_user_input.name
+        bracket_upper_limit = valid_user_input.limit
+    except LastFMUserInputError as e:
+        if request.method == "GET":
             return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
-
+        else:
+            return make_response(jsonify(
+                {'message': str(e)}
+            ),
+                404)
+    if request.method == "GET":
         user_request = json.dumps({
             "bracket_type": "lastfm",
-            "value1": username,
-            "limit": upper_limit
+            "value1": lastfm_username,
+            "limit": bracket_upper_limit
         })
         return render_template("bracket.html", user_request=user_request)
     else:
-        if not is_valid_input:
-            print('no input')
-            return make_response(jsonify(
-                {'message': f"👿 INCORRECT INPUT 👿"}
-            ),
-                404)
-        upper_limit = valid_upper_limit.upper_limit
-        tracks = ultimate_lastfm_user_tracks_handler(username, upper_limit)
+        tracks = ultimate_lastfm_user_tracks_handler(lastfm_username, bracket_upper_limit)
         print(tracks)
         if not tracks:
             print('nothing found')
             return make_response(jsonify(
-                {'message': f"😟 no tracks found for {username} 😟"}
+                {'message': f"😟 no tracks found for {lastfm_username} 😟"}
             ),
                 404)
         return jsonify(tracks)

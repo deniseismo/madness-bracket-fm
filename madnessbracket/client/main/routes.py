@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint
 
-from madnessbracket.profile.spotify.spotify_profile_oauth import check_spotify_login, get_spotify_user_info
+from madnessbracket.client.profile.spotify.spotify_profile_oauth import check_spotify_login, get_spotify_user_info
 
 main = Blueprint('main', __name__)
 
