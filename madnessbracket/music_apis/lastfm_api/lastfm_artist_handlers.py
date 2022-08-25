@@ -1,27 +1,30 @@
 import json
+from typing import Optional
 
 from madnessbracket import cache
-from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_response
+from madnessbracket.music_apis.lastfm_api.lastfm_api import lastfm_get_response
 
 
 @cache.memoize(timeout=3600)
-def lastfm_get_artist_correct_name(artist: str):
+def lastfm_get_artist_correct_name(artist_name: str) -> Optional[str]:
     """
     Use the last.fm corrections data to check whether the supplied artist has a correction to a canonical artist
-    :param artist: artist's name as is
+    :param artist_name: (str) artist's name as is
     :return: corrected version of the artist's name
     """
     response = lastfm_get_response({
         'method': 'artist.getCorrection',
-        'artist': artist
+        'artist': artist_name
     })
+    if not response:
+        return None
     # in case of an error, return None
     if response.status_code != 200:
         return None
     try:
-        correct_name = response.json(
-        )["corrections"]["correction"]["artist"]["name"]
-    except (KeyError, TypeError, json.decoder.JSONDecodeError):
+        correct_name = response.json()["corrections"]["correction"]["artist"]["name"]
+    except (KeyError, TypeError, json.decoder.JSONDecodeError) as e:
+        print(e)
         return None
     return correct_name
 
