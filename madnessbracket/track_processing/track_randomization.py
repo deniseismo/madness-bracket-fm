@@ -24,11 +24,10 @@ def get_weighted_random_selection_of_tracks(tracks: list, bracket_size: int) -> 
     # give those portions weight: e.g. the first portion (top 1-30%) would be selected 6 out of 11 times,
     # the second one — 4/11, etc.
     weight_ratios = [10, 4, 2]
-    portions_and_ratios = list(zip(portions, weight_ratios))
+    portions_and_ratios = zip(portions, weight_ratios)
     # populate weights list
     weights = []
-    for chunk in portions_and_ratios:
-        size, weight = chunk
+    for (size, weight) in portions_and_ratios:
         weights += [weight for _ in range(size)]
     # get weighted random tracks
     selected_tracks = []
