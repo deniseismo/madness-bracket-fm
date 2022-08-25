@@ -1,4 +1,5 @@
 from fuzzywuzzy import fuzz
+from tekore import NotFound
 
 from madnessbracket import cache
 from madnessbracket.dev.spotify.spotify_artist_handlers import get_spotify_artist_info
@@ -48,8 +49,12 @@ def get_track_search_results(track_title: str, artist_name: str, spotify_tekore_
     :return: all the tracks found (max=15)
     """
     query = f"{track_title} artist:{artist_name}"
-    tracks_found, = spotify_tekore_client.search(
-        query=query, types=('track',), limit=15, market="GE")
+    try:
+        tracks_found, = spotify_tekore_client.search(
+            query=query, types=('track',), limit=15, market="GE")
+    except NotFound:
+        print("track not found")
+        return None
     # in case of not getting any response
     if not tracks_found:
         print("search for track failed")
@@ -103,6 +108,7 @@ def find_track_best_match(track_title: str, artist_name: str, spotify_artist_nam
             print(f"pretty close: {track_found} vs. {track_title}")
             return track
         if ratio > 80:
+            print("ratio > 80, appending to the matches list")
             # append a match to matches list
             matches.append((track, ratio))
     # if there are matches

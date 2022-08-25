@@ -2,13 +2,13 @@ from aiocache import cached, Cache
 from aiocache.serializers import PickleSerializer
 from sqlalchemy.event import listen
 
-from madnessbracket import db, cache
+from madnessbracket import db
 from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_response
 from madnessbracket.dev.spotify.spotify_async_track_handlers import fetch_spotify_track_info
 from madnessbracket.models import Song, Artist
-from madnessbracket.musician.prepare_tracks import process_a_track_from_spotify, process_a_track_from_db
+from madnessbracket.client.musician.prepare_tracks import process_a_track_from_spotify, process_a_track_from_db
 from madnessbracket.utilities.db_extensions import load_unicode_extension
-from madnessbracket.utilities.track_filtering import get_filtered_name
+from madnessbracket.utilities.logging_handlers import log_arbitrary_data
 
 
 def find_track_in_database(track_title: str, artist_name: str):
@@ -25,6 +25,7 @@ def find_track_in_database(track_title: str, artist_name: str):
     if not song_in_database:
         print(
             f"COULD NOT find: Track({track_title}) by Artist({artist_name}) in database")
+        log_arbitrary_data(f"Track({track_title}) by Artist({artist_name})", "lastfm_tracks_not_found_in_db.csv")
         return None
     return song_in_database
 
@@ -49,7 +50,7 @@ async def get_track_info_shortcut(track_title: str, artist_name: str, spotify_te
             print(
                 f"NO SPOTIFY TRACK INFO for Artist({artist_name}) — Track({track_title})")
             return {
-                "track_title": get_filtered_name(track_title),
+                "track_title": track_title,
                 "artist_name": artist_name,
                 "spotify_preview_url": None,
                 "album_colors": None

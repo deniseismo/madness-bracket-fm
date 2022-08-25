@@ -3,6 +3,8 @@ import tekore as tk
 from flask import current_app
 from spotipy.oauth2 import SpotifyClientCredentials
 
+from madnessbracket.utilities.helpers import timeit
+
 
 def get_spotify_spotipy_client():
     """get a spotify client via spotipy library
@@ -17,6 +19,7 @@ def get_spotify_spotipy_client():
     return spotify
 
 
+@timeit
 def get_spotify_tekore_client(asynchronous=False):
     """get a spotify client via tekore library
 
