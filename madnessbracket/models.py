@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy import JSON
 
 from madnessbracket import db
@@ -32,6 +34,17 @@ class Album(db.Model):
         if self.artist:
             album_description += f" by Artist({self.artist.name})"
         return album_description
+
+    def get_list_of_album_colors(self) -> Optional[list[str]]:
+        if not self.album_cover_color:
+            return None
+        try:
+            list_of_album_colors = self.album_cover_color.split(",")
+            print(f"{list_of_album_colors=}")
+            return list_of_album_colors
+        except AttributeError as e:
+            print(e)
+            return None
 
 
 class Song(db.Model):
