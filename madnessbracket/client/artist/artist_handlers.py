@@ -1,10 +1,9 @@
 from typing import Optional
 
 from madnessbracket import cache
+from madnessbracket.track_processing.track_preparation import prepare_tracks_for_artist
 from madnessbracket.client.database_manipulation.db_artist_handlers import db_get_artist
 from madnessbracket.client.database_manipulation.db_track_handlers import db_get_tracks_by_artist_entry
-from madnessbracket.client.artist.prepare_tracks import prepare_tracks_for_musician
-from madnessbracket.music_apis.lastfm_api.lastfm_artist_handlers import lastfm_get_artist_correct_name
 from madnessbracket.music_apis.spotify_api.spotify_artist_handlers import get_spotify_artist_top_tracks
 from madnessbracket.schemas.track_schema import TrackInfo
 from madnessbracket.track_processing.process_tracks_from_database import process_tracks_from_db
@@ -12,7 +11,7 @@ from madnessbracket.track_processing.process_tracks_from_spotify import process_
 from madnessbracket.utilities.logging_handlers import log_artist_missing_from_db
 
 
-def get_musician_bracket_data(artist_name: str, bracket_limit: int) -> Optional[dict]:
+def get_tracks_for_artist(artist_name: str, bracket_limit: int) -> Optional[list[TrackInfo]]:
     """
     a shortcut function that combines all the other musician handlers
     :param artist_name: artist's name
@@ -22,21 +21,11 @@ def get_musician_bracket_data(artist_name: str, bracket_limit: int) -> Optional[
     if not artist_name or not bracket_limit:
         # no artist provided or bracket limit provided
         return None
-    artist_correct_name = lastfm_get_artist_correct_name(artist_name)
-    if artist_correct_name:
-        artist_name = artist_correct_name
     artist_tracks = get_artists_tracks(artist_name, bracket_limit)
     if not artist_tracks:
         return None
-    artist_tracks = prepare_tracks_for_musician(artist_tracks, bracket_limit)
-
-    tracks = {
-        "tracks": artist_tracks,
-        "description": artist_tracks[0]["artist_name"].upper(),
-        "value1": artist_tracks[0]["artist_name"],
-        "extra": None
-    }
-    return tracks
+    artist_tracks = prepare_tracks_for_artist(artist_tracks, bracket_limit)
+    return artist_tracks
 
 
 def get_artists_tracks(artist_name: str, bracket_limit: int) -> Optional[list[TrackInfo]]:

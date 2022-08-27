@@ -2,53 +2,59 @@ import json
 
 from flask import Blueprint, jsonify, request, make_response, render_template, Response
 
-from madnessbracket.client.musician.fetch_artists_handlers import get_filtered_artists_suggestions
-from madnessbracket.client.musician.musician_handlers import get_musician_bracket_data
+from madnessbracket.client.artist.artist_handlers import get_tracks_for_artist
+from madnessbracket.client.artist.fetch_artists_handlers import get_filtered_artists_suggestions
+from madnessbracket.music_apis.lastfm_api.lastfm_artist_handlers import lastfm_get_artist_correct_name
+from madnessbracket.track_processing.track_processing_helpers import make_tracks_info_response
 from madnessbracket.utilities.validation.exceptions.validation_exceptions import ArtistUserInputError
 from madnessbracket.utilities.validation.user_input_validation import validate_artist_user_input
 
-musician = Blueprint('musician', __name__)
+artist = Blueprint('artist', __name__)
 
 
-@musician.route('/artist', methods=['POST', "GET"])
-def generate_musician_bracket():
+@artist.route('/artist', methods=['POST', "GET"])
+def generate_artist_bracket():
     """generates madness bracket for a particular artist/musician
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket
     """
     try:
         valid_user_input = validate_artist_user_input(request.args)
-        valid_artist_name = valid_user_input.name
-        valid_bracket_upper_limit = valid_user_input.limit
+        artist_name = valid_user_input.name
+        bracket_upper_limit = valid_user_input.limit
     except ArtistUserInputError as e:
-        if request.method == "GET":
-            return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
-        else:
-            return make_response(jsonify(
-                {'message': str(e)}
-            ),
-                404)
+        return make_response(jsonify(
+            {'message': str(e)}
+        ),
+            404)
 
     if request.method == "GET":
         user_request = json.dumps({
             "bracket_type": "artist",
-            "value1": valid_artist_name,
-            "limit": valid_bracket_upper_limit
+            "value1": artist_name,
+            "limit": bracket_upper_limit
         })
         return render_template("bracket.html", user_request=user_request)
     else:
-        tracks = get_musician_bracket_data(valid_artist_name, valid_bracket_upper_limit)
-        print(tracks)
-        if not tracks:
-            print('nothing found')
+        artist_correct_name = lastfm_get_artist_correct_name(artist_name)
+        if artist_correct_name:
+            artist_name = artist_correct_name
+        artist_tracks = get_tracks_for_artist(artist_name, bracket_upper_limit)
+        if not artist_tracks:
             return make_response(jsonify(
-                {'message': f"😟 no tracks found for {valid_artist_name} 😟"}
+                {'message': f"😟 no tracks found for {artist_name} 😟"}
             ),
                 404)
-        return jsonify(tracks)
+        tracks_info_response = make_tracks_info_response(
+            tracks=artist_tracks,
+            description=f"{artist_name.upper()}",
+            value1=artist_name,
+            extra=None
+        )
+        return jsonify(tracks_info_response)
 
 
-@musician.route('/get_artists', methods=['POST'])
+@artist.route('/get_artists', methods=['POST'])
 def get_artists() -> Response:
     """
     gets a list of artists
