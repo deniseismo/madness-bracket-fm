@@ -15,7 +15,7 @@ def get_filtered_artists_suggestions(query) -> list:
     """
     try:
         filename = "all_artists.json"
-        filepath = os.path.join(current_app.root_path, "musician", filename)
+        filepath = os.path.join(current_app.root_path, "client/musician", filename)
         with open(filepath, encoding="UTF-8") as file:
             artists_list = json.load(file)
     except (IOError, OSError) as e:

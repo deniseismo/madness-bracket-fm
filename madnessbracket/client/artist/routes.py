@@ -2,9 +2,8 @@ import json
 
 from flask import Blueprint, jsonify, request, make_response, render_template, Response
 
-from madnessbracket.musician.fetch_artists_handlers import get_filtered_artists_suggestions
-from madnessbracket.musician.musician_handlers import get_musician_bracket_data
-from madnessbracket.utilities.user_input_validation import validate_artist_name, validate_bracket_upper_limit
+from madnessbracket.client.musician.fetch_artists_handlers import get_filtered_artists_suggestions
+from madnessbracket.client.musician.musician_handlers import get_musician_bracket_data
 from madnessbracket.utilities.validation.exceptions.validation_exceptions import ArtistUserInputError
 from madnessbracket.utilities.validation.user_input_validation import validate_artist_user_input
 

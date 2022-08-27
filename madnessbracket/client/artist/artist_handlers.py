@@ -3,7 +3,7 @@ from typing import Optional
 from madnessbracket import cache
 from madnessbracket.client.database_manipulation.db_artist_handlers import db_get_artist
 from madnessbracket.client.database_manipulation.db_track_handlers import db_get_tracks_by_artist_entry
-from madnessbracket.client.musician.prepare_tracks import prepare_tracks_for_musician
+from madnessbracket.client.artist.prepare_tracks import prepare_tracks_for_musician
 from madnessbracket.music_apis.lastfm_api.lastfm_artist_handlers import lastfm_get_artist_correct_name
 from madnessbracket.music_apis.spotify_api.spotify_artist_handlers import get_spotify_artist_top_tracks
 from madnessbracket.schemas.track_schema import TrackInfo
