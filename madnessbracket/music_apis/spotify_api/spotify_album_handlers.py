@@ -1,9 +1,9 @@
 from fuzzywuzzy import fuzz
 
-from madnessbracket.dev.spotify.spotify_artist_handlers import get_spotify_artist_info
-from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
+from madnessbracket.music_apis.spotify_api.spotify_artist_handlers import get_spotify_artist_info
+from madnessbracket.music_apis.spotify_api.spotify_client_api import get_spotify_tekore_client
 from madnessbracket.utilities.fuzzymatch import fuzzy_match_artist
-from madnessbracket.utilities.track_filtering import get_filtered_name
+from madnessbracket.utilities.name_filtering import get_filtered_name
 
 
 def get_spotify_albums_tracks(album_title: str, artist_name: str, tekore_client=None):

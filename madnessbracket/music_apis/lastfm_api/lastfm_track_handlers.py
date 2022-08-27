@@ -3,10 +3,11 @@ from aiocache.serializers import PickleSerializer
 from sqlalchemy.event import listen
 
 from madnessbracket import db
-from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_response
-from madnessbracket.dev.spotify.spotify_async_track_handlers import fetch_spotify_track_info
+from madnessbracket.music_apis.lastfm_api.lastfm_api import lastfm_get_response
+from madnessbracket.music_apis.spotify_api.spotify_async_track_handlers import fetch_spotify_track_info
 from madnessbracket.models import Song, Artist
-from madnessbracket.client.musician.prepare_tracks import process_a_track_from_spotify, process_a_track_from_db
+from madnessbracket.track_processing.process_tracks_from_spotify import process_a_track_from_spotify
+from madnessbracket.track_processing.process_tracks_from_database import process_a_track_from_db
 from madnessbracket.utilities.db_extensions import load_unicode_extension
 from madnessbracket.utilities.logging_handlers import log_arbitrary_data
 

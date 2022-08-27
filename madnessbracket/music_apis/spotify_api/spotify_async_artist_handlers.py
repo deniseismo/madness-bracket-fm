@@ -1,5 +1,5 @@
-from madnessbracket.dev.spotify.spotify_artist_handlers import find_artist_best_match
-from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
+from madnessbracket.music_apis.spotify_api.spotify_artist_handlers import find_artist_best_match
+from madnessbracket.music_apis.spotify_api.spotify_client_api import get_spotify_tekore_client
 
 
 async def fetch_spotify_artist_info(artist_name: str, tekore_client=None):

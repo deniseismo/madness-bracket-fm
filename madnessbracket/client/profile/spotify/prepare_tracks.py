@@ -1,7 +1,7 @@
 import random
 from typing import Optional
 
-from madnessbracket.musician.prepare_tracks import process_tracks_from_spotify
+from madnessbracket.track_processing.process_tracks_from_spotify import process_tracks_from_spotify
 from madnessbracket.utilities.bracket_sizing import get_capped_bracket_size
 
 

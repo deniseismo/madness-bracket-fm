@@ -3,9 +3,9 @@ from typing import Optional
 
 import tekore as tk
 
-from madnessbracket.musician.prepare_tracks import add_text_color_to_tracks
-from madnessbracket.profile.spotify.spotify_profile_oauth import spotify_tekore_client
-from madnessbracket.profile.spotify.prepare_tracks import prepare_spotify_tracks
+from madnessbracket.track_processing.track_processing_helpers import add_text_color_to_tracks
+from madnessbracket.client.profile.spotify.spotify_profile_oauth import spotify_tekore_client
+from madnessbracket.client.profile.spotify.prepare_tracks import prepare_spotify_tracks
 
 
 def get_spotify_bracket_data(token, bracket_limit) -> Optional[dict]:

@@ -2,7 +2,7 @@ import json
 
 from flask import Blueprint, jsonify, request, make_response, render_template
 
-from madnessbracket.profile.lastfm.lastfm_profile_handlers import ultimate_lastfm_user_tracks_handler
+from madnessbracket.client.profile.lastfm.lastfm_profile_handlers import ultimate_lastfm_user_tracks_handler
 from madnessbracket.utilities.validation.exceptions.validation_exceptions import LastFMUserInputError
 from madnessbracket.utilities.validation.user_input_validation import validate_lastfm_user_input
 

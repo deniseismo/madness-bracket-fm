@@ -2,12 +2,12 @@ import asyncio
 from typing import Optional
 
 from madnessbracket import cache
-from madnessbracket.dev.lastfm.lastfm_track_handlers import get_track_info_shortcut
-from madnessbracket.dev.lastfm.lastfm_user_handlers import lastfm_get_user_top_tracks
-from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
-from madnessbracket.musician.prepare_tracks import add_text_color_to_tracks
-from madnessbracket.utilities.track_filtering import get_filtered_name
-from madnessbracket.utilities.track_preparation import prepare_tracks
+from madnessbracket.music_apis.lastfm_api.lastfm_track_handlers import get_track_info_shortcut
+from madnessbracket.music_apis.lastfm_api.lastfm_user_handlers import lastfm_get_user_top_tracks
+from madnessbracket.music_apis.spotify_api.spotify_client_api import get_spotify_tekore_client
+from madnessbracket.utilities.name_filtering import get_filtered_name
+from madnessbracket.track_processing.track_preparation import prepare_tracks
+from madnessbracket.track_processing.track_processing_helpers import add_text_color_to_tracks
 
 
 def ultimate_lastfm_user_tracks_handler(username, upper_limit) -> Optional[dict]:

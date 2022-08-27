@@ -6,10 +6,11 @@ from flask import request, url_for, Blueprint, redirect, session, make_response,
     Response
 
 from madnessbracket import db
+from madnessbracket.client.profile.spotify.spotify_profile_handlers import get_spotify_bracket_data
+from madnessbracket.client.profile.spotify.spotify_profile_oauth import get_spotify_auth, check_spotify_login
 from madnessbracket.models import User
-from madnessbracket.profile.spotify.spotify_profile_handlers import get_spotify_bracket_data
-from madnessbracket.profile.spotify.spotify_profile_oauth import get_spotify_auth, check_spotify_login
-from madnessbracket.utilities.user_input_validation import validate_bracket_upper_limit
+from madnessbracket.utilities.validation.exceptions.validation_exceptions import BracketUpperLimitError
+from madnessbracket.utilities.validation.user_input_validation import validate_bracket_upper_limit
 
 spotify = Blueprint('spotify', __name__)
 
@@ -98,8 +99,13 @@ def generate_spotify_bracket() -> Response:
     Returns:
         jsonified dict with all the tracks and tracks' info needed for the bracket
     """
-    upper_limit = request.args.get("limit")
-    valid_upper_limit = validate_bracket_upper_limit(upper_limit)
+    try:
+        bracket_upper_limit = validate_bracket_upper_limit(request.args)
+    except BracketUpperLimitError as e:
+        return make_response(jsonify(
+            {'message': f'👿 INCORRECT INPUT 👿'}
+        ),
+            404)
     if request.method == "GET":
         user, token = check_spotify_login()
         if not user or not token:
@@ -107,12 +113,9 @@ def generate_spotify_bracket() -> Response:
                 {'message': f"👿 YOU'RE NOT LOGGED IN 👿"}
             ),
                 404)
-        if not valid_upper_limit:
-            upper_limit = 16
-
         user_request = json.dumps({
             "bracket_type": "spotify",
-            "limit": upper_limit
+            "limit": bracket_upper_limit
         })
         return render_template("bracket.html", user_request=user_request)
     else:
@@ -122,15 +125,8 @@ def generate_spotify_bracket() -> Response:
                 {'message': f"👿 YOU'RE NOT LOGGED IN 👿"}
             ),
                 404)
-        if not valid_upper_limit:
-            return make_response(jsonify(
-                {'message': f'👿 INCORRECT INPUT 👿'}
-            ),
-                404)
-        upper_limit = valid_upper_limit.upper_limit
-        tracks = get_spotify_bracket_data(token, upper_limit)
+        tracks = get_spotify_bracket_data(token, bracket_upper_limit)
         if not tracks:
-            print('nothing found')
             return make_response(jsonify(
                 {'message': f"😟 no tracks found for you 😟"}
             ),

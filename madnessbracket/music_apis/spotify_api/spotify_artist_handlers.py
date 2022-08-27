@@ -1,7 +1,10 @@
+from typing import Optional
+
 from fuzzywuzzy import fuzz
+from tekore._model import FullTrack
 
 from madnessbracket import cache
-from madnessbracket.dev.spotify.spotify_client_api import get_spotify_tekore_client
+from madnessbracket.music_apis.spotify_api.spotify_client_api import get_spotify_tekore_client
 
 
 @cache.memoize(timeout=36000)
@@ -91,7 +94,7 @@ def find_artist_best_match(artist_name: str, search_results: list):
     return first_result
 
 
-def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
+def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None) -> Optional[list[FullTrack]]:
     """get artist's top tracks according to spotify
     Args:
         artist_name (str): [description]
@@ -107,8 +110,7 @@ def get_spotify_artist_top_tracks(artist_name: str, tekore_client=None):
         spotify_tekore_client = get_spotify_tekore_client()
     else:
         spotify_tekore_client = tekore_client
-    artist_info = get_spotify_artist_info(
-        artist_name, spotify_tekore_client)  # get ID via tekore
+    artist_info = get_spotify_artist_info(artist_name, spotify_tekore_client)  # get ID via tekore
     if not artist_info:
         return None
     print("artist spotify id", artist_info.id)

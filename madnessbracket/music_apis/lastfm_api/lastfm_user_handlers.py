@@ -2,7 +2,7 @@ import json
 import random
 
 from madnessbracket import cache
-from madnessbracket.dev.lastfm.lastfm_api import lastfm_get_response
+from madnessbracket.music_apis.lastfm_api.lastfm_api import lastfm_get_response
 
 
 @cache.memoize(timeout=36000)
