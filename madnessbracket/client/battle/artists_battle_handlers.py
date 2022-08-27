@@ -1,7 +1,7 @@
 from typing import Optional
 
 from madnessbracket.track_processing.track_preparation import prepare_tracks_for_artist_battle
-from madnessbracket.client.musician.musician_handlers import get_artists_tracks
+from madnessbracket.client.artist.artist_handlers import get_artists_tracks
 from madnessbracket.schemas.track_schema import TrackInfo
 
 
