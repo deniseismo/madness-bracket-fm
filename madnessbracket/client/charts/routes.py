@@ -2,44 +2,44 @@ import json
 
 from flask import Blueprint, jsonify, request, make_response, render_template
 
-from madnessbracket.charts.charts_handlers import get_songs_considered_best
-from madnessbracket.utilities.user_input_validation import validate_bracket_upper_limit
+from madnessbracket.client.charts.charts_handlers import get_tracks_for_charts
+from madnessbracket.track_processing.track_processing_helpers import make_tracks_info_response
+from madnessbracket.utilities.validation.exceptions.validation_exceptions import BracketUpperLimitError
+from madnessbracket.utilities.validation.user_input_validation import validate_bracket_upper_limit
 
 charts = Blueprint('charts', __name__)
 
 
 @charts.route('/charts', methods=['POST', "GET"])
 def generate_charts_bracket():
-    """generates madness bracket for the best/classics/charts type of tracks
-    Returns:
-        jsonified dict with all the tracks and tracks' info needed for the bracket
     """
-    upper_limit = request.args.get("limit")
-    valid_upper_limit = validate_bracket_upper_limit(upper_limit)
+    generates madness bracket with tracks from charts (songs considered best, NME/RS lists of best songs, etc.)
+    :return: jsonified dict with all the needed info for the madness bracket
+    """
+    try:
+        bracket_upper_limit = validate_bracket_upper_limit(request.args)
+    except BracketUpperLimitError as e:
+        return make_response(jsonify(
+            {'message': str(e)}
+        ),
+            404)
     if request.method == "GET":
-        if not valid_upper_limit:
-            return render_template('404.html', description='👿 INCORRECT INPUT 👿'), 404
-
         user_request = json.dumps({
             "bracket_type": "charts",
             "name": None,
-            "limit": upper_limit
+            "limit": bracket_upper_limit
         })
         return render_template("bracket.html", user_request=user_request)
     else:
-        if not valid_upper_limit:
-            print('incorrect input')
+        charts_tracks = get_tracks_for_charts(bracket_upper_limit)
+        if not charts_tracks:
             return make_response(jsonify(
-                {'message': f'👿 INCORRECT INPUT 👿'}
+                {'message': f"😟 NO TRACKS FOUND 😟"}
             ),
                 404)
-        upper_limit = valid_upper_limit.upper_limit
-        tracks = get_songs_considered_best(upper_limit)
-        print(tracks)
-        if not tracks:
-            print('nothing found')
-            return make_response(jsonify(
-                {'message': f"nothing found"}
-            ),
-                404)
-        return jsonify(tracks)
+        tracks_info_response = make_tracks_info_response(
+            tracks=charts_tracks,
+            description="CHARTS",
+            extra=None
+        )
+        return jsonify(tracks_info_response)

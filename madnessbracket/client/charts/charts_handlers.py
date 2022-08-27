@@ -1,40 +1,38 @@
 import json
 import os
+import random
 from typing import Optional
 
 from flask import current_app
 
 from madnessbracket import cache
-from madnessbracket.charts.prepare_tracks import prepare_tracks_for_charts
+from madnessbracket.schemas.track_schema import TrackInfo
+from madnessbracket.track_processing.process_tracks_from_charts import process_tracks_from_charts
+from madnessbracket.track_processing.track_preparation import prepare_tracks
 
 
-def get_songs_considered_best(upper_limit: int) -> Optional[dict]:
+def get_tracks_for_charts(bracket_upper_limit: int) -> Optional[list[TrackInfo]]:
     """
-    picks random selection of songs considered best*
-    * by Pitchfork, (Rolling Stones, …) # TODO: add RS500/NME
+    get charts tracks
+    :param bracket_upper_limit: (int) bracket upper limit size
+    :return: (list[TrackInfo]) list of charts TrackInfo (processed & prepared tracks)
     """
-    songs = load_best_songs_from_the_file()
+    charts_filename = _pick_charts_list()
+    songs = load_charts_list_from_the_file(charts_filename)
     if not songs:
         return None
-    processed_tracks = process_charts_songs(songs)
-    prepared_tracks = prepare_tracks_for_charts(processed_tracks, upper_limit)
-    tracks = {
-        "tracks": prepared_tracks,
-        "description": "CHARTS",
-        "extra": None,
-    }
-    return tracks
+    processed_tracks = process_tracks_from_charts(songs)
+    prepared_tracks = prepare_tracks(processed_tracks, bracket_upper_limit)
+    return prepared_tracks
 
 
 @cache.memoize(timeout=36000)
-def load_best_songs_from_the_file() -> Optional[list]:
-    """load all the best (according to some papers) songs of all time
-
-    Returns:
-        [list]: of the best songs
+def load_charts_list_from_the_file(charts_filename: str) -> Optional[list[dict[str]]]:
     """
-    filename = 'nme_top_500_extended.json'
-    filepath = os.path.join(current_app.root_path, 'charts', filename)
+    load songs considered best from file
+    :return: (list[dict[str]]) list of dicts with all the info
+    """
+    filepath = os.path.join(current_app.root_path, 'client', 'charts', 'charts_lists', 'ready', charts_filename)
     try:
         with open(filepath, encoding='utf-8') as f:
             songs = json.load(f)
@@ -44,27 +42,10 @@ def load_best_songs_from_the_file() -> Optional[list]:
     return songs
 
 
-def process_charts_songs(tracks: list) -> list[dict]:
+def _pick_charts_list() -> str:
     """
-    processes songs from charts creating a list of dicts with all the needed info about tracks
-    :param tracks: a list of tracks from charts
-    :return: a list of dict with all the info about particular songs
+    pick a random charts list from a list of available charts (filenames of the charts)
+    :return: (str) charts list filename
     """
-    # iterate through tracks
-    processed_tracks = []
-    for track in tracks:
-        name = track['title']
-        artist_name = track['artist_name']
-        preview_url = track["preview_url"]
-        album_colors = track["album_colors"]
-        text_color = track["text_color"]
-
-        a_track_info = {
-            "artist_name": artist_name,
-            "track_title": name,
-            "spotify_preview_url": preview_url,
-            "album_colors": album_colors,
-            "text_color": text_color
-        }
-        processed_tracks.append(a_track_info)
-    return processed_tracks
+    charts_lists_filenames = ['nme_top_500_extended.json', "classics_list_extended.json"]
+    return random.choice(charts_lists_filenames)
