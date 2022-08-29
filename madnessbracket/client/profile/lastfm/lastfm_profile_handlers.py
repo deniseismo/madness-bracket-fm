@@ -1,68 +1,101 @@
 import asyncio
 from typing import Optional
 
-from madnessbracket import cache
-from madnessbracket.music_apis.lastfm_api.lastfm_track_handlers import get_track_info_shortcut
-from madnessbracket.music_apis.lastfm_api.lastfm_user_handlers import lastfm_get_user_top_tracks
+import tekore as tk
+from aiocache import cached, Cache
+from aiocache.serializers import PickleSerializer
+
+from madnessbracket.client.database_manipulation.db_track_handlers import db_get_track_by_name
+from madnessbracket.music_apis.lastfm_api.lastfm_user_handlers import lastfm_get_user_top_tracks_info
+from madnessbracket.music_apis.spotify_api.spotify_async_track_handlers import fetch_spotify_track_info
 from madnessbracket.music_apis.spotify_api.spotify_client_api import get_spotify_tekore_client
-from madnessbracket.utilities.name_filtering import get_filtered_name
+from madnessbracket.schemas.lastfm_user_info import LastFMUserTopTracksProcessedInfo
+from madnessbracket.schemas.track_schema import TrackInfo
+from madnessbracket.track_processing.process_tracks_from_database import process_a_track_from_db
+from madnessbracket.track_processing.process_tracks_from_spotify import process_a_track_from_spotify
 from madnessbracket.track_processing.track_preparation import prepare_tracks
 from madnessbracket.track_processing.track_processing_helpers import add_text_color_to_tracks
 
 
-def ultimate_lastfm_user_tracks_handler(username, upper_limit) -> Optional[dict]:
+def get_tracks_for_lastfm_user(username: str, upper_limit: int = 16) -> Optional[LastFMUserTopTracksProcessedInfo]:
     """
-    a shortcut function that ultimately returns randomized & processed lastfm user tracks with all the needed info
-    :param username: user's name
-    :param upper_limit: upper bracket limit
-    :return: a dict with all the info about user's Last.fm tracks
+    get tracks for profile: last.fm;
+    processed & ready info for user's tracks as well as user's corrected username (the way it's stylized)
+    :param username: (str) username on last.fm
+    :param upper_limit: (int) bracket upper limit
+    :return: (LastFMUserTopTracksProcessedInfo) with username (corrected stylized form)
+        and their tracks with all the needed info
     """
-    correct_username, lastfm_user_top_tracks = lastfm_get_user_top_tracks(username)
-    if not lastfm_user_top_tracks:
-        print(f"COULD NOT find tracks for User({username})")
+    top_tracks_info = lastfm_get_user_top_tracks_info(username)
+    if not top_tracks_info:
+        print(f"--no tracks on last.fm for User({username})")
         return None
-    capped_tracks = prepare_tracks(lastfm_user_top_tracks, upper_limit)
-    tracks_with_info = get_lastfm_user_tracks_info(capped_tracks)
-    print("TRACKS: ", tracks_with_info)
-    add_text_color_to_tracks(tracks_with_info)
-    tracks = {
-        "tracks": tracks_with_info,
-        "description": f"{correct_username}: My Last.fm",
-        "value1": correct_username,
-        "extra": None,
-    }
-    return tracks
+    top_tracks_info.tracks = prepare_tracks(top_tracks_info.tracks, upper_limit)
+    top_tracks_info.tracks = get_lastfm_user_tracks_with_additional_info(top_tracks_info.tracks)
+    add_text_color_to_tracks(top_tracks_info.tracks)
+    return top_tracks_info
 
 
-@cache.memoize(timeout=36000)
-def get_lastfm_user_tracks_info(tracks) -> list:
+def get_lastfm_user_tracks_with_additional_info(tracks: list[TrackInfo]) -> list[TrackInfo]:
     """
-    get all the info for the user's top tracks asynchronously
-    :param tracks: a list of lastfm user's tracks
-    :return: tracks with info
+    get additional information for tracks found on last.fm: spotify preview url, album colors, etc.
+    :param tracks: (list[TrackInfo]) a list of lastfm user's tracks (processed as TrackInfo objects)
+    :return: (list[TrackInfo]) list of TrackInfo tracks with added info
     """
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    tracks_with_info = asyncio.get_event_loop().run_until_complete(get_info_for_lastfm_user_tracks(tracks))
-    print("RESULTS: ", tracks_with_info)
+    tracks_with_info = asyncio.get_event_loop().run_until_complete(get_additional_info_for_lastfm_user_tracks(tracks))
     return tracks_with_info
 
 
-async def get_info_for_lastfm_user_tracks(tracks):
+async def get_additional_info_for_lastfm_user_tracks(tracks: list[TrackInfo]):
     """
-    an async function that tries to find all the necessary info about user's tracks: album, cover art color, etc.
-    :param tracks: a list of lastfm user tracks
+    an async function that tries to find additional info about last.fm user's tracks: album, cover art color, etc.
+    :param tracks: (list[TrackInfo]) a list of lastfm user tracks (processed as TrackInfo objects)
     :return: a future aggregating results (tracks with all the info needed)
     """
     tasks = []
     tekore_client = get_spotify_tekore_client(asynchronous=True)
-    for track in tracks:
-        try:
-            artist_name = track['artist']['name']
-            track_title = get_filtered_name(track['name'])
-        except (KeyError, ValueError) as e:
-            print("error when parsing lastfm tracks", e)
-            continue
-        task = asyncio.create_task(get_track_info_shortcut(track_title, artist_name, tekore_client))
+    if not tekore_client:
+        return None
+    for track_info in tracks:
+        task = asyncio.create_task(
+            get_additional_info_for_a_lastfm_user_track(
+                track_info.track_title,
+                track_info.artist_name,
+                tekore_client
+            )
+        )
         tasks.append(task)
     return await asyncio.gather(*tasks)
+
+
+@cached(ttl=3600, serializer=PickleSerializer(), cache=Cache.MEMORY)
+async def get_additional_info_for_a_lastfm_user_track(
+        track_title: str,
+        artist_name: str,
+        spotify_tekore_client: tk.Spotify
+) -> Optional[TrackInfo]:
+    """
+    gets additional information for a last.fm user track via db & spotify
+    :param track_title: track's title
+    :param artist_name: artist's name
+    :param spotify_tekore_client: (tk.Spotify) an async spotify API client
+    :return: (TrackInfo) with added info
+    """
+    if not track_title or not artist_name:
+        return None
+    track = db_get_track_by_name(track_title, artist_name)
+    if not track:
+        track = await fetch_spotify_track_info(track_title, artist_name, spotify_tekore_client)
+        print(track)
+        if not track:
+            print(f"--no spotify info for Artist({artist_name}) — Track({track_title})")
+            return TrackInfo(
+                track_title=track_title,
+                artist_name=artist_name,
+            )
+        track_info = process_a_track_from_spotify(track)
+        return track_info
+    track_info = process_a_track_from_db(track)
+    return track_info
