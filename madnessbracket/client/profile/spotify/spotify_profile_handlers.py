@@ -1,64 +1,21 @@
-import random
 from typing import Optional
 
-import tekore as tk
-
+from madnessbracket.music_apis.spotify_api.spotify_user_handlers import spotify_get_users_top_tracks
+from madnessbracket.schemas.spotify_user_info import SpotifyTopTracksProcessedInfo
+from madnessbracket.track_processing.track_preparation import prepare_tracks
 from madnessbracket.track_processing.track_processing_helpers import add_text_color_to_tracks
-from madnessbracket.client.profile.spotify.spotify_profile_oauth import spotify_tekore_client
-from madnessbracket.client.profile.spotify.prepare_tracks import prepare_spotify_tracks
 
 
-def get_spotify_bracket_data(token, bracket_limit) -> Optional[dict]:
+def get_tracks_for_spotify_user(token, bracket_limit: int) -> Optional[SpotifyTopTracksProcessedInfo]:
     """
-    a shortcut function that combines all the other spotify handlers
-    :param token: user's Spotify (tekore lib) token
-    :param bracket_limit: chosen bracket upper limit
-    :return: a dict with all the musician bracket data
+    get spotify top tracks processed info with spotify user's username & processed tracks
+    :param token: user's access token
+    :param bracket_limit: (int) bracket upper limit
+    :return: (SpotifyTopTracksProcessedInfo) with username & processed tracks ready for madness bracket
     """
-    username, user_tracks = spotify_get_users_top_tracks(token)
-    if not user_tracks:
+    spotify_top_tracks_info = spotify_get_users_top_tracks(token)
+    if not spotify_top_tracks_info:
         return None
-    user_tracks = prepare_spotify_tracks(user_tracks, bracket_limit)
-    add_text_color_to_tracks(user_tracks)
-    tracks = {
-        "tracks": user_tracks,
-        "description": f"{username}: My Spotify",
-        "extra": None
-    }
-    return tracks
-
-
-def spotify_get_users_top_tracks(token) -> Optional[tuple]:
-    """get current user top tracks (items)
-    :return: current user's top track items
-
-    Args:
-        token: access token
-
-    Returns:
-        current user's top track items
-    """
-    # spotify's internal 'time spans': gives different selections of your fav. tracks based on time period
-    time_periods = ['short_term', 'medium_term', 'long_term']
-    if not token:
-        return None
-    try:
-        with spotify_tekore_client.token_as(token):
-            current_user = spotify_tekore_client.current_user()
-            username = current_user.display_name
-            # get user's top 50 tracks (pick time span at random)
-            top_tracks = spotify_tekore_client.current_user_top_tracks(
-                limit=50, time_range=random.choice(time_periods))
-    except tk.HTTPError:
-        return None
-
-    if not top_tracks:
-        return None
-
-    if not top_tracks.items:
-        return None
-    print(top_tracks.total)
-    if len(top_tracks.items) < 4:
-        print('not enough tracks')
-        return None
-    return username, top_tracks.items
+    spotify_top_tracks_info.tracks = prepare_tracks(spotify_top_tracks_info.tracks, bracket_limit)
+    add_text_color_to_tracks(spotify_top_tracks_info.tracks)
+    return spotify_top_tracks_info
