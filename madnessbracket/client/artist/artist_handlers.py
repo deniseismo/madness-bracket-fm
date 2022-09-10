@@ -34,7 +34,7 @@ def get_artists_tracks(artist_name: str, bracket_limit: int, max_songs_range: in
     :param artist_name: (str) artist's name
     :param bracket_limit: (int) chosen bracket upper limit
     :param max_songs_range: (int) maximum number of top songs to choose from, defaults to top 100
-    :return:
+    :return: (list[TrackInfo]) with artist's top tracks info
     """
     if not artist_name or not bracket_limit:
         # no artist provided
