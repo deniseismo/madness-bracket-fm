@@ -1,22 +1,22 @@
 from madnessbracket.schemas.track_schema import TrackInfo
 
 
-def process_tracks_from_charts(tracks: list[dict[str]]) -> list[TrackInfo]:
+def process_tracks_from_info_list(tracks: list[dict[str]]) -> list[TrackInfo]:
     """
-    processes tracks from charts lists (list of dicts with all the needed info)
-    :param tracks: (list[dict[str]]) a list of tracks from charts
+    processes tracks from info lists (list of dicts with all the needed info)
+    :param tracks: (list[dict[str]]) a list of tracks info
     :return: (list[TrackInfo]) list of processed tracks (TrackInfo)
     """
     processed_tracks = []
     for track in tracks:
-        track_info = process_a_track_from_charts(track)
+        track_info = process_a_track_from_info(track)
         processed_tracks.append(track_info)
     return processed_tracks
 
 
-def process_a_track_from_charts(track: dict[str]) -> TrackInfo:
+def process_a_track_from_info(track: dict[str]) -> TrackInfo:
     """
-    process a track from charts list
+    process a track from info dict
     :param track: (dict[str]) information about the track
     :return: TrackInfo
     """
