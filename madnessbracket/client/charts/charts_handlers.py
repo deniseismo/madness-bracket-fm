@@ -7,7 +7,7 @@ from flask import current_app
 
 from madnessbracket import cache
 from madnessbracket.schemas.track_schema import TrackInfo
-from madnessbracket.track_processing.process_tracks_from_charts import process_tracks_from_charts
+from madnessbracket.track_processing.process_tracks_from_lists import process_tracks_from_info_list
 from madnessbracket.track_processing.track_preparation import prepare_tracks
 
 
@@ -21,7 +21,7 @@ def get_tracks_for_charts(bracket_upper_limit: int) -> Optional[list[TrackInfo]]
     songs = load_charts_list_from_the_file(charts_filename)
     if not songs:
         return None
-    processed_tracks = process_tracks_from_charts(songs)
+    processed_tracks = process_tracks_from_info_list(songs)
     prepared_tracks = prepare_tracks(processed_tracks, bracket_upper_limit)
     return prepared_tracks
 
