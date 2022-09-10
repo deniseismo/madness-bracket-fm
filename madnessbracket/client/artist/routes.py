@@ -14,9 +14,9 @@ artist = Blueprint('artist', __name__)
 
 @artist.route('/artist', methods=['POST', "GET"])
 def generate_artist_bracket():
-    """generates madness bracket for a particular artist/musician
-    Returns:
-        jsonified dict with all the tracks and tracks' info needed for the bracket
+    """
+    generate madness bracket for artist picked by user
+    :return: jsonified dict with all the needed info for the madness bracket
     """
     try:
         valid_user_input = validate_artist_user_input(request.args)

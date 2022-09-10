@@ -28,23 +28,19 @@ def get_tracks_for_artist(artist_name: str, bracket_limit: int) -> Optional[list
     return artist_tracks
 
 
-def get_artists_tracks(artist_name: str, bracket_limit: int) -> Optional[list[TrackInfo]]:
-    """gets top tracks by a particular artist
-    first it goes through database,
-    if nothing found, goes through spotify fallback function
-
-    Args:
-        artist_name (str): artist's name
-        bracket_limit: chosen bracket upper limit
-    Returns:
-        [dict]: a dict with a list of 'track info' dicts
-
+def get_artists_tracks(artist_name: str, bracket_limit: int, max_songs_range: int = 100) -> Optional[list[TrackInfo]]:
+    """
+    find artist's tracks by artist's name (database, spotify)
+    :param artist_name: (str) artist's name
+    :param bracket_limit: (int) chosen bracket upper limit
+    :param max_songs_range: (int) maximum number of top songs to choose from, defaults to top 100
+    :return:
     """
     if not artist_name or not bracket_limit:
         # no artist provided
         return None
     # go through database first
-    tracks = get_artist_tracks_from_database(artist_name)
+    tracks = get_artist_tracks_from_database(artist_name, max_songs_range)
     # if nothing found, go through a fallback function — via spotify
     if not tracks:
         tracks = get_tracks_via_spotify(artist_name)
@@ -55,17 +51,18 @@ def get_artists_tracks(artist_name: str, bracket_limit: int) -> Optional[list[Tr
 
 
 @cache.memoize(timeout=3600)
-def get_artist_tracks_from_database(artist_name: str) -> Optional[list[TrackInfo]]:
+def get_artist_tracks_from_database(artist_name: str, max_songs_range: int = 100) -> Optional[list[TrackInfo]]:
     """
     get artist's top track from database (sorted by rating (popularity/number of scrobbles)
     :param artist_name: (str) artist's name
+    :param max_songs_range: (int) maximum number of top songs to choose from, defaults to top 100
     :return: (list[TrackInfo]) a list of processed TrackInfo with all the information about tracks from db
     """
     artist_entry = db_get_artist(artist_name)
     if not artist_entry:
         return None
     # find top tracks in descending order (most listened first)
-    track_entries = db_get_tracks_by_artist_entry(artist_entry)
+    track_entries = db_get_tracks_by_artist_entry(artist_entry, max_songs_range)
     if not track_entries:
         return None
     processed_tracks = process_tracks_from_db(track_entries)

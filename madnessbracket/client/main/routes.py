@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint
 
-from madnessbracket.client.profile.spotify.spotify_profile_oauth import check_spotify_login, get_spotify_user_info
+from madnessbracket.music_apis.spotify_api.spotify_user_handlers import authenticate_spotify_user, get_spotify_user_info
 
 main = Blueprint('main', __name__)
 
@@ -8,12 +8,8 @@ main = Blueprint('main', __name__)
 @main.route("/", methods=["GET", "POST"])
 @main.route("/home", methods=["GET", "POST"])
 def home() -> str:
-    """renders home page
-
-    Returns:
-        home page template (home.html)
-    """
-    user, token = check_spotify_login()
+    """render home page"""
+    user, token = authenticate_spotify_user()
     spotify_info = {
         "logged_in": user and token,
         "user_info": get_spotify_user_info(token.access_token) if (user and token) else None
@@ -23,9 +19,5 @@ def home() -> str:
 
 @main.route("/about", methods=["GET"])
 def about() -> str:
-    """renders about page
-
-    Returns:
-        about page template (home.html)
-    """
+    """render about page"""
     return render_template("about.html", title="About")

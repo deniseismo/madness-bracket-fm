@@ -1,10 +1,12 @@
+from typing import Literal, Optional, Union
+
 import wcag_contrast_ratio as contrast
-from colormath.color_objects import sRGBColor
+from colormath.color_objects import sRGBColor, BaseRGBColor
 
 from madnessbracket import cache
 
 
-def convert_from_hex_to_rgb(hex_color):
+def convert_from_hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
     """
     converts a hex color into an RGB one
     """
@@ -12,7 +14,7 @@ def convert_from_hex_to_rgb(hex_color):
     return rgb_color.get_upscaled_value_tuple()
 
 
-def convert_from_rgb_to_hex(rgb_color):
+def convert_from_rgb_to_hex(rgb_color: BaseRGBColor) -> str:
     """
     converts an RGB color to hex
     """
@@ -28,8 +30,7 @@ def get_a_color_in_between(color_1, color_2):
     """
     red_1, green_1, blue_1 = color_1
     red_2, green_2, blue_2 = color_2
-    color_in_between = ((red_1 + red_2) / 2, (green_1 +
-                                              green_2) / 2, (blue_1 + blue_2) / 2)
+    color_in_between = ((red_1 + red_2) / 2, (green_1 + green_2) / 2, (blue_1 + blue_2) / 2)
     return color_in_between
 
 
@@ -38,11 +39,11 @@ def get_luminance(rgb_r, rgb_g, rgb_b):
     luminance © https://www.w3.org/TR/WCAG20-TECHS/G17.html
     L = 0.2126 * R + 0.7152 * G + 0.0722 * B where R, G and B
     """
-    luminance = 0.2126 * rgb_r + 0.7152 * rgb_g + 0.0722 * rgb_g
+    luminance = 0.2126 * rgb_r + 0.7152 * rgb_g + 0.0722 * rgb_b
     return luminance
 
 
-def get_contrast_color_by_luminance(luminance):
+def get_contrast_color_by_luminance(luminance: float) -> Literal["white", "black"]:
     """
     figure out whether the appropriate contrast color for the given luminance is black or white
     © https://www.w3.org/TR/WCAG20-TECHS/G17.html
@@ -69,17 +70,19 @@ def get_contrast_color_for_hex_color(hex_color):
 
 
 @cache.memoize(timeout=3600)
-def get_contrast_color_for_two_color_gradient(color_1, color_2):
+def get_contrast_color_for_two_color_gradient(
+        color_1: Union[tuple[int, int, int], str],
+        color_2: Union[tuple[int, int, int], str]
+) -> Optional[Literal["white", "black"]]:
     """
     calculate the most appropriate contrast color for a two-colored gradient background
-    :param: color_1: hex color
-    :param: color_2: hex color
+    :param: color_1: color as a hex string or a rgb tuple (int, int, int)
+    :param: color_2: color as a hex string or a rgb tuple (int, int, int)
     """
     if not color_2 or not color_2:
         print("no colors provided")
         return None
     if isinstance(color_1, str) and isinstance(color_2, str):
-        print("converting hex to rgb")
         color_1_rgb = convert_from_hex_to_rgb(color_1)
         color_2_rgb = convert_from_hex_to_rgb(color_2)
     else:
@@ -88,8 +91,7 @@ def get_contrast_color_for_two_color_gradient(color_1, color_2):
     color_in_between = get_a_color_in_between(color_1_rgb, color_2_rgb)
     # downscale values
     color_1_rgb = sRGBColor(*color_1_rgb, is_upscaled=True).get_value_tuple()
-    color_in_between = sRGBColor(
-        *color_in_between, is_upscaled=True).get_value_tuple()
+    color_in_between = sRGBColor(*color_in_between, is_upscaled=True).get_value_tuple()
     gradient_colors = [color_1_rgb, color_in_between]
 
     color_black = (0, 0, 0)
