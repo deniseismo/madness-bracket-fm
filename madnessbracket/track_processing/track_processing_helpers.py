@@ -1,7 +1,9 @@
+import json
 import math
 import random
 from typing import Optional
 
+from madnessbracket import cache
 from madnessbracket.schemas.response import TracksInfoResponse
 from madnessbracket.schemas.track_schema import TrackInfo
 from madnessbracket.utilities.color_processing import get_contrast_color_for_two_color_gradient
@@ -100,3 +102,19 @@ def add_text_color_to_tracks(tracks: list[TrackInfo]) -> None:
             track.text_color = text_color
         except (ValueError, IndexError) as e:
             print(e)
+
+
+@cache.memoize(timeout=36000)
+def load_tracks_from_file(filepath) -> Optional[list[dict[str]]]:
+    """load tracks from json file
+
+    Returns:
+        [list]: of songs
+    """
+    try:
+        with open(filepath, encoding='utf-8') as f:
+            tracks = json.load(f)
+    except IOError as e:
+        print('file not found', e)
+        return None
+    return tracks
