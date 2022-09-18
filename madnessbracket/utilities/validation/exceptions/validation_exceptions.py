@@ -12,3 +12,11 @@ class ArtistsBattleUserInputError(Exception):
 
 class BracketUpperLimitError(Exception):
     pass
+
+
+class BracketDataError(Exception):
+    pass
+
+
+class WinnerTrackBracketDataError(Exception):
+    pass
