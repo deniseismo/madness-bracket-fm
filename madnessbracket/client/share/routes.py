@@ -3,43 +3,45 @@ import urllib.parse
 
 from flask import render_template, Blueprint, jsonify, request, make_response, Response
 
-from madnessbracket.client.share.bracket_data_validation import (validate_bracket_data_for_sharing,
-                                                                 parse_bracket_data_for_sharing, is_valid_nanoid)
-from madnessbracket.client.share.share_handlers import save_bracket_to_database, get_bracket_from_database
+from madnessbracket.client.database_manipulation.db_bracket_handlers import save_bracket_to_database, \
+    get_bracket_from_database
+from madnessbracket.client.share.share_handlers import parse_bracket_data_for_sharing
+from madnessbracket.utilities.validation.bracket_data_validation import validate_bracket_data
+from madnessbracket.utilities.validation.exceptions.validation_exceptions import BracketDataError
+from madnessbracket.utilities.validation.user_input_validation import is_valid_nanoid
 
 share = Blueprint('share', __name__)
 
 
 @share.route('/share', methods=['POST'])
-def get_share_link() -> Response:
-    """save bracket to the database → get share link to the bracket
+def share_madness_bracket() -> Response:
     """
-    content = request.get_json()
-    print(content)
-    print(content["description"])
+    share madness bracket: save madness bracket data to db → get share link for the bracket
+    :return: jsonified dict with the share link for the madness bracket
+    """
+    bracket_share_data = request.get_json()
     # validate bracket data via pydantic models
-    validated_bracket_data = validate_bracket_data_for_sharing(content)
-    if not validated_bracket_data:
-        return make_response("Invalid Bracket Data", 400)
+    try:
+        validated_bracket_data = validate_bracket_data(bracket_share_data)
+    except BracketDataError as e:
+        return make_response(jsonify(
+            {'message': str(e)}
+        ),
+            404)
     # parse pydantic models to get an appropriate dict structure for sharing
-    parsed_bracket_data = parse_bracket_data_for_sharing(
-        validated_bracket_data)
+    parsed_bracket_data = parse_bracket_data_for_sharing(validated_bracket_data)
     # get bracket unique id used for sharing
-    share_link_id = save_bracket_to_database(parsed_bracket_data)
+    bracket_share_link_id = save_bracket_to_database(parsed_bracket_data)
     return jsonify({
-        "bracketShareLink": urllib.parse.urljoin("get/", share_link_id)
+        "bracketShareLink": urllib.parse.urljoin("get/", bracket_share_link_id)
     })
 
 
 @share.route("/get/<bracket_id>", methods=["GET"])
-def get_shared_bracket(bracket_id) -> str:
-    """get/generate a bracket from a given bracket id that is presumably stored in a database
-
-    Args:
-        bracket_id (str): uuid4-like string
-
-    Returns:
-        html: template
+def get_shared_bracket(bracket_id: str):
+    """
+    get shared bracket (saved in database) by bracket share link id
+    :param bracket_id: (str): (uuid4-like string) bracket share link id
     """
     if not is_valid_nanoid(bracket_id):
         print("invalid bracket id")
