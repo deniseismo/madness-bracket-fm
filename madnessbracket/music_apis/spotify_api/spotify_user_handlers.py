@@ -4,7 +4,9 @@ from typing import Optional
 
 import tekore as tk
 from flask import current_app, session
+from tekore import Token, BadRequest
 
+from madnessbracket.client.database_manipulation.db_user_handlers import delete_spotify_user_from_database
 from madnessbracket.models import User
 from madnessbracket.music_apis.spotify_api.spotify_client_api import get_spotify_tekore_client
 from madnessbracket.schemas.spotify_user_info import SpotifyUserAuth, SpotifyUserProfile, SpotifyTopTracksInfo, \
@@ -53,20 +55,32 @@ def authenticate_spotify_user() -> Optional[SpotifyUserAuth]:
         return SpotifyUserAuth(None, None)
 
     if token.is_expiring:
-        # get new access token
-        conf = _get_app_spotify_credentials()
-        cred = tk.Credentials(*conf)
-        user_entry = User.query.filter_by(spotify_id=user).first()
-        if user_entry:
-            # get user's refresh token from db
-            refresh_token = user_entry.spotify_token
-            if refresh_token:
-                # get new token via refresh token
-                token = cred.refresh_user_token(refresh_token)
-                session['token'] = pickle.dumps(token)
+        try:
+            token = _refresh_expiring_token(user)
+        except BadRequest as e:
+            # BadRequest might mean revoked and/or invalid token → clear user/token from session, delete user from db
+            session.pop('user', None)
+            session.pop('token', None)
+            delete_spotify_user_from_database(user)
+            return SpotifyUserAuth(None, None)
 
     return SpotifyUserAuth(user, token)
 
+
+def _refresh_expiring_token(spotify_user_id: str) -> Optional[Token]:
+    conf = _get_app_spotify_credentials()
+    cred = tk.Credentials(*conf)
+    user_entry = User.query.filter_by(spotify_id=spotify_user_id).first()
+    if not user_entry:
+        return None
+    # get user's refresh token from db
+    refresh_token = user_entry.spotify_token
+    if not refresh_token:
+        return None
+    # get new token via refresh token
+    token = cred.refresh_user_token(refresh_token)
+    session['token'] = pickle.dumps(token)
+    return token
 
 def get_spotify_user_info(token) -> Optional[SpotifyUserProfile]:
     """
