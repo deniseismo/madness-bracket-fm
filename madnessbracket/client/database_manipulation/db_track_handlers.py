@@ -2,7 +2,7 @@ from typing import Optional
 
 from sqlalchemy.event import listen
 
-from madnessbracket import db
+from madnessbracket import db, cache
 from madnessbracket.models import Artist, Song
 from madnessbracket.utilities.db_extensions import load_unicode_extension
 from madnessbracket.utilities.logging_handlers import log_arbitrary_data
@@ -38,3 +38,18 @@ def db_get_track_by_name(track_title: str, artist_name: str) -> Optional[Song]:
         log_arbitrary_data(f"Track({track_title}) by Artist({artist_name})", "lastfm_tracks_not_found_in_db.csv")
         return None
     return song_in_database
+
+
+@cache.memoize(timeout=3600)
+def db_get_artist_most_popular_song_by_artist_entry(artist_entry: Artist) -> Optional[Song]:
+    """
+    get the most listened song by a particular artist
+    :param artist_entry: artist's database entry (Artist instance)
+    :return: (Song) a Song instance
+    """
+    if not artist_entry:
+        return None
+    most_popular_song = Song.query.filter_by(artist=artist_entry).order_by(Song.rating.desc()).first()
+    if not most_popular_song:
+        return None
+    return most_popular_song
