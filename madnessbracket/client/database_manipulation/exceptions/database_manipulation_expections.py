@@ -1,0 +1,2 @@
+class DatabaseBracketError(Exception):
+    pass

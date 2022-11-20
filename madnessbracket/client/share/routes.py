@@ -5,6 +5,7 @@ from flask import render_template, Blueprint, jsonify, request, make_response, R
 
 from madnessbracket.client.database_manipulation.db_bracket_handlers import save_bracket_to_database, \
     get_bracket_from_database
+from madnessbracket.client.database_manipulation.exceptions.database_manipulation_expections import DatabaseBracketError
 from madnessbracket.client.share.share_handlers import parse_bracket_data_for_sharing
 from madnessbracket.utilities.validation.bracket_data_validation import validate_bracket_data
 from madnessbracket.utilities.validation.exceptions.validation_exceptions import BracketDataError
@@ -46,11 +47,15 @@ def get_shared_bracket(bracket_id: str):
     if not is_valid_nanoid(bracket_id):
         print("invalid bracket id")
         return render_template("404.html")
-    shared_bracket_data = get_bracket_from_database(
-        bracket_id)
+    try:
+        shared_bracket_data = get_bracket_from_database(
+            bracket_id)
+    except DatabaseBracketError:
+        error_message = "bracket not found"
+        return render_template("404.html", description=error_message)
     if not shared_bracket_data:
         error_message = "bracket not found"
-        return render_template("404.html", error_message=error_message)
+        return render_template("404.html", description=error_message)
     shared_bracket_data = json.dumps(shared_bracket_data)
 
     return render_template("shared.html", shared_bracket_data=shared_bracket_data)

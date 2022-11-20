@@ -4,6 +4,7 @@ from typing import Optional
 from nanoid import generate
 
 from madnessbracket import cache, db
+from madnessbracket.client.database_manipulation.exceptions.database_manipulation_expections import DatabaseBracketError
 from madnessbracket.models import BracketData
 
 
@@ -54,7 +55,7 @@ def get_bracket_from_database(bracket_id: str) -> Optional[dict]:
     """
     bracket = BracketData.query.filter_by(bracket_id=bracket_id).first()
     if not bracket:
-        return None
+        raise DatabaseBracketError("Bracket Not Found")
     bracket_structure = json.loads(bracket.bracket_info)
     bracket_description = {
         "bracket_type": bracket.bracket_type,
@@ -63,6 +64,8 @@ def get_bracket_from_database(bracket_id: str) -> Optional[dict]:
         "value2": bracket.value2,
         "extra": bracket.extra
     }
-    bracket_data = bracket_description | bracket_structure
-
+    try:
+        bracket_data = bracket_description | bracket_structure
+    except TypeError:
+        raise DatabaseBracketError("Bracket DB Data Error")
     return bracket_data
