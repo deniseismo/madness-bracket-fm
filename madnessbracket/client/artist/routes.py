@@ -3,7 +3,7 @@ import json
 from flask import Blueprint, jsonify, request, make_response, render_template, Response
 
 from madnessbracket.client.artist.artist_handlers import get_tracks_for_artist
-from madnessbracket.client.artist.fetch_artists_handlers import get_filtered_artists_suggestions
+from madnessbracket.client.artist.artists_suggestions_handlers import get_filtered_artists_suggestions
 from madnessbracket.music_apis.lastfm_api.lastfm_artist_handlers import lastfm_get_artist_correct_name
 from madnessbracket.track_processing.track_processing_helpers import make_tracks_info_response
 from madnessbracket.utilities.validation.exceptions.validation_exceptions import ArtistUserInputError

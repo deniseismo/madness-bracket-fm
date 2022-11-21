@@ -18,7 +18,7 @@ def get_tracks_for_charts(bracket_upper_limit: int) -> Optional[list[TrackInfo]]
     :return: (list[TrackInfo]) list of charts TrackInfo (processed & prepared tracks)
     """
     charts_filename = _pick_charts_list()
-    songs = load_charts_list_from_the_file(charts_filename)
+    songs = _load_charts_list_from_the_file(charts_filename)
     if not songs:
         return None
     processed_tracks = process_tracks_from_info_list(songs)
@@ -27,7 +27,7 @@ def get_tracks_for_charts(bracket_upper_limit: int) -> Optional[list[TrackInfo]]
 
 
 @cache.memoize(timeout=36000)
-def load_charts_list_from_the_file(charts_filename: str) -> Optional[list[dict[str]]]:
+def _load_charts_list_from_the_file(charts_filename: str) -> Optional[list[dict[str]]]:
     """
     load songs considered best from file
     :return: (list[dict[str]]) list of dicts with all the info
