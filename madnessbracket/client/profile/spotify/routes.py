@@ -94,10 +94,7 @@ def generate_spotify_bracket() -> Response:
     try:
         bracket_upper_limit = validate_bracket_upper_limit(request.args)
     except BracketUpperLimitError as e:
-        return make_response(jsonify(
-            {'message': f'👿 INCORRECT INPUT 👿'}
-        ),
-            404)
+        bracket_upper_limit = 16
     user, token = authenticate_spotify_user()
     if not user or not token:
         return make_response(jsonify(
