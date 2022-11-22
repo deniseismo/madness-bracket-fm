@@ -27,7 +27,7 @@ class SecretThemeGenerator:
         "seismo_top_2021": get_seismo_top_tracks_of_2021,
     }
 
-    def __init__(self, bracket_size, themes_list: tuple[str] = THEMES):
+    def __init__(self, bracket_size: int, themes_list: tuple[str] = THEMES):
         self.bracket_size = bracket_size
         self.themes = themes_list
 

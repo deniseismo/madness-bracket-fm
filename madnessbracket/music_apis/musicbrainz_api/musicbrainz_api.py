@@ -1,32 +1,27 @@
+from pprint import pprint
+from typing import Optional
 from urllib.error import HTTPError
+
 import musicbrainzngs
-import requests_cache
-from musicbrainzngs.musicbrainz import ResponseError
 from flask import current_app
+from musicbrainzngs.musicbrainz import ResponseError
+
 from madnessbracket import create_app
 from madnessbracket.utilities.logging_handlers import log_missing_info
 
 app = create_app()
 app.app_context().push()
 
-
-requests_cache.install_cache()
-
-musicbrainzngs.set_useragent(
-    *current_app.config['MUSIC_BRAINZ_USER_AGENT'].split(','))
+musicbrainzngs.set_useragent(*current_app.config['MUSIC_BRAINZ_USER_AGENT'].split(','))
 
 
-def music_brainz_get_release_id_via_release_group(release_group_id: str):
-    """get release id from a release_group id
-    param:
-        release_group_id (str): release group id from Music Brainz
-
-    return:
-        (str): release id
+def music_brainz_get_release_id_via_release_group(release_group_id: str) -> Optional[str]:
+    """get release id (i.e. a particular album cd or vinyl record) from a 'release group' by release group id
+    :param release_group_id: (str) release group id from Music Brainz
+    :return: (str) release id
     """
     try:
-        release_group_info = musicbrainzngs.get_release_group_by_id(
-            release_group_id, includes=['releases'])
+        release_group_info = musicbrainzngs.get_release_group_by_id(release_group_id, includes=['releases'])
     except (HTTPError, ResponseError) as e:
         info = f"RELEASE GROUP ID ({release_group_id}   ERROR({e}))"
         log_missing_info(info)
@@ -41,16 +36,13 @@ def music_brainz_get_release_id_via_release_group(release_group_id: str):
     return release_id
 
 
-def music_brainz_get_release_tracklist(release_id: str):
-    """get release group info by it id
-    :param 
-        release_group_id (str): release group id from Music Brainz
-    :return: 
-        (list) a list of tracks (track titles) for the current release (album)
+def music_brainz_get_release_tracklist(release_id: str) -> Optional[list[str]]:
+    """get release info by its id
+    :param release_id: (str) release id from Music Brainz
+    :return: (list) of tracks (track titles) for the current release (album)
     """
     try:
-        release_info = musicbrainzngs.get_release_by_id(
-            release_id, includes=['media', 'recordings'])
+        release_info = musicbrainzngs.get_release_by_id(release_id, includes=['media', 'recordings'])
     except (HTTPError, ResponseError) as e:
         print(f'a response error occurred for {release_id}', e)
         return None
