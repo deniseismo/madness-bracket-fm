@@ -1,9 +1,10 @@
 from flask import Flask
-from flask_session import Session
 from flask_caching import Cache
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-from madnessbracket.config import Config, CACHE_CONFIG
 from sqlalchemy import MetaData
+
+from madnessbracket.config import Config, CACHE_CONFIG
 
 my_naming_convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -34,22 +35,21 @@ def create_app(production=False, config_class=Config):
     else:
         cache.init_app(app, config=CACHE_CONFIG["testing"])
     db.init_app(app)
-
     # import all blueprints necessary
-    from madnessbracket.main.routes import main
-    from madnessbracket.profile.spotify.routes import spotify
-    from madnessbracket.share.routes import share
-    from madnessbracket.charts.routes import charts
-    from madnessbracket.musician.routes import musician
-    from madnessbracket.secret.routes import secret
-    from madnessbracket.battle.routes import battle
-    from madnessbracket.errors.handlers import errors
-    from madnessbracket.trivia.routes import trivia
-    from madnessbracket.profile.lastfm.routes import lastfm_profile
+    from madnessbracket.client.main.routes import main
+    from madnessbracket.client.profile.spotify.routes import spotify
+    from madnessbracket.client.share.routes import share
+    from madnessbracket.client.charts.routes import charts
+    from madnessbracket.client.artist.routes import artist
+    from madnessbracket.client.secret.routes import secret
+    from madnessbracket.client.battle.routes import battle
+    from madnessbracket.client.errors.handlers import errors
+    from madnessbracket.client.trivia.routes import trivia
+    from madnessbracket.client.profile.lastfm.routes import lastfm_profile
 
     # register all blueprints
     app.register_blueprint(main)
-    app.register_blueprint(musician)
+    app.register_blueprint(artist)
     app.register_blueprint(charts)
     app.register_blueprint(secret)
     app.register_blueprint(spotify)
