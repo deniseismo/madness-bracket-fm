@@ -27,6 +27,7 @@ def parse_bracket_data_for_sharing(bracket_data: SharedBracketData) -> dict:
         "winner": None,
         "extra": bracket_data.extra
     }
+    # save winning track's title if there is one
     if bracket_data.structure.final.winner.track_id:
         track_id = bracket_data.structure.final.winner.track_id
         parsed_bracket_data["winner"] = bracket_data.tracks[track_id].track_title

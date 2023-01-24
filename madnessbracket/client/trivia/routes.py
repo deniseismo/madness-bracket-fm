@@ -11,7 +11,7 @@ trivia = Blueprint('trivia', __name__)
 @trivia.route("/get_commentary", methods=["POST"])
 def get_madness_commentary() -> Response:
     """
-    get madness bracket commentary: easter egg commentary for the madness bracket winner track
+    get madness bracket commentary: Easter egg commentary for the madness bracket winner track
     :return: jsonified commentary info
     """
     winner_track_bracket_data = request.get_json()

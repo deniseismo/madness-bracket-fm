@@ -86,7 +86,7 @@ def spotify_callback():
 
 
 @spotify.route('/spotify', methods=["GET", "POST"])
-def generate_spotify_bracket() -> Response:
+def generate_spotify_bracket():
     """
     generates madness bracket based on spotify's user best tracks
     :return: jsonified dict with all the needed info for the madness bracket

@@ -12,8 +12,7 @@ def get_secret_artists_battle(bracket_limit: int = 16) -> TracksInfoResponse:
     """
     artist_1_name, artist_2_name = pick_random_artists_matchup()
     # pick from the selection of top 50 tracks only
-    MAX_SONGS_RANGE = 50
-    battle_tracks = get_tracks_for_artists_battle(artist_1_name, artist_2_name, bracket_limit, MAX_SONGS_RANGE)
+    battle_tracks = get_tracks_for_artists_battle(artist_1_name, artist_2_name, bracket_limit, max_songs_range=50)
     tracks_info_response = make_tracks_info_response(
         tracks=battle_tracks,
         description=f"{artist_1_name.upper()} vs {artist_2_name.upper()}",

@@ -32,7 +32,6 @@ def get_filtered_artists_suggestions(query: Optional[str]) -> list[str]:
         query (str): user's input
     """
     artists_list = _load_all_artists()
-    print(query)
     filtered_artists_list = []
     # check if the input's not empty
     if query and artists_list:

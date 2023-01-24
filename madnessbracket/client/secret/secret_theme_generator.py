@@ -31,7 +31,7 @@ class SecretThemeGenerator:
         self.bracket_size = bracket_size
         self.themes = themes_list
 
-    def pick_random_theme(self) -> str:
+    def _pick_random_theme(self) -> str:
         """
         select random secret theme from a list of themes
         :return: (str) secret theme's title
@@ -43,6 +43,6 @@ class SecretThemeGenerator:
         load secret theme bracket info with all the tracks, description, etc.
         :return: (TracksInfoResponse) with all the secret theme bracket info
         """
-        random_theme = self.pick_random_theme()
+        random_theme = self._pick_random_theme()
         tracks = self.THEME_HANDLERS[random_theme](self.bracket_size)
         return tracks

@@ -1,5 +1,5 @@
 from madnessbracket import db
-from madnessbracket.dev.db_mgmt.album_mgmt.album_metadata_utilities import parse_release_date
+from madnessbracket.utilities.convert_values import parse_release_date
 from madnessbracket.models import Album
 
 
