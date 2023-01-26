@@ -80,9 +80,9 @@ class CommentaryGenerator:
             return True
         return False
 
-    def get_commentary(self):
+    def get_commentary(self) -> Optional[str]:
         """
-        get 'easter egg' commentary for the given song
+        get 'Easter egg' commentary for the given song
         :return: (str) commentary on success
         """
         artist_entry = db_get_artist(self.artist_name)

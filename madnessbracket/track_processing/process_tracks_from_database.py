@@ -28,7 +28,8 @@ def process_a_track_from_db(track_entry: Song) -> TrackInfo:
     )
     if track_entry.spotify_preview_url:
         track_info.spotify_preview_url = track_entry.spotify_preview_url
-    album_colors = track_entry.album.get_list_of_album_colors()
-    if album_colors:
-        track_info.album_colors = album_colors
+    if track_entry.album:
+        album_colors = track_entry.album.get_list_of_album_colors()
+        if album_colors:
+            track_info.album_colors = album_colors
     return track_info
